@@ -1,4 +1,4 @@
-import { Download, Check } from 'lucide-react';
+import { Download } from 'lucide-react';
 import Hero from '../components/Hero';
 
 const products = [

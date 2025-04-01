@@ -1,4 +1,4 @@
-import { ArrowRight, Droplet, Shield, Zap, Check, Users, Award, Globe, Clock, Star } from 'lucide-react';
+import { ArrowRight, Droplet, Shield, Zap, Users, Award, Globe, Clock, Star } from 'lucide-react';
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
 

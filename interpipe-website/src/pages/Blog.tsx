@@ -1,4 +1,4 @@
-import { Calendar, Clock, Tag, Search, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, Tag, Search } from 'lucide-react';
 import Hero from '../components/Hero';
 
 const blogPosts = [

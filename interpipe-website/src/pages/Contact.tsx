@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 import Hero from '../components/Hero';
 
 const Contact = () => {
