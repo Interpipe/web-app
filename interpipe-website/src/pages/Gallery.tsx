@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, Filter } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import Hero from '../components/Hero';
 
 const galleryItems = [

@@ -4,16 +4,19 @@ import { Link } from 'react-router-dom';
 
 const features = [
   {
+    id: 'quality',
     icon: Droplet,
     title: "Superior Quality",
     description: "Our PVC pipes are manufactured using the highest quality materials, ensuring durability and long-lasting performance."
   },
   {
+    id: 'reliability',
     icon: Shield,
     title: "Reliable Performance",
     description: "Built to withstand the toughest conditions, our pipes deliver consistent performance year after year."
   },
   {
+    id: 'efficiency',
     icon: Zap,
     title: "Energy Efficient",
     description: "Optimized design ensures maximum water flow with minimal energy consumption, saving you money."
@@ -21,26 +24,29 @@ const features = [
 ];
 
 const stats = [
-  { number: "150+", label: "Happy Customers", icon: Users },
-  { number: "5+", label: "Years Experience", icon: Award },
-  { number: "3+", label: "Countries Served", icon: Globe },
-  { number: "24/7", label: "Support Available", icon: Clock }
+  { id: 'customers', number: "150+", label: "Happy Customers", icon: Users },
+  { id: 'experience', number: "5+", label: "Years Experience", icon: Award },
+  { id: 'countries', number: "3+", label: "Countries Served", icon: Globe },
+  { id: 'support', number: "24/7", label: "Support Available", icon: Clock }
 ];
 
 const featuredProducts = [
   {
+    id: 'pvc',
     name: "PVC Irrigation Pipes",
     description: "High-quality PVC pipes for efficient water distribution",
     image: "/src/assets/Products/PVC/Pvc edited 5.jpg",
     link: "/products#pvc-pipes"
   },
   {
+    id: 'hdpe',
     name: "HDPE Pipes",
     description: "Durable polyethylene pipes for various applications",
     image: "/src/assets/Products/POLY PIPES/HDPE Re edited.jpg",
     link: "/products#poly-pipes"
   },
   {
+    id: 'casings',
     name: "Borehole Casings",
     description: "Reliable casings for water well applications",
     image: "/src/assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg",
@@ -50,6 +56,7 @@ const featuredProducts = [
 
 const testimonials = [
   {
+    id: 'icp',
     quote: "Interpipe has been a great blessing to our business. They do not just meet our requirements but go beyond in providing the best possible products, support, pricing and technical assistance.",
     author: "Intergrated Construction Projects",
     role: "Company",
@@ -57,6 +64,7 @@ const testimonials = [
     category: "Construction"
   },
   {
+    id: 'liquitech',
     quote: "Working with Interpipe has been a delight on all of our sites and projects. They always had everything we needed and provided excellent service in terms of material supply.",
     author: "LIQUITECH",
     role: "Company",
@@ -74,8 +82,8 @@ const Home = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
+            {stats.map((stat) => (
+              <div key={stat.id} className="text-center">
                 <stat.icon className="w-12 h-12 text-sky-500 mx-auto mb-4" />
                 <div className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</div>
                 <div className="text-gray-600">{stat.label}</div>
@@ -90,8 +98,8 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Why Choose Interpipe?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+            {features.map((feature) => (
+              <div key={feature.id} className="bg-white p-6 rounded-lg shadow-md">
                 <feature.icon className="text-sky-500 mb-4" size={40} />
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-gray-600">
@@ -108,8 +116,8 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Featured Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProducts.map((product, index) => (
-              <Link key={index} to={product.link} className="group">
+            {featuredProducts.map((product) => (
+              <Link key={product.id} to={product.link} className="group">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
                   <div className="h-64 w-full overflow-hidden">
                     <img
@@ -146,8 +154,8 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+            {testimonials.map((testimonial) => (
+              <div key={testimonial.id} className="bg-white p-6 rounded-lg shadow-md">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center mr-4">
                     <span className="text-sky-500 font-bold">
@@ -163,8 +171,8 @@ const Home = () => {
                 </div>
                 <p className="text-gray-600 italic">"{testimonial.quote}"</p>
                 <div className="flex text-yellow-400 mt-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-current" />
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star key={`${testimonial.id}-star-${star}`} className="w-5 h-5 fill-current" />
                   ))}
                 </div>
               </div>
