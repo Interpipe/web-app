@@ -14,21 +14,21 @@ const slides: Slide[] = [
   {
     title: "Committed to Flow",
     subtitle: "Your trusted partner in irrigation solutions",
-    image: "/images/hero/home-hero-1.jpg",
+    image: "/src/assets/Home/blue.jpg",
     link: "/products",
     linkText: "Explore Products"
   },
   {
     title: "Sustainable Irrigation",
     subtitle: "Efficient water management for a greener future",
-    image: "/images/hero/home-hero-2.jpg",
+    image: "/src/assets/Home/polyy.jpg",
     link: "/gallery",
     linkText: "View Projects"
   },
   {
     title: "Expert Support",
     subtitle: "Professional guidance for your irrigation needs",
-    image: "/images/hero/home-hero-3.jpg",
+    image: "/src/assets/Home/IMG-20250402-WA0008.jpg",
     link: "/contact",
     linkText: "Contact Us"
   }

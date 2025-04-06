@@ -1,15 +1,9 @@
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
-import Hero from '../components/Hero';
+import { Mail, Phone, MapPin, Clock, Globe } from 'lucide-react';
 
 const Contact = () => {
   return (
     <div>
-      <Hero 
-        title="Contact Us"
-        subtitle="Get in touch with our team for any questions or support"
-        image="/images/hero/contact-hero.jpg"
-      />
-      <div className="py-12">
+      <div className="py-12 pt-20">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold text-center mb-12">Contact Us</h1>
 
@@ -29,7 +23,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-gray-600">info@interpipe.com</p>
+                    <p className="text-gray-600">sales@interpipe.co.zw</p>
+                    <p className="text-gray-600">interpipesolutions@gmail.com</p>
                   </div>
                 </div>
 
@@ -39,7 +34,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Phone</h3>
-                    <p className="text-gray-600">(555) 123-4567</p>
+                    <p className="text-gray-600">+263 777 418 618</p>
+                    <p className="text-gray-600">+263 777 418 942 | +263 777 418 034</p>
+                    <p className="text-gray-600">+263 777 418 470</p>
                   </div>
                 </div>
 
@@ -50,9 +47,21 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Address</h3>
                     <p className="text-gray-600">
-                      123 Pipe Street<br />
-                      City, State 12345<br />
-                      Country
+                      Interpipe PVT Ltd<br />
+                      1236 Tynwald South Industries<br />
+                      Harare, Zimbabwe
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center mr-4">
+                    <Globe className="text-sky-500" size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Website</h3>
+                    <p className="text-gray-600">
+                      <a href="https://www.interpipe.co.zw" className="text-sky-500 hover:underline">www.interpipe.co.zw</a>
                     </p>
                   </div>
                 </div>
@@ -175,9 +184,16 @@ const Contact = () => {
             <h2 className="text-2xl font-semibold mb-6">Visit Us</h2>
             <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg">
               {/* Replace with actual map */}
-              <div className="w-full h-64 bg-sky-100 flex items-center justify-center">
-                <span className="text-sky-500">Map will be embedded here</span>
-              </div>
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.0378989306894!2d30.98454611487618!3d-17.813279087823896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1931a575b7eaecbb%3A0x2472a7c77a38c4a2!2sTynwald%20South%20Industrial%20Park%2C%20Harare%2C%20Zimbabwe!5e0!3m2!1sen!2sus!4v1712457356409!5m2!1sen!2sus" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Interpipe Location - 1236 Tynwald South Industries, Harare, Zimbabwe"
+              ></iframe>
             </div>
           </div>
         </div>

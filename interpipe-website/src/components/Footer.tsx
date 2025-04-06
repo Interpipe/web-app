@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Globe } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -47,11 +47,6 @@ const Footer = () => {
                   Gallery
                 </Link>
               </li>
-              <li>
-                <Link to="/blog" className="text-gray-400 hover:text-sky-500 transition-colors">
-                  Blog
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -89,18 +84,29 @@ const Footer = () => {
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-sky-500 mt-1" />
                 <span className="text-gray-400">
-                  123 Irrigation Street<br />
-                  Water City, WC 12345<br />
-                  United States
+                  Interpipe PVT Ltd<br />
+                  1236 Tynwald South Industries<br />
+                  Harare, Zimbabwe
+                </span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <Phone className="w-5 h-5 text-sky-500 mt-1" />
+                <span className="text-gray-400">
+                  +263 777 418 618<br />
+                  +263 777 418 942
                 </span>
               </li>
               <li className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-sky-500" />
-                <span className="text-gray-400">+1 (555) 123-4567</span>
+                <Mail className="w-5 h-5 text-sky-500" />
+                <a href="mailto:sales@interpipe.co.zw" className="text-gray-400 hover:text-sky-500 transition-colors">
+                  sales@interpipe.co.zw
+                </a>
               </li>
               <li className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-sky-500" />
-                <span className="text-gray-400">info@interpipe.com</span>
+                <Globe className="w-5 h-5 text-sky-500" />
+                <a href="https://www.interpipe.co.zw" className="text-gray-400 hover:text-sky-500 transition-colors">
+                  www.interpipe.co.zw
+                </a>
               </li>
             </ul>
           </div>

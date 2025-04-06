@@ -21,9 +21,9 @@ const features = [
 ];
 
 const stats = [
-  { number: "10K+", label: "Happy Customers", icon: Users },
-  { number: "25+", label: "Years Experience", icon: Award },
-  { number: "50+", label: "Countries Served", icon: Globe },
+  { number: "150+", label: "Happy Customers", icon: Users },
+  { number: "5+", label: "Years Experience", icon: Award },
+  { number: "3+", label: "Countries Served", icon: Globe },
   { number: "24/7", label: "Support Available", icon: Clock }
 ];
 
@@ -31,37 +31,37 @@ const featuredProducts = [
   {
     name: "PVC Irrigation Pipes",
     description: "High-quality PVC pipes for efficient water distribution",
-    image: "/images/products/pvc-pipes.jpg",
+    image: "/src/assets/Products/PVC/Pvc edited 5.jpg",
     link: "/products#pvc-pipes"
   },
   {
-    name: "Drip Irrigation Systems",
-    description: "Precision water delivery for optimal plant growth",
-    image: "/images/products/drip-irrigation.jpg",
-    link: "/products#drip-irrigation"
+    name: "HDPE Pipes",
+    description: "Durable polyethylene pipes for various applications",
+    image: "/src/assets/Products/POLY PIPES/HDPE Re edited.jpg",
+    link: "/products#poly-pipes"
   },
   {
-    name: "Smart Controllers",
-    description: "Automated irrigation control for water conservation",
-    image: "/images/products/smart-controller.jpg",
-    link: "/products#smart-controllers"
+    name: "Borehole Casings",
+    description: "Reliable casings for water well applications",
+    image: "/src/assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg",
+    link: "/products#casings"
   }
 ];
 
 const testimonials = [
   {
-    quote: "Interpipe's products have transformed our agricultural operations. The water efficiency has increased by 40%.",
-    author: "John Smith",
-    role: "Farm Manager",
-    company: "Green Valley Farms",
-    image: "/images/testimonials/john.jpg"
+    quote: "Interpipe has been a great blessing to our business. They do not just meet our requirements but go beyond in providing the best possible products, support, pricing and technical assistance.",
+    author: "Intergrated Construction Projects",
+    role: "Company",
+    company: "ICP",
+    category: "Construction"
   },
   {
-    quote: "The quality and durability of their pipes are unmatched. We've been using them for over 5 years with zero issues.",
-    author: "Sarah Chen",
-    role: "Landscape Architect",
-    company: "Green Design Studio",
-    image: "/images/testimonials/sarah.jpg"
+    quote: "Working with Interpipe has been a delight on all of our sites and projects. They always had everything we needed and provided excellent service in terms of material supply.",
+    author: "LIQUITECH",
+    role: "Company",
+    company: "LIQUITECH",
+    category: "Industry"
   }
 ];
 
@@ -111,7 +111,7 @@ const Home = () => {
             {featuredProducts.map((product, index) => (
               <Link key={index} to={product.link} className="group">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <div className="aspect-w-16 aspect-h-9 bg-gray-200">
+                  <div className="h-64 w-full overflow-hidden">
                     <img
                       src={product.image}
                       alt={product.name}
@@ -149,15 +149,15 @@ const Home = () => {
             {testimonials.map((testimonial, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md">
                 <div className="flex items-center mb-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.author}
-                    className="w-12 h-12 rounded-full mr-4"
-                  />
+                  <div className="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center mr-4">
+                    <span className="text-sky-500 font-bold">
+                      {testimonial.company.split(' ').map(n => n[0]).join('')}
+                    </span>
+                  </div>
                   <div>
                     <div className="font-semibold">{testimonial.author}</div>
                     <div className="text-gray-600 text-sm">
-                      {testimonial.role} at {testimonial.company}
+                      {testimonial.role} | {testimonial.category}
                     </div>
                   </div>
                 </div>

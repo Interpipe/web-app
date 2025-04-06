@@ -23,8 +23,12 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-sky-500">
-            Interpipe
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/src/assets/Home/logo.png" 
+              alt="Interpipe Logo" 
+              className="h-24 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -40,9 +44,6 @@ const Header = () => {
             </Link>
             <Link to="/gallery" className="text-gray-600 hover:text-sky-500 transition-colors">
               Gallery
-            </Link>
-            <Link to="/blog" className="text-gray-600 hover:text-sky-500 transition-colors">
-              Blog
             </Link>
             <Link to="/testimonials" className="text-gray-600 hover:text-sky-500 transition-colors">
               Testimonials
@@ -95,13 +96,6 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Gallery
-              </Link>
-              <Link
-                to="/blog"
-                className="text-gray-600 hover:text-sky-500 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Blog
               </Link>
               <Link
                 to="/testimonials"

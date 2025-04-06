@@ -1,50 +1,52 @@
 import { Star, Quote } from 'lucide-react';
 import Hero from '../components/Hero';
+// Import hero image
+import bluePvcImage from '../assets/Home/blue  pvc.jpg 2.jpg';
 
 const testimonials = [
   {
     id: 1,
-    name: 'David Thompson',
-    role: 'Farm Owner',
-    company: 'Thompson Farms',
-    image: '/images/testimonials/david.jpg',
+    name: 'Intergrated Construction Projects',
+    role: 'Company',
+    company: 'ICP',
+    image: '/images/testimonials/icp.jpg',
     rating: 5,
-    testimonial: 'The irrigation system provided by Interpipe has transformed our farming operations. The water efficiency has improved significantly, and the support team is always ready to help.',
-    category: 'Agriculture',
+    testimonial: 'Interpipe has been a great blessing to our business. They do not just meet our requirements but go beyond in providing the best possible products, support, pricing and technical assistance. Their well-stocked branch is a pleasure to deal with and offer not just great service but a personalized service to us. I do not need to use any other company other than Interpipe. I\'d strongly recommend them to anyone and I look forward to doing much more business with the team!',
+    category: 'Construction',
   },
   {
     id: 2,
-    name: 'Sarah Chen',
-    role: 'Landscape Architect',
-    company: 'Green Design Studio',
-    image: '/images/testimonials/sarah.jpg',
+    name: 'LIQUITECH',
+    role: 'Company',
+    company: 'LIQUITECH',
+    image: '/images/testimonials/liquitech.jpg',
     rating: 5,
-    testimonial: "I've worked with Interpipe on multiple commercial projects. Their products are reliable, and their technical expertise is invaluable for complex installations.",
-    category: 'Landscaping',
+    testimonial: "Working with Interpipe has been a delight on all of our sites and projects. They always had everything we needed and provided excellent service in terms of material supply. Their solution offerings have allowed us to provide a very efficient and reliable system in a very remote place.",
+    category: 'Industry',
   },
   {
     id: 3,
-    name: 'Michael Rodriguez',
-    role: 'Golf Course Manager',
-    company: 'Pine Valley Golf Club',
-    image: '/images/testimonials/michael.jpg',
+    name: 'MAC HOMES',
+    role: 'Company',
+    company: 'MAC HOMES',
+    image: '/images/testimonials/machomes.jpg',
     rating: 5,
-    testimonial: 'The smart irrigation system has helped us maintain perfect course conditions while reducing water consumption by 30%. The ROI has been exceptional.',
-    category: 'Sports',
+    testimonial: 'We are in the business of Land and Property Development, and Inter Pipe is one of our consistent Pipe suppliers in terms of quality and service. We confidently recommend Inter Pipe Pvt Ltd as a solid and reliable pipe supplier.',
+    category: 'Property Development',
   },
   {
     id: 4,
-    name: 'Emily Watson',
-    role: 'Greenhouse Manager',
-    company: 'Sustainable Growth Co.',
-    image: '/images/testimonials/emily.jpg',
+    name: 'FORTUNE HARDWARE',
+    role: 'Company',
+    company: 'FORTUNE HARDWARE',
+    image: '/images/testimonials/fortune.jpg',
     rating: 5,
-    testimonial: "Interpipe's drip irrigation system is perfect for our greenhouse operations. The precision control and water efficiency have significantly improved our crop yields.",
-    category: 'Agriculture',
+    testimonial: "Many thanks to Loreta and her Team, for their excellent product support and technical knowledge. You have yet again gone the extra mile to assist and solve my problems. It is refreshing to deal with a team you can trust. I am sincerely grateful.",
+    category: 'Hardware',
   },
 ];
 
-const categories = ['All', 'Agriculture', 'Landscaping', 'Sports'];
+const categories = ['All', 'Construction', 'Industry', 'Property Development', 'Hardware'];
 
 const Testimonials = () => {
   return (
@@ -52,7 +54,7 @@ const Testimonials = () => {
       <Hero 
         title="Customer Testimonials"
         subtitle="See what our customers have to say about Interpipe"
-        image="/images/hero/testimonials-hero.jpg"
+        image={bluePvcImage}
       />
       <div className="py-12">
         <div className="container mx-auto px-4">
@@ -79,9 +81,9 @@ const Testimonials = () => {
               >
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 rounded-full bg-gray-200 mr-4">
-                    {/* Replace with actual image */}
+                    {/* Use company initial for avatar */}
                     <div className="w-full h-full rounded-full bg-sky-100 flex items-center justify-center">
-                      <span className="text-sky-500 text-sm">
+                      <span className="text-sky-500 font-bold text-sm">
                         {testimonial.name.split(' ').map(n => n[0]).join('')}
                       </span>
                     </div>

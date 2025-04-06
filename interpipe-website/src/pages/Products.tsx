@@ -1,5 +1,9 @@
 import { Download } from 'lucide-react';
 import Hero from '../components/Hero';
+// Import actual images
+import pvcImage from '../assets/Products/PVC/edited 1 pvc.jpg';
+import polyImage from '../assets/Products/POLY PIPES/Untitled design (2).png';
+import sewerImage from '../assets/Products/SEWER/Sewer brown 2 (1).png';
 
 const products = [
   {
@@ -8,7 +12,7 @@ const products = [
     description: 'High-quality PVC pipes designed for efficient water distribution in agricultural and landscaping applications.',
     features: ['UV resistant', 'Corrosion free', 'Easy installation'],
     sizes: ['1/2" to 12"', 'Custom sizes available'],
-    image: '/images/pvc-irrigation.jpg',
+    image: pvcImage,
   },
   {
     id: 2,
@@ -16,7 +20,7 @@ const products = [
     description: 'Complete drip irrigation solutions for precise water delivery to plants and crops.',
     features: ['Water efficient', 'Pressure compensated', 'Anti-clogging'],
     sizes: ['Various configurations', 'Customizable'],
-    image: '/images/drip-irrigation.jpg',
+    image: polyImage,
   },
   {
     id: 3,
@@ -24,7 +28,7 @@ const products = [
     description: 'Comprehensive range of fittings and connectors for seamless pipe connections.',
     features: ['Leak-proof', 'Durable', 'Easy to maintain'],
     sizes: ['Compatible with all pipe sizes', 'Standard and custom options'],
-    image: '/images/fittings.jpg',
+    image: sewerImage,
   },
 ];
 
@@ -34,7 +38,7 @@ const Products = () => {
       <Hero 
         title="Our Products"
         subtitle="Discover our comprehensive range of irrigation solutions"
-        image="/images/hero/products-hero.jpg"
+        image="/src/assets/Home/IMG-20250224-WA0027.jpg"
       />
       <div className="py-12">
         <div className="container mx-auto px-4">
@@ -46,9 +50,11 @@ const Products = () => {
               <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="aspect-w-16 aspect-h-9 bg-gray-200">
                   {/* Replace with actual image */}
-                  <div className="w-full h-48 bg-sky-100 flex items-center justify-center">
-                    <span className="text-sky-500">Product Image</span>
-                  </div>
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="object-cover w-full h-48"
+                  />
                 </div>
                 
                 <div className="p-6">

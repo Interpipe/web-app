@@ -5,49 +5,49 @@ import Hero from '../components/Hero';
 const galleryItems = [
   {
     id: 1,
-    title: 'Agricultural Irrigation System',
+    title: 'PVC Irrigation System',
     category: 'Agriculture',
-    image: '/images/gallery/agriculture.jpg',
-    description: 'Large-scale irrigation system installation for a commercial farm',
+    image: '/src/assets/Products/PVC/Pvc edited 5.jpg',
+    description: 'High-quality PVC pipes for irrigation systems',
   },
   {
     id: 2,
-    title: 'Golf Course Watering System',
-    category: 'Sports',
-    image: '/images/gallery/golf-course.jpg',
-    description: 'Custom irrigation solution for a championship golf course',
+    title: 'HDPE Pipe Installation',
+    category: 'Industrial',
+    image: '/src/assets/Products/POLY PIPES/HDPE Re edited.jpg',
+    description: 'Durable HDPE pipes for industrial applications',
   },
   {
     id: 3,
-    title: 'Landscape Irrigation',
-    category: 'Landscaping',
-    image: '/images/gallery/landscape.jpg',
-    description: 'Smart irrigation system for a residential landscape',
+    title: 'Sewer Pipe Systems',
+    category: 'Infrastructure',
+    image: '/src/assets/Products/SEWER/Sewer brown (1).png',
+    description: 'Reliable sewer pipe solutions',
   },
   {
     id: 4,
-    title: 'Greenhouse Installation',
-    category: 'Agriculture',
-    image: '/images/gallery/greenhouse.jpg',
-    description: 'Precision drip irrigation in a modern greenhouse',
+    title: 'Borehole Casings',
+    category: 'Water Systems',
+    image: '/src/assets/Products/Borehole Casings/CASINGS.jpg',
+    description: 'Professional borehole casing installation',
   },
   {
     id: 5,
-    title: 'Sports Field Irrigation',
-    category: 'Sports',
-    image: '/images/gallery/sports-field.jpg',
-    description: 'Professional sports field irrigation system',
+    title: 'Blue PVC Pipes',
+    category: 'Agriculture',
+    image: '/src/assets/Home/blue.jpg',
+    description: 'Blue PVC pipes for agricultural applications',
   },
   {
     id: 6,
-    title: 'Commercial Landscape',
-    category: 'Landscaping',
-    image: '/images/gallery/commercial.jpg',
-    description: 'Large-scale commercial property irrigation',
+    title: 'Irrigation System Components',
+    category: 'Infrastructure',
+    image: '/src/assets/Home/18141aef4ce07193b2ce5f2fb7429047.jpg',
+    description: 'Complete irrigation system components',
   },
 ];
 
-const categories = ['All', 'Agriculture', 'Sports', 'Landscaping'];
+const categories = ['All', 'Agriculture', 'Industrial', 'Infrastructure', 'Water Systems'];
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -62,7 +62,7 @@ const Gallery = () => {
       <Hero 
         title="Project Gallery"
         subtitle="Explore our successful irrigation installations across different sectors"
-        image="/images/hero/gallery-hero.jpg"
+        image="/src/assets/Home/65d56d8922e5ce44d0d07309ab1899ae.jpg"
       />
       <div className="py-12">
         <div className="container mx-auto px-4">
@@ -94,10 +94,12 @@ const Gallery = () => {
                 onClick={() => setSelectedImage(item.id)}
               >
                 <div className="aspect-w-16 aspect-h-9 bg-gray-200">
-                  {/* Replace with actual image */}
-                  <div className="w-full h-48 bg-sky-100 flex items-center justify-center">
-                    <Image className="text-sky-500" size={40} />
-                  </div>
+                  {/* Display actual image */}
+                  <img 
+                    src={item.image}
+                    alt={item.title}
+                    className="object-cover w-full h-48"
+                  />
                 </div>
                 <div className="p-4">
                   <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
@@ -128,10 +130,12 @@ const Gallery = () => {
                     </button>
                   </div>
                   <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg mb-4">
-                    {/* Replace with actual image */}
-                    <div className="w-full h-64 bg-sky-100 flex items-center justify-center">
-                      <Image className="text-sky-500" size={60} />
-                    </div>
+                    {/* Display actual image */}
+                    <img 
+                      src={galleryItems.find(item => item.id === selectedImage)?.image}
+                      alt={galleryItems.find(item => item.id === selectedImage)?.title}
+                      className="object-cover w-full h-full rounded-lg"
+                    />
                   </div>
                   <p className="text-gray-600">
                     {galleryItems.find(item => item.id === selectedImage)?.description}

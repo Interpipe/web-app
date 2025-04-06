@@ -3,17 +3,20 @@ import { cn } from '../lib/utils';
 interface HeroProps {
   title: string;
   subtitle?: string;
-  image: string;
+  image: string | any; // Allow imported images too
   className?: string;
 }
 
 const Hero = ({ title, subtitle, image, className }: HeroProps) => {
+  // Handle both string paths and imported images
+  const imageUrl = typeof image === 'string' ? image : image?.src ?? image;
+  
   return (
     <div className={cn("relative w-full h-[400px] md:h-[600px] lg:h-screen", className)}>
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${image})` }}
+        style={{ backgroundImage: `url(${imageUrl})` }}
       >
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/50" />
