@@ -2,6 +2,11 @@ import { ArrowRight, Droplet, Shield, Zap, Users, Award, Globe, Clock, Star } fr
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
 
+// Import product images
+import pvcImage from '../assets/Products/PVC/Pvc edited 5.jpg';
+import hdpeImage from '../assets/Products/POLY PIPES/HDPE Re edited.jpg';
+import boreholeImage from '../assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg';
+
 const features = [
   {
     id: 'quality',
@@ -35,21 +40,21 @@ const featuredProducts = [
     id: 'pvc',
     name: "PVC Irrigation Pipes",
     description: "High-quality PVC pipes for efficient water distribution",
-    image: "/src/assets/Products/PVC/Pvc edited 5.jpg",
+    image: pvcImage,
     link: "/products#pvc-pipes"
   },
   {
     id: 'hdpe',
     name: "HDPE Pipes",
     description: "Durable polyethylene pipes for various applications",
-    image: "/src/assets/Products/POLY PIPES/HDPE Re edited.jpg",
+    image: hdpeImage,
     link: "/products#poly-pipes"
   },
   {
     id: 'casings',
     name: "Borehole Casings",
     description: "Reliable casings for water well applications",
-    image: "/src/assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg",
+    image: boreholeImage,
     link: "/products#casings"
   }
 ];

@@ -5,7 +5,7 @@ import bluePvcImage from '../assets/Home/blue  pvc.jpg 2.jpg';
 
 const testimonials = [
   {
-    id: 1,
+    id: 'icp',
     name: 'Intergrated Construction Projects',
     role: 'Company',
     company: 'ICP',
@@ -15,7 +15,7 @@ const testimonials = [
     category: 'Construction',
   },
   {
-    id: 2,
+    id: 'liquitech',
     name: 'LIQUITECH',
     role: 'Company',
     company: 'LIQUITECH',
@@ -25,7 +25,7 @@ const testimonials = [
     category: 'Industry',
   },
   {
-    id: 3,
+    id: 'machomes',
     name: 'MAC HOMES',
     role: 'Company',
     company: 'MAC HOMES',
@@ -35,7 +35,7 @@ const testimonials = [
     category: 'Property Development',
   },
   {
-    id: 4,
+    id: 'fortune',
     name: 'FORTUNE HARDWARE',
     role: 'Company',
     company: 'FORTUNE HARDWARE',
@@ -96,9 +96,9 @@ const Testimonials = () => {
                 </div>
 
                 <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
+                  {[1, 2, 3, 4, 5].slice(0, testimonial.rating).map((star) => (
                     <Star
-                      key={i}
+                      key={`${testimonial.id}-star-${star}`}
                       className="text-yellow-400 fill-current"
                       size={16}
                     />

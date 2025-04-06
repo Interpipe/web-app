@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+// Import logo
+import logoImage from '../assets/Home/logo.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,7 +27,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
-              src="/src/assets/Home/logo.png" 
+              src={logoImage} 
               alt="Interpipe Logo" 
               className="h-24 w-auto"
             />

@@ -2,7 +2,13 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+// Import slide images
+import slideImage1 from '../assets/Home/blue.jpg';
+import slideImage2 from '../assets/Home/polyy.jpg';
+import slideImage3 from '../assets/Home/IMG-20250402-WA0008.jpg';
+
 interface Slide {
+  id: string;
   title: string;
   subtitle: string;
   image: string;
@@ -12,23 +18,26 @@ interface Slide {
 
 const slides: Slide[] = [
   {
+    id: 'slide1',
     title: "Committed to Flow",
     subtitle: "Your trusted partner in irrigation solutions",
-    image: "/src/assets/Home/blue.jpg",
+    image: slideImage1,
     link: "/products",
     linkText: "Explore Products"
   },
   {
+    id: 'slide2',
     title: "Sustainable Irrigation",
     subtitle: "Efficient water management for a greener future",
-    image: "/src/assets/Home/polyy.jpg",
+    image: slideImage2,
     link: "/gallery",
     linkText: "View Projects"
   },
   {
+    id: 'slide3',
     title: "Expert Support",
     subtitle: "Professional guidance for your irrigation needs",
-    image: "/src/assets/Home/IMG-20250402-WA0008.jpg",
+    image: slideImage3,
     link: "/contact",
     linkText: "Contact Us"
   }
@@ -57,11 +66,11 @@ const HomeHero = () => {
   return (
     <div className="relative w-full h-[400px] md:h-[600px] lg:h-screen">
       {/* Slides */}
-      {slides.map((slide, index) => (
+      {slides.map((slide) => (
         <div
-          key={index}
+          key={slide.id}
           className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
+            slides.indexOf(slide) === currentSlide ? 'opacity-100' : 'opacity-0'
           }`}
         >
           {/* Background Image */}
@@ -105,14 +114,14 @@ const HomeHero = () => {
 
       {/* Slide Indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-        {slides.map((_, index) => (
+        {slides.map((slide) => (
           <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
+            key={`indicator-${slide.id}`}
+            onClick={() => setCurrentSlide(slides.indexOf(slide))}
             className={`w-3 h-3 rounded-full transition-colors ${
-              index === currentSlide ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
+              slides.indexOf(slide) === currentSlide ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
             }`}
-            aria-label={`Go to slide ${index + 1}`}
+            aria-label={`Go to slide ${slides.indexOf(slide) + 1}`}
           />
         ))}
       </div>

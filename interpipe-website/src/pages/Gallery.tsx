@@ -2,47 +2,56 @@ import { useState } from 'react';
 import { Filter } from 'lucide-react';
 import Hero from '../components/Hero';
 
+// Import images
+import pvcImage from '../assets/Products/PVC/Pvc edited 5.jpg';
+import hdpeImage from '../assets/Products/POLY PIPES/HDPE Re edited.jpg';
+import sewerImage from '../assets/Products/SEWER/Sewer brown (1).png';
+import boreholeImage from '../assets/Products/Borehole Casings/CASINGS.jpg';
+import blueImage from '../assets/Home/blue.jpg';
+import irrigationImage from '../assets/Home/18141aef4ce07193b2ce5f2fb7429047.jpg';
+import heroImage from '../assets/Home/65d56d8922e5ce44d0d07309ab1899ae.jpg';
+
 const galleryItems = [
   {
     id: 1,
     title: 'PVC Irrigation System',
     category: 'Agriculture',
-    image: '/src/assets/Products/PVC/Pvc edited 5.jpg',
+    image: pvcImage,
     description: 'High-quality PVC pipes for irrigation systems',
   },
   {
     id: 2,
     title: 'HDPE Pipe Installation',
     category: 'Industrial',
-    image: '/src/assets/Products/POLY PIPES/HDPE Re edited.jpg',
+    image: hdpeImage,
     description: 'Durable HDPE pipes for industrial applications',
   },
   {
     id: 3,
     title: 'Sewer Pipe Systems',
     category: 'Infrastructure',
-    image: '/src/assets/Products/SEWER/Sewer brown (1).png',
+    image: sewerImage,
     description: 'Reliable sewer pipe solutions',
   },
   {
     id: 4,
     title: 'Borehole Casings',
     category: 'Water Systems',
-    image: '/src/assets/Products/Borehole Casings/CASINGS.jpg',
+    image: boreholeImage,
     description: 'Professional borehole casing installation',
   },
   {
     id: 5,
     title: 'Blue PVC Pipes',
     category: 'Agriculture',
-    image: '/src/assets/Home/blue.jpg',
+    image: blueImage,
     description: 'Blue PVC pipes for agricultural applications',
   },
   {
     id: 6,
     title: 'Irrigation System Components',
     category: 'Infrastructure',
-    image: '/src/assets/Home/18141aef4ce07193b2ce5f2fb7429047.jpg',
+    image: irrigationImage,
     description: 'Complete irrigation system components',
   },
 ];
@@ -62,7 +71,7 @@ const Gallery = () => {
       <Hero 
         title="Project Gallery"
         subtitle="Explore our successful irrigation installations across different sectors"
-        image="/src/assets/Home/65d56d8922e5ce44d0d07309ab1899ae.jpg"
+        image={heroImage}
       />
       <div className="py-12">
         <div className="container mx-auto px-4">

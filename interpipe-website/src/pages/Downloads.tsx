@@ -1,83 +1,98 @@
 import { Download, FileText, FileCheck } from 'lucide-react';
 import Hero from '../components/Hero';
 import pvcPipesImage from '../assets/Home/PVC PIpes.png';
+// Import PDF files
+import priceListPdf from '../assets/Downloads/Inter Pipe Price List 02.12.2024.pdf';
+import companyProfilePdf from '../assets/Downloads/InterPipe Company Profile.pdf.pdf';
 
 const downloads = [
   {
+    id: 'specifications',
     category: 'Product Specifications',
     items: [
       {
+        id: 'price-list',
         title: 'Inter Pipe Price List',
         description: 'Current price list for all our products',
         fileSize: '189 KB',
         type: 'PDF',
-        url: '/src/assets/Downloads/Inter Pipe Price List 02.12.2024.pdf',
+        url: priceListPdf,
       },
       {
+        id: 'company-profile',
         title: 'InterPipe Company Profile',
         description: 'Comprehensive overview of our company, products and services',
         fileSize: '2.5 MB',
         type: 'PDF',
-        url: '/src/assets/Downloads/InterPipe Company Profile.pdf.pdf',
+        url: companyProfilePdf,
       },
       {
+        id: 'pvc-specs',
         title: 'PVC Irrigation Pipes Technical Specs',
         description: 'Detailed specifications for our PVC irrigation pipe range',
         fileSize: '2.4 MB',
         type: 'PDF',
-        url: '/downloads/pvc-pipes-specs.pdf',
+        url: '#',
       },
       {
+        id: 'drip-manual',
         title: 'Drip Irrigation System Manual',
         description: 'Installation and maintenance guide for drip irrigation systems',
         fileSize: '1.8 MB',
         type: 'PDF',
-        url: '/downloads/drip-irrigation-manual.pdf',
+        url: '#',
       },
       {
+        id: 'fittings-catalog',
         title: 'Fittings Catalog',
         description: 'Complete catalog of available fittings and connectors',
         fileSize: '3.2 MB',
         type: 'PDF',
-        url: '/downloads/fittings-catalog.pdf',
+        url: '#',
       },
     ],
   },
   {
+    id: 'certifications',
     category: 'Certifications & Standards',
     items: [
       {
+        id: 'iso-cert',
         title: 'ISO 9001:2015 Certification',
         description: 'Quality management system certification',
         fileSize: '1.2 MB',
         type: 'PDF',
-        url: '/downloads/iso-certification.pdf',
+        url: '#',
       },
       {
+        id: 'safety-standards',
         title: 'Product Safety Standards',
         description: 'Compliance documentation for safety standards',
         fileSize: '980 KB',
         type: 'PDF',
-        url: '/downloads/safety-standards.pdf',
+        url: '#',
       },
     ],
   },
   {
+    id: 'guides',
     category: 'Installation Guides',
     items: [
       {
+        id: 'installation-guide',
         title: 'Basic Installation Guide',
         description: 'Step-by-step guide for basic pipe installation',
         fileSize: '1.5 MB',
         type: 'PDF',
-        url: '/downloads/installation-guide.pdf',
+        url: '#',
       },
       {
+        id: 'maintenance-manual',
         title: 'Maintenance Manual',
         description: 'Comprehensive maintenance procedures and schedules',
         fileSize: '2.1 MB',
         type: 'PDF',
-        url: '/downloads/maintenance-manual.pdf',
+        url: '#',
       },
     ],
   },
@@ -112,12 +127,12 @@ const Downloads = () => {
           {/* Downloads Grid */}
           <div className="space-y-12">
             {downloads.map((category) => (
-              <div key={category.category}>
+              <div key={category.id}>
                 <h2 className="text-2xl font-bold mb-6">{category.category}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {category.items.map((item) => (
                     <div
-                      key={item.title}
+                      key={item.id}
                       className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
                     >
                       <div className="flex items-start justify-between mb-4">
