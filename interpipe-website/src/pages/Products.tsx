@@ -4,6 +4,7 @@ import Hero from '../components/Hero';
 import pvcImage from '../assets/Products/PVC/edited 1 pvc.jpg';
 import polyImage from '../assets/Products/POLY PIPES/Untitled design (2).png';
 import sewerImage from '../assets/Products/SEWER/Sewer brown 2 (1).png';
+import productsHeroImage from '../assets/Home/IMG-20250224-WA0027.jpg';
 
 const products = [
   {
@@ -38,7 +39,7 @@ const Products = () => {
       <Hero 
         title="Our Products"
         subtitle="Discover our comprehensive range of irrigation solutions"
-        image="/src/assets/Home/IMG-20250224-WA0027.jpg"
+        image={productsHeroImage}
       />
       <div className="py-12">
         <div className="container mx-auto px-4">
