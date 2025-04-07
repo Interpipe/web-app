@@ -1,4 +1,4 @@
-import { ArrowRight, Droplet, Shield, Zap, Users, Award, Globe, Clock, Star } from 'lucide-react';
+import { ArrowRight, Droplet, Shield, Zap, Users, Award, Clock, Star } from 'lucide-react';
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
 
@@ -31,7 +31,7 @@ const features = [
 const stats = [
   { id: 'customers', number: "150+", label: "Happy Customers", icon: Users },
   { id: 'experience', number: "3+", label: "Years Experience", icon: Award },
-  { id: 'worktime', number: "Open", label: "Weekdays: 0730-1700hrs\nWeekends: 0730-1400hrs", icon: Clock }
+  { id: 'worktime', number: "Open", label: "Mon-Fri: 0730-1700hrs\nSaturday: 0730-1400hrs", icon: Clock }
 ];
 
 const featuredProducts = [
