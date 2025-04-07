@@ -20,7 +20,7 @@ const slides: Slide[] = [
   {
     id: 'slide1',
     title: "Committed to Flow",
-    subtitle: "Your trusted partner in irrigation solutions",
+    subtitle: "Your trusted partner in PVC and HDPE systems",
     image: slideImage1,
     link: "/products",
     linkText: "Explore Products"

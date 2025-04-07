@@ -9,16 +9,16 @@ import productsHeroImage from '../assets/Home/IMG-20250224-WA0027.jpg';
 const products = [
   {
     id: 1,
-    name: 'PVC Irrigation Pipes',
-    description: 'High-quality PVC pipes designed for efficient water distribution in agricultural and landscaping applications.',
-    features: ['UV resistant', 'Corrosion free', 'Easy installation'],
+    name: 'PVC Pipes',
+    description: 'High-quality PVC pipes manufactured for various applications including water supply, drainage, and industrial use.',
+    features: ['UV resistant', 'Corrosion free', 'Easy installation', 'Long-lasting durability'],
     sizes: ['1/2" to 12"', 'Custom sizes available'],
     image: pvcImage,
   },
   {
     id: 2,
-    name: 'Drip Irrigation Systems',
-    description: 'Complete drip irrigation solutions for precise water delivery to plants and crops.',
+    name: 'Irrigation Systems',
+    description: 'Complete irrigation solutions including PVC pipes and fittings for agricultural and landscaping applications.',
     features: ['Water efficient', 'Pressure compensated', 'Anti-clogging'],
     sizes: ['Various configurations', 'Customizable'],
     image: polyImage,
@@ -26,7 +26,7 @@ const products = [
   {
     id: 3,
     name: 'Fittings & Connectors',
-    description: 'Comprehensive range of fittings and connectors for seamless pipe connections.',
+    description: 'Comprehensive range of PVC fittings and connectors for seamless pipe connections.',
     features: ['Leak-proof', 'Durable', 'Easy to maintain'],
     sizes: ['Compatible with all pipe sizes', 'Standard and custom options'],
     image: sewerImage,
@@ -38,7 +38,7 @@ const Products = () => {
     <div>
       <Hero 
         title="Our Products"
-        subtitle="Discover our comprehensive range of irrigation solutions"
+        subtitle="Discover our comprehensive range of PVC pipe solutions"
         image={productsHeroImage}
       />
       <div className="py-12">

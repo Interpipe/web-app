@@ -14,10 +14,10 @@ import heroImage from '../assets/Home/65d56d8922e5ce44d0d07309ab1899ae.jpg';
 const galleryItems = [
   {
     id: 1,
-    title: 'PVC Irrigation System',
-    category: 'Agriculture',
+    title: 'PVC Water Supply System',
+    category: 'Water Supply',
     image: pvcImage,
-    description: 'High-quality PVC pipes for irrigation systems',
+    description: 'High-quality PVC pipes for water supply systems',
   },
   {
     id: 2,
@@ -28,35 +28,35 @@ const galleryItems = [
   },
   {
     id: 3,
-    title: 'Sewer Pipe Systems',
+    title: 'PVC Sewer Systems',
     category: 'Infrastructure',
     image: sewerImage,
-    description: 'Reliable sewer pipe solutions',
+    description: 'Reliable PVC sewer pipe solutions',
   },
   {
     id: 4,
-    title: 'Borehole Casings',
+    title: 'PVC Borehole Casings',
     category: 'Water Systems',
     image: boreholeImage,
-    description: 'Professional borehole casing installation',
+    description: 'Professional PVC borehole casing installation',
   },
   {
     id: 5,
     title: 'Blue PVC Pipes',
-    category: 'Agriculture',
+    category: 'Water Supply',
     image: blueImage,
-    description: 'Blue PVC pipes for agricultural applications',
+    description: 'Blue PVC pipes for water supply applications',
   },
   {
     id: 6,
-    title: 'Irrigation System Components',
+    title: 'PVC Pipe Components',
     category: 'Infrastructure',
     image: irrigationImage,
-    description: 'Complete irrigation system components',
+    description: 'Complete PVC pipe system components',
   },
 ];
 
-const categories = ['All', 'Agriculture', 'Industrial', 'Infrastructure', 'Water Systems'];
+const categories = ['All', 'Water Supply', 'Industrial', 'Infrastructure', 'Water Systems'];
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -70,7 +70,7 @@ const Gallery = () => {
     <div>
       <Hero 
         title="Project Gallery"
-        subtitle="Explore our successful irrigation installations across different sectors"
+        subtitle="Explore our successful PVC pipe installations across different sectors"
         image={heroImage}
       />
       <div className="py-12">

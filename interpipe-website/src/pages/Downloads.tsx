@@ -28,47 +28,25 @@ const downloads = [
       },
       {
         id: 'pvc-specs',
-        title: 'PVC Irrigation Pipes Technical Specs',
-        description: 'Detailed specifications for our PVC irrigation pipe range',
+        title: 'PVC Pipes Technical Specs',
+        description: 'Detailed specifications for our PVC pipe range',
         fileSize: '2.4 MB',
         type: 'PDF',
         url: '#',
       },
       {
-        id: 'drip-manual',
-        title: 'Drip Irrigation System Manual',
-        description: 'Installation and maintenance guide for drip irrigation systems',
+        id: 'irrigation-manual',
+        title: 'Irrigation System Manual',
+        description: 'Installation and maintenance guide for irrigation systems',
         fileSize: '1.8 MB',
         type: 'PDF',
         url: '#',
       },
       {
         id: 'fittings-catalog',
-        title: 'Fittings Catalog',
-        description: 'Complete catalog of available fittings and connectors',
+        title: 'PVC Fittings Catalog',
+        description: 'Complete catalog of available PVC fittings and connectors',
         fileSize: '3.2 MB',
-        type: 'PDF',
-        url: '#',
-      },
-    ],
-  },
-  {
-    id: 'certifications',
-    category: 'Certifications & Standards',
-    items: [
-      {
-        id: 'iso-cert',
-        title: 'ISO 9001:2015 Certification',
-        description: 'Quality management system certification',
-        fileSize: '1.2 MB',
-        type: 'PDF',
-        url: '#',
-      },
-      {
-        id: 'safety-standards',
-        title: 'Product Safety Standards',
-        description: 'Compliance documentation for safety standards',
-        fileSize: '980 KB',
         type: 'PDF',
         url: '#',
       },
@@ -80,16 +58,16 @@ const downloads = [
     items: [
       {
         id: 'installation-guide',
-        title: 'Basic Installation Guide',
-        description: 'Step-by-step guide for basic pipe installation',
+        title: 'PVC Pipe Installation Guide',
+        description: 'Step-by-step guide for PVC pipe installation',
         fileSize: '1.5 MB',
         type: 'PDF',
         url: '#',
       },
       {
         id: 'maintenance-manual',
-        title: 'Maintenance Manual',
-        description: 'Comprehensive maintenance procedures and schedules',
+        title: 'PVC Pipe Maintenance Manual',
+        description: 'Comprehensive maintenance procedures and schedules for PVC pipes',
         fileSize: '2.1 MB',
         type: 'PDF',
         url: '#',
@@ -103,7 +81,7 @@ const Downloads = () => {
     <div>
       <Hero 
         title="Downloads"
-        subtitle="Access our product specifications, catalogs, and documentation"
+        subtitle="Access our PVC pipe specifications, catalogs, and documentation"
         image={pvcPipesImage}
       />
       <div className="py-12">

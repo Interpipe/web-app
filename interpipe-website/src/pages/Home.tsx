@@ -12,48 +12,47 @@ const features = [
     id: 'quality',
     icon: Droplet,
     title: "Superior Quality",
-    description: "Our PVC pipes are manufactured using the highest quality materials, ensuring durability and long-lasting performance."
+    description: "Our PVC pipes are manufactured using the highest quality materials and advanced technology, ensuring durability and long-lasting performance."
   },
   {
     id: 'reliability',
     icon: Shield,
     title: "Reliable Performance",
-    description: "Built to withstand the toughest conditions, our pipes deliver consistent performance year after year."
+    description: "Built to withstand the toughest conditions, our PVC pipes deliver consistent performance year after year in various applications."
   },
   {
     id: 'efficiency',
     icon: Zap,
     title: "Energy Efficient",
-    description: "Optimized design ensures maximum water flow with minimal energy consumption, saving you money."
+    description: "Optimized design ensures maximum water flow with minimal energy consumption, making our PVC pipes an economical choice."
   }
 ];
 
 const stats = [
   { id: 'customers', number: "150+", label: "Happy Customers", icon: Users },
-  { id: 'experience', number: "5+", label: "Years Experience", icon: Award },
-  { id: 'countries', number: "3+", label: "Countries Served", icon: Globe },
-  { id: 'support', number: "24/7", label: "Support Available", icon: Clock }
+  { id: 'experience', number: "3+", label: "Years Experience", icon: Award },
+  { id: 'worktime', number: "Open", label: "Weekdays: 0730-1700hrs\nWeekends: 0730-1400hrs", icon: Clock }
 ];
 
 const featuredProducts = [
   {
     id: 'pvc',
-    name: "PVC Irrigation Pipes",
-    description: "High-quality PVC pipes for efficient water distribution",
+    name: "PVC Pipes",
+    description: "High-quality PVC pipes for various applications",
     image: pvcImage,
     link: "/products#pvc-pipes"
   },
   {
     id: 'hdpe',
     name: "HDPE Pipes",
-    description: "Durable polyethylene pipes for various applications",
+    description: "Durable polyethylene pipes for specialized applications",
     image: hdpeImage,
     link: "/products#poly-pipes"
   },
   {
     id: 'casings',
     name: "Borehole Casings",
-    description: "Reliable casings for water well applications",
+    description: "Reliable PVC casings for water well applications",
     image: boreholeImage,
     link: "/products#casings"
   }
@@ -86,12 +85,12 @@ const Home = () => {
       {/* Stats Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
             {stats.map((stat) => (
               <div key={stat.id} className="text-center">
                 <stat.icon className="w-12 h-12 text-sky-500 mx-auto mb-4" />
                 <div className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                <div className="text-gray-600">{stat.label}</div>
+                <div className="text-gray-600 whitespace-pre-line">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -197,9 +196,9 @@ const Home = () => {
       {/* CTA Section */}
       <section className="py-20 bg-indigo-600 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Irrigation System?</h2>
+          <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Water Systems?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Contact us today to learn more about our products and get expert advice for your specific needs.
+            Contact us today to learn more about our PVC pipe products and get expert advice for your specific needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

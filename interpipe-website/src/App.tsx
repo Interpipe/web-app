@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import WhatsAppFab from './components/WhatsAppFab';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Downloads from './pages/Downloads';
@@ -24,6 +25,7 @@ const App = () => {
           </Routes>
         </main>
         <Footer />
+        <WhatsAppFab />
       </div>
     </Router>
   );

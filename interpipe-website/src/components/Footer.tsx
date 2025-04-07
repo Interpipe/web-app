@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <h3 className="text-2xl font-bold text-sky-500 mb-4">Interpipe</h3>
             <p className="text-gray-400 mb-4">
-              Your trusted partner in irrigation solutions, committed to sustainable water management.
+              Manufacturer of PVC and HDPE systems. We are looking for distributors to join our sales force. Contact us today for more information!
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
