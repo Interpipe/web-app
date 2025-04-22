@@ -3,9 +3,9 @@ import { Filter } from 'lucide-react';
 import Hero from '../components/Hero';
 
 // Import images
-import pvcImage from '../assets/Products/PVC/Pvc edited 5.jpg';
+import pvcImage from '../assets/Products/PVC/65d56d8922e5ce44d0d07309ab1899ae.jpg';
 import hdpeImage from '../assets/Products/POLY PIPES/HDPE Re edited.jpg';
-import sewerImage from '../assets/Products/SEWER/Sewer brown (1).png';
+import sewerImage from '../assets/Products/SEWER/sewer-pipes.jpg';
 import boreholeImage from '../assets/Products/Borehole Casings/CASINGS.jpg';
 import blueImage from '../assets/Home/blue.jpg';
 import irrigationImage from '../assets/Home/18141aef4ce07193b2ce5f2fb7429047.jpg';

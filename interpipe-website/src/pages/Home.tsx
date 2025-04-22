@@ -1,11 +1,35 @@
-import { ArrowRight, Droplet, Shield, Zap, Users, Award, Clock, Star } from 'lucide-react';
+import { ArrowRight, Droplet, Shield, Zap, Users, Award, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 
 // Import product images
-import pvcImage from '../assets/Products/PVC/Pvc edited 5.jpg';
-import hdpeImage from '../assets/Products/POLY PIPES/HDPE Re edited.jpg';
+import pvcImage from '../assets/Products/PVC/65d56d8922e5ce44d0d07309ab1899ae.jpg';
+import hdpeImage from '../assets/Products/POLY PIPES/poly.png';
 import boreholeImage from '../assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg';
+import sewerImage from '../assets/Products/SEWER/sewer-pipes.jpg';
+import conduitImage from '../assets/Products/Conduits/Untitled design (3).jpg';
+
+// Import partner logos
+import jnmLogo from '../assets/Partners/j_n_m.png';
+import makBokanoLogo from '../assets/Partners/mak_bokano.png';
+import prevLogo from '../assets/Partners/prev.jpg';
+import primeIrrigationLogo from '../assets/Partners/prime_irrigation.png';
+import cityCouncilLogo from '../assets/Partners/city_council.png';
+import icpLogo from '../assets/Partners/icp.png';
+import macHomeLogo from '../assets/Partners/mac_home.webp';
+import liquiLogo from '../assets/Partners/liqui.jpg';
+
+const partnerImages = [
+  { id: 'jnm', name: 'J & M', logo: jnmLogo },
+  { id: 'mak_bokano', name: 'Mak Bokano', logo: makBokanoLogo },
+  { id: 'prev', name: 'Prev', logo: prevLogo },
+  { id: 'prime_irrigation', name: 'Prime Irrigation', logo: primeIrrigationLogo },
+  { id: 'city_council', name: 'City Council', logo: cityCouncilLogo },
+  { id: 'icp', name: 'ICP', logo: icpLogo },
+  { id: 'mac_home', name: 'Mac Home', logo: macHomeLogo },
+  { id: 'liqui', name: 'Liquitech', logo: liquiLogo },
+];
 
 const features = [
   {
@@ -37,24 +61,38 @@ const stats = [
 const featuredProducts = [
   {
     id: 'pvc',
-    name: "PVC Pipes",
-    description: "High-quality PVC pipes for various applications",
+    name: "PVC Pressure Pipes",
+    description: "High-quality PVC pipes for water distribution and irrigation systems",
     image: pvcImage,
     link: "/products#pvc-pipes"
   },
   {
     id: 'hdpe',
     name: "HDPE Pipes",
-    description: "Durable polyethylene pipes for specialized applications",
+    description: "Durable polyethylene pipes for specialized and demanding applications",
     image: hdpeImage,
     link: "/products#poly-pipes"
   },
   {
+    id: 'sewer',
+    name: "Sewer & Drainage Pipes",
+    description: "Reliable solutions for waste water management and drainage",
+    image: sewerImage,
+    link: "/products#sewer-pipes"
+  },
+  {
     id: 'casings',
     name: "Borehole Casings",
-    description: "Reliable PVC casings for water well applications",
+    description: "Quality PVC casings for water well and borehole applications",
     image: boreholeImage,
     link: "/products#casings"
+  },
+  {
+    id: 'conduits',
+    name: "Electrical Conduits",
+    description: "Safe and durable conduit systems for electrical installations",
+    image: conduitImage,
+    link: "/products#conduits"
   }
 ];
 
@@ -78,6 +116,63 @@ const testimonials = [
 ];
 
 const Home = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const visiblePartners = 3; // Number of partners visible at once
+  
+  // Products carousel state
+  const [currentProductIndex, setCurrentProductIndex] = useState(0);
+  const productsCarouselRef = useRef<HTMLDivElement>(null);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex + visiblePartners >= partnerImages.length 
+        ? 0 
+        : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 
+        ? Math.max(0, partnerImages.length - visiblePartners) 
+        : prevIndex - 1
+    );
+  };
+  
+  // Products carousel controls
+  const nextProduct = () => {
+    setCurrentProductIndex((prevIndex) => 
+      prevIndex + 1 >= featuredProducts.length 
+        ? 0 
+        : prevIndex + 1
+    );
+  };
+
+  const prevProduct = () => {
+    setCurrentProductIndex((prevIndex) => 
+      prevIndex === 0 
+        ? featuredProducts.length - 1 
+        : prevIndex - 1
+    );
+  };
+
+  // Auto-scroll effect for partners
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+  
+  // Auto-scroll effect for products
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextProduct();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [currentProductIndex]);
+
   return (
     <div>
       <HomeHero />
@@ -116,32 +211,115 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-24  pb-60 bg-gray-50 relative">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Featured Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
-              <Link key={product.id} to={product.link} className="group">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <div className="h-64 w-full overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                    <p className="text-gray-600 mb-4">{product.description}</p>
-                    <div className="text-sky-500 font-semibold flex items-center">
-                      Learn More
-                      <ArrowRight className="ml-2 w-4 h-4" />
+          <h2 className="text-3xl font-bold text-center mb-60 relative z-50">Featured Products</h2>
+          
+          <div className="relative max-w-6xl mx-auto px-16">
+            <div className="overflow-hidden">
+              <div 
+                ref={productsCarouselRef}
+                className="flex justify-center items-center pt-10"
+              >
+                {featuredProducts.map((product, index) => {
+                  // Calculate relative position
+                  const normalizedIndex = (index - currentProductIndex + featuredProducts.length) % featuredProducts.length;
+                  
+                  // Only show 3 items: previous, current, and next
+                  if (normalizedIndex > 2 && normalizedIndex < featuredProducts.length - 1) {
+                    return null;
+                  }
+                  
+                  let position = '';
+                  let transformScale = 1;
+                  let zIndex = 0;
+                  let opacity = 1;
+                  
+                  if (normalizedIndex === 0) {
+                    // Center item
+                    position = 'center';
+                    transformScale = 1;
+                    zIndex = 30;
+                    opacity = 1;
+                  } else if (normalizedIndex === 1 || normalizedIndex === featuredProducts.length - 1) {
+                    // Side items - make them smaller and further away
+                    position = normalizedIndex === 1 ? 'right' : 'left';
+                    transformScale = 0.65;
+                    zIndex = 20;
+                    opacity = 0.6;
+                  } else {
+                    // Hide other items
+                    return null;
+                  }
+                  
+                  const translateX = position === 'center' ? 0 : (position === 'left' ? -50 : 50) + '%';
+                  
+                  return (
+                    <div 
+                      key={product.id} 
+                      className="absolute transition-all duration-500 ease-in-out"
+                      style={{
+                        transform: `translateX(${translateX}) scale(${transformScale})`,
+                        zIndex,
+                        opacity,
+                        width: '50%',
+                      }}
+                    >
+                      <Link to={product.link} className="block group">
+                        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                          <div className="h-72 w-full overflow-hidden">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                          <div className="p-6">
+                            <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+                            <p className="text-gray-600 mb-4">{product.description}</p>
+                            <div className="text-sky-500 font-semibold flex items-center">
+                              Learn More
+                              <ArrowRight className="ml-2 w-4 h-4" />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
                     </div>
-                  </div>
-                </div>
-              </Link>
+                  );
+                })}
+              </div>
+            </div>
+            
+            <button 
+              onClick={prevProduct}
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-40"
+              aria-label="Previous product"
+            >
+              <ChevronLeft className="w-6 h-6 text-sky-500" />
+            </button>
+            
+            <button 
+              onClick={nextProduct}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-40" 
+              aria-label="Next product"
+            >
+              <ChevronRight className="w-6 h-6 text-sky-500" />
+            </button>
+          </div>
+          
+          <div className="flex justify-center mt-16">
+            {featuredProducts.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentProductIndex(idx)}
+                className={`mx-1 w-3 h-3 rounded-full ${
+                  currentProductIndex === idx ? 'bg-sky-500' : 'bg-gray-300'
+                }`}
+                aria-label={`Go to product ${idx + 1}`}
+              />
             ))}
           </div>
+          
           <div className="text-center mt-12">
             <Link
               to="/products"
@@ -149,6 +327,69 @@ const Home = () => {
             >
               View All Products
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Carousel Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Our Customers</h2>
+          
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div 
+                ref={carouselRef}
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-${currentIndex * (100 / visiblePartners)}%)` }}
+              >
+                {partnerImages.map((partner) => (
+                  <div 
+                    key={partner.id} 
+                    className="min-w-[33.333%] px-4 flex-shrink-0"
+                  >
+                    <div className="bg-white p-6 rounded-lg shadow-md h-40 flex items-center justify-center">
+                      <img 
+                        src={partner.logo} 
+                        alt={partner.name}
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <button 
+              onClick={prevSlide}
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 -ml-4"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-6 h-6 text-sky-500" />
+            </button>
+            
+            <button 
+              onClick={nextSlide}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 -mr-4" 
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-6 h-6 text-sky-500" />
+            </button>
+          </div>
+          
+          <div className="flex justify-center mt-6">
+            {Array.from({ length: Math.ceil(partnerImages.length / visiblePartners) }).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx * visiblePartners)}
+                className={`mx-1 w-3 h-3 rounded-full ${
+                  Math.floor(currentIndex / visiblePartners) === idx
+                    ? 'bg-sky-500'
+                    : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>

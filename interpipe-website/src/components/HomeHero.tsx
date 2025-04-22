@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Import slide images
-import slideImage1 from '../assets/Home/blue.jpg';
-import slideImage2 from '../assets/Home/polyy.jpg';
-import slideImage3 from '../assets/Home/IMG-20250402-WA0008.jpg';
+// Import slide images from hero_slides directory
+import slideImage1 from '../assets/Home/hero_slides/PVC.png';
+import slideImage2 from '../assets/Home/hero_slides/POly edited 1.png';
+import slideImage3 from '../assets/Home/hero_slides/Sewer white.png';
+import slideImage4 from '../assets/Home/hero_slides/Borehole Casings.jpg';
+import slideImage5 from '../assets/Home/hero_slides/conduits.png';
 
 interface Slide {
   id: string;
@@ -19,27 +21,43 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 'slide1',
-    title: "Committed to Flow",
-    subtitle: "Your trusted partner in PVC and HDPE systems",
+    title: "PVC Pressure Systems",
+    subtitle: "Your trusted partner in PVC  Pipes and fittings",
     image: slideImage1,
-    link: "/products",
-    linkText: "Explore Products"
+    link: "/products#pvc-pipes",
+    linkText: "Explore PVC Products"
   },
   {
     id: 'slide2',
-    title: "Sustainable Irrigation",
-    subtitle: "Efficient water management for a greener future",
+    title: "HDPE Pipes and fittings",
+    subtitle: " lightweight, flexible and corrosion resistant. Perfect for water supply, irrigation and industrial applications",
     image: slideImage2,
-    link: "/gallery",
-    linkText: "View Projects"
+    link: "/products#poly-pipes",
+    linkText: "View HDPE Solutions"
   },
   {
     id: 'slide3',
-    title: "Expert Support",
-    subtitle: "Professional guidance for your irrigation needs",
+    title: "Borehole Casings",
+    subtitle: "Designed for water well and boreholapplicationse ",
+    image: slideImage4,
+    link: "/products#casings",
+    linkText: "View Borehole Products"
+  },
+  {
+    id: 'slide4',
+    title: "Drainage and Sewer Pipes",
+    subtitle: "Manage water flow, prevent flooding and support effective waste management",
     image: slideImage3,
-    link: "/contact",
-    linkText: "Contact Us"
+    link: "/products#sewer-pipes",
+    linkText: "Discover Sewer Systems"
+  },
+  {
+    id: 'slide5',
+    title: "Electrical Conduit pipes",
+    subtitle: "Safely protect electrical wiring with durable and compliant solutions",
+    image: slideImage5,
+    link: "/products#conduits",
+    linkText: "Explore Conduit Range"
   }
 ];
 

@@ -1,23 +1,22 @@
 import { Download, FileText, FileCheck } from 'lucide-react';
 import Hero from '../components/Hero';
 import pvcPipesImage from '../assets/Home/PVC PIpes.png';
+
 // Import PDF files
 import priceListPdf from '../assets/Downloads/Inter Pipe Price List 02.12.2024.pdf';
 import companyProfilePdf from '../assets/Downloads/InterPipe Company Profile.pdf.pdf';
+import pvcUStandardsPdf from '../assets/Downloads/STANDARDS FOR PVC-U Pipes .pdf';
+import pvcMStandardsPdf from '../assets/Downloads/STANDARDS FOR PVC-M Pipes.pdf';
+import electricalConduitsPdf from '../assets/Downloads/Standards Value for Electrical Conduits.pdf';
+import valuePEPipesPdf from '../assets/Downloads/Standards for Value PE Pipes.pdf';
+import pePipesPdf from '../assets/Downloads/STANDARDS FOR PE Pipes .pdf';
+import sdrSewerPipesPdf from '../assets/Downloads/STANDARDS FOR SDR (Standard Dimensional Ratio) Sewer Drain Pipes .pdf';
 
 const downloads = [
   {
-    id: 'specifications',
-    category: 'Product Specifications',
+    id: 'company-docs',
+    category: 'Company Documents',
     items: [
-      {
-        id: 'price-list',
-        title: 'Inter Pipe Price List',
-        description: 'Current price list for all our products',
-        fileSize: '189 KB',
-        type: 'PDF',
-        url: priceListPdf,
-      },
       {
         id: 'company-profile',
         title: 'InterPipe Company Profile',
@@ -27,53 +26,69 @@ const downloads = [
         url: companyProfilePdf,
       },
       {
-        id: 'pvc-specs',
-        title: 'PVC Pipes Technical Specs',
-        description: 'Detailed specifications for our PVC pipe range',
-        fileSize: '2.4 MB',
+        id: 'price-list',
+        title: 'Inter Pipe Price List (Dec 2024)',
+        description: 'Current price list for all our products',
+        fileSize: '189 KB',
         type: 'PDF',
-        url: '#',
-      },
-      {
-        id: 'irrigation-manual',
-        title: 'Irrigation System Manual',
-        description: 'Installation and maintenance guide for irrigation systems',
-        fileSize: '1.8 MB',
-        type: 'PDF',
-        url: '#',
-      },
-      {
-        id: 'fittings-catalog',
-        title: 'PVC Fittings Catalog',
-        description: 'Complete catalog of available PVC fittings and connectors',
-        fileSize: '3.2 MB',
-        type: 'PDF',
-        url: '#',
-      },
+        url: priceListPdf,
+      }
     ],
   },
   {
-    id: 'guides',
-    category: 'Installation Guides',
+    id: 'standards',
+    category: 'Product Standards & Specifications',
     items: [
       {
-        id: 'installation-guide',
-        title: 'PVC Pipe Installation Guide',
-        description: 'Step-by-step guide for PVC pipe installation',
-        fileSize: '1.5 MB',
+        id: 'pvc-u-standards',
+        title: 'STANDARDS FOR PVC-U Pipes',
+        description: 'Technical standards and specifications for PVC-U pipes',
+        fileSize: '105 KB',
         type: 'PDF',
-        url: '#',
+        url: pvcUStandardsPdf,
       },
       {
-        id: 'maintenance-manual',
-        title: 'PVC Pipe Maintenance Manual',
-        description: 'Comprehensive maintenance procedures and schedules for PVC pipes',
-        fileSize: '2.1 MB',
+        id: 'pvc-m-standards',
+        title: 'STANDARDS FOR PVC-M Pipes',
+        description: 'Technical standards and specifications for PVC-M pipes',
+        fileSize: '108 KB',
         type: 'PDF',
-        url: '#',
+        url: pvcMStandardsPdf,
       },
+      {
+        id: 'pe-standards',
+        title: 'STANDARDS FOR PE Pipes',
+        description: 'Technical standards and specifications for Polyethylene pipes',
+        fileSize: '90 KB',
+        type: 'PDF',
+        url: pePipesPdf,
+      },
+      {
+        id: 'value-pe-standards',
+        title: 'Standards for Value PE Pipes',
+        description: 'Technical standards and specifications for Value PE pipes',
+        fileSize: '84 KB',
+        type: 'PDF',
+        url: valuePEPipesPdf,
+      },
+      {
+        id: 'sdr-sewer-standards',
+        title: 'STANDARDS FOR SDR Sewer Drain Pipes',
+        description: 'Technical standards for Standard Dimensional Ratio sewer and drain pipes',
+        fileSize: '81 KB',
+        type: 'PDF',
+        url: sdrSewerPipesPdf,
+      },
+      {
+        id: 'electrical-conduits-standards',
+        title: 'Standards Value for Electrical Conduits',
+        description: 'Technical standards and specifications for electrical conduit pipes',
+        fileSize: '64 KB',
+        type: 'PDF',
+        url: electricalConduitsPdf,
+      }
     ],
-  },
+  }
 ];
 
 const Downloads = () => {
@@ -81,7 +96,7 @@ const Downloads = () => {
     <div>
       <Hero 
         title="Downloads"
-        subtitle="Access our PVC pipe specifications, catalogs, and documentation"
+        subtitle="Access our product specifications, standards, and documentation"
         image={pvcPipesImage}
       />
       <div className="py-12">
