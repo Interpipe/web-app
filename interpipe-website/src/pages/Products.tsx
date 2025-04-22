@@ -26,7 +26,7 @@ const products = [
       'Easy installation and maintenance',
       'Cost-effective solution'
     ],
-    sizes: ['15mm to 400mm', 'Class C, D, and E (6, 9, 12, and 16 bar)'],
+    sizes: ['25mm to 315mm', 'Class C, D, and E (6, 9, 12, and 16 bar)'],
     image: pvcImage,
     specPdf: pvcUStandardsPdf,
     pdfName: 'STANDARDS FOR PVC-U Pipes'
@@ -42,7 +42,7 @@ const products = [
       'Chemical and corrosion resistant',
       'Suitable for trenchless installation'
     ],
-    sizes: ['20mm to 315mm', 'Various pressure ratings available'],
+    sizes: ['25mm to 75mm', 'Various pressure ratings available'],
     image: polyImage,
     specPdf: pePipesPdf,
     pdfName: 'STANDARDS FOR PE Pipes'
@@ -58,7 +58,7 @@ const products = [
       'Simple installation with push-fit connections',
       'Long service life'
     ],
-    sizes: ['110mm to 400mm', 'SDR 34 and SDR 41'],
+    sizes: ['50mm to 315mm', 'SDR 34 and SDR 41'],
     image: sewerImage,
     specPdf: sdrSewerPipesPdf,
     pdfName: 'STANDARDS FOR SDR Sewer Drain Pipes'
@@ -74,7 +74,7 @@ const products = [
       'Available with threaded connections',
       'UV stabilized material'
     ],
-    sizes: ['110mm to 200mm', 'Class B, C, and D'],
+    sizes: ['110mm to 180mm', 'Class B, C, and D'],
     image: boreholeImage,
     specPdf: pvcUStandardsPdf,
     pdfName: 'STANDARDS FOR PVC-U Pipes'
@@ -90,7 +90,7 @@ const products = [
       'Smooth interior for easy wire pulling',
       'Complete range of fittings available'
     ],
-    sizes: ['20mm to 50mm', 'Heavy and light gauge options'],
+    sizes: ['19mm to 25mm', 'Heavy and light gauge options'],
     image: conduitImage,
     specPdf: electricalConduitsPdf,
     pdfName: 'Standards Value for Electrical Conduits'

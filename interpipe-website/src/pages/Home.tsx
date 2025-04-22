@@ -211,9 +211,9 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-24  pb-60 bg-gray-50 relative">
+      <section className="py-24 pb-60 bg-gray-50 relative">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-60 relative z-50">Featured Products</h2>
+          <h2 className="text-3xl font-bold text-center mb-60 relative">Featured Products</h2>
           
           <div className="relative max-w-6xl mx-auto px-16">
             <div className="overflow-hidden">

@@ -1,5 +1,5 @@
 # Redirect root domain to www
 https://interpipe.co.zw/* https://www.interpipe.co.zw/:splat 301!
 
-# Catch-all for SPA (if needed)
-# /* /index.html 200
+# Catch-all for SPA routing
+/* /index.html 200 
