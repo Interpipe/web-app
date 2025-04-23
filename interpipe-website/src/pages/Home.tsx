@@ -5,10 +5,10 @@ import { useEffect, useRef, useState } from 'react';
 
 // Import product images
 import pvcImage from '../assets/Products/PVC/65d56d8922e5ce44d0d07309ab1899ae.jpg';
-import hdpeImage from '../assets/Products/POLY PIPES/poly.png';
+import hdpeImage from '../assets/Products/Poly Pipes/poly.png';
 import boreholeImage from '../assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg';
-import sewerImage from '../assets/Products/SEWER/sewer-pipes.jpg';
-import conduitImage from '../assets/Products/Conduits/Untitled design.png';
+import sewerImage from '../assets/Products/Sewer/sewer-pipes.jpg';
+import conduitImage from '../assets/Products/Conduits/Untitled design (3).jpg';
 
 // Import partner logos
 import jnmLogo from '../assets/Partners/j_n_m.png';
