@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Import slide images from hero_slides directory
-import slideImage1 from '../assets/Home/hero_slides/pvc.png';
-import slideImage2 from '../assets/Home/hero_slides/hde.png';
-import slideImage3 from '../assets/Home/hero_slides/sewer-pipes.jpg';
-import slideImage4 from '../assets/Home/hero_slides/borehole-casings.jpg';
-import slideImage5 from '../assets/Home/hero_slides/conduit.jpg';
+// Use image paths (no static imports)
+const imagePaths = {
+  pvc: new URL('../assets/Home/hero_slides/pvc.png', import.meta.url).href,
+  hde: new URL('../assets/Home/hero_slides/hde.png', import.meta.url).href,
+  sewer: new URL('../assets/Home/hero_slides/sewer-pipes.jpg', import.meta.url).href,
+  borehole: new URL('../assets/Home/hero_slides/borehole-casings.jpg', import.meta.url).href,
+  conduit: new URL('../assets/Home/hero_slides/conduit.jpg', import.meta.url).href,
+};
 
 interface Slide {
   id: string;
@@ -22,16 +24,16 @@ const slides: Slide[] = [
   {
     id: 'slide1',
     title: "PVC Pressure Systems",
-    subtitle: "Your trusted partner in PVC  Pipes and fittings",
-    image: slideImage1,
+    subtitle: "Your trusted partner in PVC Pipes and fittings",
+    image: imagePaths.pvc,
     link: "/products#pvc-pipes",
     linkText: "Explore PVC Products"
   },
   {
     id: 'slide2',
     title: "HDPE Pipes and fittings",
-    subtitle: " lightweight, flexible and corrosion resistant. Perfect for water supply, irrigation and industrial applications",
-    image: slideImage2,
+    subtitle: "Lightweight, flexible and corrosion resistant. Perfect for water supply, irrigation and industrial applications",
+    image: imagePaths.hde,
     link: "/products#poly-pipes",
     linkText: "View HDPE Solutions"
   },
@@ -39,7 +41,7 @@ const slides: Slide[] = [
     id: 'slide3',
     title: "Borehole Casings",
     subtitle: "Designed for water well and borehole applications",
-    image: slideImage4,
+    image: imagePaths.borehole,
     link: "/products#casings",
     linkText: "View Borehole Products"
   },
@@ -47,7 +49,7 @@ const slides: Slide[] = [
     id: 'slide4',
     title: "Drainage and Sewer Pipes",
     subtitle: "Manage water flow, prevent flooding and support effective waste management",
-    image: slideImage3,
+    image: imagePaths.sewer,
     link: "/products#sewer-pipes",
     linkText: "Discover Sewer Systems"
   },
@@ -55,7 +57,7 @@ const slides: Slide[] = [
     id: 'slide5',
     title: "Electrical Conduit pipes",
     subtitle: "Safely protect electrical wiring with durable and compliant solutions",
-    image: slideImage5,
+    image: imagePaths.conduit,
     link: "/products#conduits",
     linkText: "Explore Conduit Range"
   }
