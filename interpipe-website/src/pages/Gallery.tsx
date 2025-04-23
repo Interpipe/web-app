@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Hero from '../components/Hero';
 
-// Removed old image imports
+// Import with the correct filename that exists in the assets directory
 import heroImage from '../assets/Home/PVC PIpes.png';
 
 // Define product categories and their images
@@ -60,15 +60,43 @@ const Gallery = () => {
   // Get image filenames for the selected category (index access is now safe)
   const filteredItems = productCategories[selectedCategory] ?? [];
 
-  // Pre-import all product images using Vite's import.meta.glob
-  // This ensures images are properly processed during build
-  const productImages = import.meta.glob('../assets/Products/**/*', { eager: true });
+  // Pre-import specific directory images to ensure they're included in the build
+  const boreholeImages = import.meta.glob('../assets/Products/BoreholeCasings/*', { eager: true, as: 'url' });
+  const polyImages = import.meta.glob('../assets/Products/PolyPipes/*', { eager: true, as: 'url' });
+  const conduitImages = import.meta.glob('../assets/Products/Conduits/*', { eager: true, as: 'url' });
+  const sewerImages = import.meta.glob('../assets/Products/Sewer/*', { eager: true, as: 'url' });
+  const pvcImages = import.meta.glob('../assets/Products/PVC/*', { eager: true, as: 'url' });
+  
+  // Map category to its image collection
+  const categoryImageCollections = {
+    BoreholeCasings: boreholeImages,
+    PolyPipes: polyImages,
+    Conduits: conduitImages,
+    Sewer: sewerImages,
+    PVC: pvcImages
+  };
   
   const getImagePath = (category: ProductCategory, filename: string) => {
-    const imagePath = `../assets/Products/${category}/${filename}`;
-    // Access images through the glob result map, which contains resolved URLs
-    const resolvedImage = productImages[imagePath] as { default: string } ?? null;
-    return resolvedImage?.default ?? '';
+    try {
+      // Get the appropriate image collection for this category
+      const imageCollection = categoryImageCollections[category];
+      const imagePath = `../assets/Products/${category}/${filename}`;
+      
+      // With as: 'url', the image is directly the string URL
+      const asset = imageCollection[imagePath];
+      
+      if (asset) {
+        return asset; // Now a direct URL string
+      }
+      
+      // Fallback: Log an error and try URL approach (works in dev)
+      console.warn(`Image not found in preloaded collection: ${imagePath}`);
+      return new URL(imagePath, import.meta.url).href;
+    } catch (error) {
+      console.error(`Failed to load image: ${category}/${filename}`, error);
+      // Return empty string or placeholder
+      return '';
+    }
   };
 
   return (

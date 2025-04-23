@@ -2,20 +2,32 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Import specific images with reliable static imports
-import pvcImage from '../assets/Home/hero_slides/pvc.png';
-import hdeImage from '../assets/Home/hero_slides/hde.png';
-import sewerImage from '../assets/Home/hero_slides/sewer-pipes.jpg';
-import boreholeImage from '../assets/Home/hero_slides/borehole-casings.jpg';
-import conduitImage from '../assets/Home/hero_slides/conduit.jpg';
+// Import hero slide images using Vite's asset handling
+// This ensures proper asset processing in production builds
+const slideImages = import.meta.glob('../assets/Home/hero_slides/*', { eager: true, as: 'url' });
+
+// Helper function to get image URL with fallback
+const getImageUrl = (path: string): string => {
+  const url = slideImages[path];
+  if (url) return url;
+  
+  // Fallback for development or if image not found
+  console.warn(`Image not found in preloaded assets: ${path}`);
+  try {
+    return new URL(path, import.meta.url).href;
+  } catch (e) {
+    console.error(`Failed to load image: ${path}`, e);
+    return '';
+  }
+};
 
 // Create an object with all image paths
 const imagePaths = {
-  pvc: pvcImage,
-  hde: hdeImage,
-  sewer: sewerImage,
-  borehole: boreholeImage,
-  conduit: conduitImage,
+  pvc: getImageUrl('../assets/Home/hero_slides/pvc.png'),
+  hde: getImageUrl('../assets/Home/hero_slides/hde.png'),
+  sewer: getImageUrl('../assets/Home/hero_slides/sewer-pipes.jpg'),
+  borehole: getImageUrl('../assets/Home/hero_slides/borehole-casings.jpg'),
+  conduit: getImageUrl('../assets/Home/hero_slides/conduit.jpg'),
 };
 
 interface Slide {
