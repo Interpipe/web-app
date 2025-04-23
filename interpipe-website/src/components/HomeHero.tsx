@@ -2,13 +2,20 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Use image paths (no static imports)
+// Import specific images with reliable static imports
+import pvcImage from '../assets/Home/hero_slides/pvc.png';
+import hdeImage from '../assets/Home/hero_slides/hde.png';
+import sewerImage from '../assets/Home/hero_slides/sewer-pipes.jpg';
+import boreholeImage from '../assets/Home/hero_slides/borehole-casings.jpg';
+import conduitImage from '../assets/Home/hero_slides/conduit.jpg';
+
+// Create an object with all image paths
 const imagePaths = {
-  pvc: new URL('../assets/Home/hero_slides/pvc.png', import.meta.url).href,
-  hde: new URL('../assets/Home/hero_slides/hde.png', import.meta.url).href,
-  sewer: new URL('../assets/Home/hero_slides/sewer-pipes.jpg', import.meta.url).href,
-  borehole: new URL('../assets/Home/hero_slides/borehole-casings.jpg', import.meta.url).href,
-  conduit: new URL('../assets/Home/hero_slides/conduit.jpg', import.meta.url).href,
+  pvc: pvcImage,
+  hde: hdeImage,
+  sewer: sewerImage,
+  borehole: boreholeImage,
+  conduit: conduitImage,
 };
 
 interface Slide {

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Hero from '../components/Hero';
 
-// Removed old image imports
-import heroImage from '../assets/Home/PVC PIpes.png';
+// Import hero image with correct filename
+import heroImage from '../assets/Home/PVC Pipes.png';
 
 // Define product categories and their images
 const productCategories = {
@@ -60,11 +60,15 @@ const Gallery = () => {
   // Get image filenames for the selected category (index access is now safe)
   const filteredItems = productCategories[selectedCategory] ?? [];
 
-  // Use Vite's new URL pattern for dynamic asset handling
+  // Pre-import all product images using Vite's import.meta.glob
+  // This ensures images are properly processed during build
+  const productImages = import.meta.glob('../assets/Products/**/*', { eager: true });
+  
   const getImagePath = (category: ProductCategory, filename: string) => {
-    // Use the category exactly as it appears in productCategories
     const imagePath = `../assets/Products/${category}/${filename}`;
-    return new URL(imagePath, import.meta.url).href;
+    // Access images through the glob result map, which contains resolved URLs
+    const resolvedImage = productImages[imagePath] as { default: string } ?? null;
+    return resolvedImage?.default ?? '';
   };
 
   return (
