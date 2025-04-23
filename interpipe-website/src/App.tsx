@@ -6,7 +6,6 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import Downloads from './pages/Downloads';
 import Gallery from './pages/Gallery';
-import Testimonials from './pages/Testimonials';
 import Contact from './pages/Contact';
 
 const App = () => {
@@ -20,7 +19,6 @@ const App = () => {
             <Route path="/products" element={<Products />} />
             <Route path="/downloads" element={<Downloads />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>

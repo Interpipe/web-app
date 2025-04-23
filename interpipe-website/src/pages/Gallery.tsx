@@ -1,83 +1,74 @@
 import { useState } from 'react';
-import { Filter } from 'lucide-react';
 import Hero from '../components/Hero';
 
-// Import images
-import pvcImage from '../assets/Products/PVC/65d56d8922e5ce44d0d07309ab1899ae.jpg';
-import hdpeImage from '../assets/Products/POLY PIPES/HDPE Re edited.jpg';
-import sewerImage from '../assets/Products/SEWER/sewer-pipes.jpg';
-import boreholeImage from '../assets/Products/Borehole Casings/CASINGS.jpg';
-import blueImage from '../assets/Home/blue.jpg';
-import irrigationImage from '../assets/Home/18141aef4ce07193b2ce5f2fb7429047.jpg';
+// Removed old image imports
 import heroImage from '../assets/Home/65d56d8922e5ce44d0d07309ab1899ae.jpg';
 
-const galleryItems = [
-  {
-    id: 1,
-    title: 'PVC Water Supply System',
-    category: 'Water Supply',
-    image: pvcImage,
-    description: 'High-quality PVC pipes for water supply systems',
-  },
-  {
-    id: 2,
-    title: 'HDPE Pipe Installation',
-    category: 'Industrial',
-    image: hdpeImage,
-    description: 'Durable HDPE pipes for industrial applications',
-  },
-  {
-    id: 3,
-    title: 'PVC Sewer Systems',
-    category: 'Infrastructure',
-    image: sewerImage,
-    description: 'Reliable PVC sewer pipe solutions',
-  },
-  {
-    id: 4,
-    title: 'PVC Borehole Casings',
-    category: 'Water Systems',
-    image: boreholeImage,
-    description: 'Professional PVC borehole casing installation',
-  },
-  {
-    id: 5,
-    title: 'Blue PVC Pipes',
-    category: 'Water Supply',
-    image: blueImage,
-    description: 'Blue PVC pipes for water supply applications',
-  },
-  {
-    id: 6,
-    title: 'PVC Pipe Components',
-    category: 'Infrastructure',
-    image: irrigationImage,
-    description: 'Complete PVC pipe system components',
-  },
-];
+// Define product categories and their images
+const productCategories = {
+  'Borehole Casings': [
+    'Borehole Casings Edit 1.jpg',
+    'BOrehole Casings.png',
+    'PVC.jpg',
+    'cassings 3.jpg',
+    'CASINGS 2.jpg',
+    'CASINGS.jpg',
+  ],
+  'Poly Pipes': [
+    'polyy 1.jpg',
+    'polyy.jpg',
+    'Untitled design (2).png',
+    'POly edited 1.png',
+    'poly.png',
+  ],
+  Conduits: [
+    'Copy of Untitled design (3).jpg',
+    'Copy of Untitled design.png',
+    'Untitled design (3).jpg',
+    'Untitled design.png',
+  ],
+  Sewer: [
+    'IMG-20250402-WA0012.jpg',
+    'IMG-20250402-WA0009.jpg',
+    'IMG-20250227-WA0010.jpg',
+    'IMG-20250227-WA0011.jpg',
+    'sewer-pipes.jpg',
+  ],
+  PVC: ['65d56d8922e5ce44d0d07309ab1899ae.jpg', 'hh.jpg'],
+} as const; // Add 'as const' for stricter typing of keys
 
-const categories = ['All', 'Water Supply', 'Industrial', 'Infrastructure', 'Water Systems'];
+// Removed old galleryItems array
+
+type ProductCategory = keyof typeof productCategories;
+
+const categories = Object.keys(productCategories) as ProductCategory[];
 
 const Gallery = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  // Explicitly type the state using ProductCategory and assert initial value is not null/undefined
+  const [selectedCategory, setSelectedCategory] = useState<ProductCategory>(categories[0]!);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null); // Store full image path
 
-  const filteredItems = selectedCategory === 'All'
-    ? galleryItems
-    : galleryItems.filter(item => item.category === selectedCategory);
+  // Get image filenames for the selected category (index access is now safe)
+  const filteredItems = productCategories[selectedCategory] ?? [];
+
+  // Use Vite's new URL pattern for dynamic asset handling
+  const getImagePath = (category: ProductCategory, filename: string) => {
+    const imagePath = `../assets/Products/${category}/${filename}`;
+    return new URL(imagePath, import.meta.url).href;
+  };
 
   return (
     <div>
       <Hero 
-        title="Project Gallery"
-        subtitle="Explore our successful PVC pipe installations across different sectors"
+        title="Product Gallery" // Updated title
+        subtitle="Explore images of our products across different categories" // Updated subtitle
         image={heroImage}
       />
       <div className="py-12">
         <div className="container mx-auto px-4">
           {/* Category Filter */}
           <div className="flex justify-center mb-12">
-            <div className="inline-flex rounded-lg border border-gray-200 p-1">
+            <div className="inline-flex rounded-lg border border-gray-200 p-1 flex-wrap justify-center">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -95,61 +86,52 @@ const Gallery = () => {
           </div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => setSelectedImage(item.id)}
-              >
-                <div className="aspect-w-16 aspect-h-9 bg-gray-200">
-                  {/* Display actual image */}
-                  <img 
-                    src={item.image}
-                    alt={item.title}
-                    className="object-cover w-full h-48"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.description}</p>
-                  <div className="mt-2 flex items-center text-sm text-gray-500">
-                    <Filter className="mr-1" size={16} />
-                    <span>{item.category}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {filteredItems.map((filename: string) => {
+              const imagePath = getImagePath(selectedCategory, filename);
+              return (
+                <div
+                  key={imagePath} // Use imagePath as key
+                  className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group"
+                  onClick={() => setSelectedImage(imagePath)} // Pass full path to modal
+                >
+                  <div className="w-80 h-64 bg-gray-200 relative overflow-hidden">
+                    <img 
+                      src={imagePath}
+                      alt={`${selectedCategory} - ${filename}`}
+                      className="object-cover w-full h-full absolute top-0 left-0 group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
+                  {/* Removed title, description, and category labels */}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Image Modal */}
           {selectedImage && (
-            <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg max-w-4xl w-full mx-4">
-                <div className="p-4">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-semibold">
-                      {galleryItems.find(item => item.id === selectedImage)?.title}
-                    </h3>
-                    <button
-                      onClick={() => setSelectedImage(null)}
-                      className="text-gray-500 hover:text-gray-700"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                  <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg mb-4">
-                    {/* Display actual image */}
+            <div className="fixed inset-0 bg-black bg-opacity-85 flex items-center justify-center z-50 p-4" onClick={() => setSelectedImage(null)}>
+              {/* Added close on backdrop click */}
+              <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] w-auto h-auto relative overflow-hidden" onClick={(e) => e.stopPropagation()}> {/* Prevent closing when clicking inside modal */}
+                {/* Close button */}
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="absolute top-2 right-2 text-white bg-black bg-opacity-50 rounded-full p-1.5 hover:bg-opacity-75 transition-colors z-10"
+                  aria-label="Close image viewer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+                {/* Image container */}
+                <div className="flex items-center justify-center h-full">
+                    {/* Display actual image - Removed title and description */}
                     <img 
-                      src={galleryItems.find(item => item.id === selectedImage)?.image}
-                      alt={galleryItems.find(item => item.id === selectedImage)?.title}
-                      className="object-cover w-full h-full rounded-lg"
+                      src={selectedImage}
+                      alt="Enlarged product image"
+                      className="object-contain max-w-full max-h-[85vh] rounded-lg"
                     />
                   </div>
-                  <p className="text-gray-600">
-                    {galleryItems.find(item => item.id === selectedImage)?.description}
-                  </p>
-                </div>
               </div>
             </div>
           )}

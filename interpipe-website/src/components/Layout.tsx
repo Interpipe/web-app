@@ -12,7 +12,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     { path: '/downloads', label: 'Downloads' },
     { path: '/gallery', label: 'Gallery' },
     { path: '/blog', label: 'Blog' },
-    { path: '/testimonials', label: 'Testimonials' },
     { path: '/contact', label: 'Contact Us' },
   ];
 

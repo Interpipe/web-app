@@ -2,7 +2,7 @@ import { Download } from 'lucide-react';
 import Hero from '../components/Hero';
 // Import actual images
 import pvcImage from '../assets/Products/PVC/65d56d8922e5ce44d0d07309ab1899ae.jpg';
-import polyImage from '../assets/Products/POLY PIPES/HDPE Re edited.jpg';
+import polyImage from '../assets/Products/Poly Pipes/POly edited 1.png';
 import sewerImage from '../assets/Products/SEWER/sewer-pipes.jpg';
 import boreholeImage from '../assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg';
 import conduitImage from '../assets/Products/Conduits/Untitled design (3).jpg';
@@ -26,7 +26,7 @@ const products = [
       'Easy installation and maintenance',
       'Cost-effective solution'
     ],
-    sizes: ['25mm to 315mm', 'Class C, D, and E (6, 9, 12, and 16 bar)'],
+    sizes: ['25mm to 315mm'],
     image: pvcImage,
     specPdf: pvcUStandardsPdf,
     pdfName: 'STANDARDS FOR PVC-U Pipes'
@@ -42,7 +42,7 @@ const products = [
       'Chemical and corrosion resistant',
       'Suitable for trenchless installation'
     ],
-    sizes: ['25mm to 75mm', 'Various pressure ratings available'],
+    sizes: ['25mm to 75mm'],
     image: polyImage,
     specPdf: pePipesPdf,
     pdfName: 'STANDARDS FOR PE Pipes'
@@ -58,7 +58,7 @@ const products = [
       'Simple installation with push-fit connections',
       'Long service life'
     ],
-    sizes: ['50mm to 315mm', 'SDR 34 and SDR 41'],
+    sizes: ['50mm to 315mm'],
     image: sewerImage,
     specPdf: sdrSewerPipesPdf,
     pdfName: 'STANDARDS FOR SDR Sewer Drain Pipes'
@@ -74,7 +74,7 @@ const products = [
       'Available with threaded connections',
       'UV stabilized material'
     ],
-    sizes: ['110mm to 180mm', 'Class B, C, and D'],
+    sizes: ['110mm to 180mm'],
     image: boreholeImage,
     specPdf: pvcUStandardsPdf,
     pdfName: 'STANDARDS FOR PVC-U Pipes'
@@ -90,7 +90,7 @@ const products = [
       'Smooth interior for easy wire pulling',
       'Complete range of fittings available'
     ],
-    sizes: ['19mm to 25mm', 'Heavy and light gauge options'],
+    sizes: ['19mm to 25mm'],
     image: conduitImage,
     specPdf: electricalConduitsPdf,
     pdfName: 'Standards Value for Electrical Conduits'

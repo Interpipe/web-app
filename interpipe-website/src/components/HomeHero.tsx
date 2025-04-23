@@ -38,7 +38,7 @@ const slides: Slide[] = [
   {
     id: 'slide3',
     title: "Borehole Casings",
-    subtitle: "Designed for water well and boreholapplicationse ",
+    subtitle: "Designed for water well and borehole applications",
     image: slideImage4,
     link: "/products#casings",
     linkText: "View Borehole Products"

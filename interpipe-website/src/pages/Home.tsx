@@ -1,4 +1,4 @@
-import { ArrowRight, Droplet, Shield, Zap, Users, Award, Clock, Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Droplet, Shield, Zap, Users, Award, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
@@ -8,7 +8,7 @@ import pvcImage from '../assets/Products/PVC/65d56d8922e5ce44d0d07309ab1899ae.jp
 import hdpeImage from '../assets/Products/POLY PIPES/poly.png';
 import boreholeImage from '../assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg';
 import sewerImage from '../assets/Products/SEWER/sewer-pipes.jpg';
-import conduitImage from '../assets/Products/Conduits/Untitled design (3).jpg';
+import conduitImage from '../assets/Products/Conduits/Untitled design.png';
 
 // Import partner logos
 import jnmLogo from '../assets/Partners/j_n_m.png';
@@ -93,25 +93,6 @@ const featuredProducts = [
     description: "Safe and durable conduit systems for electrical installations",
     image: conduitImage,
     link: "/products#conduits"
-  }
-];
-
-const testimonials = [
-  {
-    id: 'icp',
-    quote: "Interpipe has been a great blessing to our business. They do not just meet our requirements but go beyond in providing the best possible products, support, pricing and technical assistance.",
-    author: "Intergrated Construction Projects",
-    role: "Company",
-    company: "ICP",
-    category: "Construction"
-  },
-  {
-    id: 'liquitech',
-    quote: "Working with Interpipe has been a delight on all of our sites and projects. They always had everything we needed and provided excellent service in terms of material supply.",
-    author: "LIQUITECH",
-    role: "Company",
-    company: "LIQUITECH",
-    category: "Industry"
   }
 ];
 
@@ -390,46 +371,6 @@ const Home = () => {
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Preview */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="bg-white p-6 rounded-lg shadow-md">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center mr-4">
-                    <span className="text-sky-500 font-bold">
-                      {testimonial.company.split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <div>
-                    <div className="font-semibold">{testimonial.author}</div>
-                    <div className="text-gray-600 text-sm">
-                      {testimonial.role} | {testimonial.category}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-600 italic">"{testimonial.quote}"</p>
-                <div className="flex text-yellow-400 mt-4">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={`${testimonial.id}-star-${star}`} className="w-5 h-5 fill-current" />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Link
-              to="/testimonials"
-              className="inline-block bg-white text-sky-500 px-8 py-3 rounded-lg font-semibold border-2 border-sky-500 hover:bg-sky-50 transition-colors"
-            >
-              Read More Testimonials
-            </Link>
           </div>
         </div>
       </section>

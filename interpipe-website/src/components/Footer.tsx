@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, Globe } from 'lucide-react';
+import { Facebook, Mail, Phone, MapPin, Globe } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -13,10 +13,10 @@ const Footer = () => {
               Manufacturer of PVC and HDPE systems.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
+              <a href="https://www.facebook.com/share/1ANPDa5jqC/" className="text-gray-400 hover:text-sky-500 transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
+              {/* <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
                 <Twitter size={20} />
               </a>
               <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
@@ -24,7 +24,7 @@ const Footer = () => {
               </a>
               <a href="#" className="text-gray-400 hover:text-sky-500 transition-colors">
                 <Linkedin size={20} />
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -57,11 +57,6 @@ const Footer = () => {
               <li>
                 <Link to="/contact" className="text-gray-400 hover:text-sky-500 transition-colors">
                   Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link to="/testimonials" className="text-gray-400 hover:text-sky-500 transition-colors">
-                  Testimonials
                 </Link>
               </li>
               <li>

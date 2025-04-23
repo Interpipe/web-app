@@ -47,9 +47,6 @@ const Header = () => {
             <Link to="/gallery" className="text-gray-600 hover:text-sky-500 transition-colors">
               Gallery
             </Link>
-            <Link to="/testimonials" className="text-gray-600 hover:text-sky-500 transition-colors">
-              Testimonials
-            </Link>
             <Link
               to="/contact"
               className="bg-sky-500 text-white px-6 py-2 rounded-lg hover:bg-sky-600 transition-colors"

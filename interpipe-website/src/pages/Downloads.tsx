@@ -1,4 +1,4 @@
-import { Download, FileText, FileCheck } from 'lucide-react';
+import { Download, FileCheck } from 'lucide-react';
 import Hero from '../components/Hero';
 import pvcPipesImage from '../assets/Home/PVC PIpes.png';
 
@@ -41,7 +41,7 @@ const downloads = [
     items: [
       {
         id: 'pvc-u-standards',
-        title: 'STANDARDS FOR PVC-U Pipes',
+        title: 'Standards for PVC-U Pipes',
         description: 'Technical standards and specifications for PVC-U pipes',
         fileSize: '105 KB',
         type: 'PDF',
@@ -49,7 +49,7 @@ const downloads = [
       },
       {
         id: 'pvc-m-standards',
-        title: 'STANDARDS FOR PVC-M Pipes',
+        title: 'Standards for PVC-M Pipes',
         description: 'Technical standards and specifications for PVC-M pipes',
         fileSize: '108 KB',
         type: 'PDF',
@@ -57,7 +57,7 @@ const downloads = [
       },
       {
         id: 'pe-standards',
-        title: 'STANDARDS FOR PE Pipes',
+        title: 'Standards for PE Pipes',
         description: 'Technical standards and specifications for Polyethylene pipes',
         fileSize: '90 KB',
         type: 'PDF',
@@ -73,7 +73,7 @@ const downloads = [
       },
       {
         id: 'sdr-sewer-standards',
-        title: 'STANDARDS FOR SDR Sewer Drain Pipes',
+        title: 'Standards for SDR Sewer Drain Pipes',
         description: 'Technical standards for Standard Dimensional Ratio sewer and drain pipes',
         fileSize: '81 KB',
         type: 'PDF',
@@ -103,20 +103,6 @@ const Downloads = () => {
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold text-center mb-12">Downloads</h1>
           
-          {/* Search and Filter Section */}
-          <div className="mb-12">
-            <div className="max-w-2xl mx-auto">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search downloads..."
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
-                />
-                <FileText className="absolute right-3 top-2.5 text-gray-400" size={20} />
-              </div>
-            </div>
-          </div>
-
           {/* Downloads Grid */}
           <div className="space-y-12">
             {downloads.map((category) => (
