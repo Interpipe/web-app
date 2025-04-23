@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Hero from '../components/Hero';
 
-// Import hero image with correct filename
-import heroImage from '../assets/Home/PVC Pipes.png';
+// Removed old image imports
+import heroImage from '../assets/Home/PVC PIpes.png';
 
 // Define product categories and their images
 const productCategories = {
