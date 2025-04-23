@@ -1,11 +1,11 @@
 import { Download } from 'lucide-react';
 import Hero from '../components/Hero';
 // Import actual images
-import pvcImage from '../assets/Products/PVC/65d56d8922e5ce44d0d07309ab1899ae.jpg';
-import polyImage from '../assets/Products/Poly Pipes/poly.png';
-import sewerImage from '../assets/Products/Sewer/sewer-pipes.jpg';
-import boreholeImage from '../assets/Products/Borehole Casings/Borehole Casings Edit 1.jpg';
-import conduitImage from '../assets/Products/Conduits/Untitled design (3).jpg';
+import pvcImage from '../assets/Products/PVC/pvc-1.jpg';
+import polyImage from '../assets/Products/PolyPipes/Poly-pipes-2.png';
+import sewerImage from '../assets/Products/Sewer/sewer-pipes-1.jpg';
+import boreholeImage from '../assets/Products/BoreholeCasings/Borehole-Casings-1.jpg';
+import conduitImage from '../assets/Products/Conduits/Conduits-1.jpg';
 import productsHeroImage from '../assets/Home/hero_slides/PVC.png';
 
 // Import PDF specifications

@@ -3,11 +3,11 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Import slide images from hero_slides directory
-import slideImage1 from '../assets/Home/hero_slides/PVC.png';
-import slideImage2 from '../assets/Home/hero_slides/POly edited 1.png';
-import slideImage3 from '../assets/Home/hero_slides/Sewer white.png';
-import slideImage4 from '../assets/Home/hero_slides/Borehole Casings.jpg';
-import slideImage5 from '../assets/Home/hero_slides/conduits.png';
+import slideImage1 from '../assets/Home/hero_slides/pvc.png';
+import slideImage2 from '../assets/Home/hero_slides/hde.png';
+import slideImage3 from '../assets/Home/hero_slides/sewer-pipes.jpg';
+import slideImage4 from '../assets/Home/hero_slides/borehole-casings.jpg';
+import slideImage5 from '../assets/Home/hero_slides/conduit.jpg';
 
 interface Slide {
   id: string;

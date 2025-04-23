@@ -2,39 +2,39 @@ import { useState } from 'react';
 import Hero from '../components/Hero';
 
 // Removed old image imports
-import heroImage from '../assets/Home/65d56d8922e5ce44d0d07309ab1899ae.jpg';
+import heroImage from '../assets/Home/PVC PIpes.png';
 
 // Define product categories and their images
 const productCategories = {
-  'Borehole Casings': [
-    'Borehole Casings Edit 1.jpg',
-    'BOrehole Casings.png',
-    'PVC.jpg',
-    'cassings 3.jpg',
-    'CASINGS 2.jpg',
-    'CASINGS.jpg',
+  BoreholeCasings: [
+    'Borehole-Casings-1.jpg',
+    'Borehole-Casings-2.png',
+    'Borehole-Casings-3.jpg',
+    'Borehole-Casings-4.jpg',
+    'Borehole-Casings-5.jpg',
+    'Borehole-Casings-6.jpg',
   ],
-  'Poly Pipes': [
-    'polyy 1.jpg',
-    'polyy.jpg',
-    'Untitled design (2).png',
-    'POly edited 1.png',
-    'poly.png',
+  PolyPipes: [
+    'Poly-pipes-1.png',
+    'Poly-pipes-2.png',
+    'Poly-pipes-3.jpg',
+    'Poly-pipes-4.jpg',
+    'Poly-pipes-5.png',
   ],
   Conduits: [
-    'Copy of Untitled design (3).jpg',
-    'Copy of Untitled design.png',
-    'Untitled design (3).jpg',
-    'Untitled design.png',
+    'Conduits-1.jpg',
+    'Conduits-2.png',
+    'Conduits-3.jpg',
+    'Conduits-4.png',
   ],
   Sewer: [
-    'IMG-20250402-WA0012.jpg',
-    'IMG-20250402-WA0009.jpg',
-    'IMG-20250227-WA0010.jpg',
-    'IMG-20250227-WA0011.jpg',
-    'sewer-pipes.jpg',
+    'sewer-pipes-1.jpg',
+    'sewer-pipes-2.jpg',
+    'sewer-pipes-3.jpg',
+    'sewer-pipes-4.jpg',
+    'sewer-pipes-5.jpg',
   ],
-  PVC: ['65d56d8922e5ce44d0d07309ab1899ae.jpg', 'hh.jpg'],
+  PVC: ['pvc-1.jpg', 'pvc-2.jpg'],
 } as const; // Add 'as const' for stricter typing of keys
 
 // Removed old galleryItems array
@@ -42,6 +42,15 @@ const productCategories = {
 type ProductCategory = keyof typeof productCategories;
 
 const categories = Object.keys(productCategories) as ProductCategory[];
+
+// Mapping for display names
+const displayNames: Record<ProductCategory, string> = {
+  BoreholeCasings: 'Borehole Casings',
+  PolyPipes: 'Poly Pipes',
+  Conduits: 'Conduits',
+  Sewer: 'Sewer',
+  PVC: 'PVC',
+};
 
 const Gallery = () => {
   // Explicitly type the state using ProductCategory and assert initial value is not null/undefined
@@ -53,6 +62,7 @@ const Gallery = () => {
 
   // Use Vite's new URL pattern for dynamic asset handling
   const getImagePath = (category: ProductCategory, filename: string) => {
+    // Use the category exactly as it appears in productCategories
     const imagePath = `../assets/Products/${category}/${filename}`;
     return new URL(imagePath, import.meta.url).href;
   };
@@ -79,7 +89,7 @@ const Gallery = () => {
                       : 'text-gray-600 hover:text-sky-500'
                   }`}
                 >
-                  {category}
+                  {displayNames[category]}
                 </button>
               ))}
             </div>
