@@ -23,6 +23,7 @@ const getImageUrl = (path: string): string => {
 
 // Create an object with all image paths
 const imagePaths = {
+  pvcX: getImageUrl('../assets/Home/hero_slides/pvc.png'),
   pvc: getImageUrl('../assets/Home/hero_slides/pvc.png'),
   hde: getImageUrl('../assets/Home/hero_slides/hde.png'),
   sewer: getImageUrl('../assets/Home/hero_slides/sewer-pipes.jpg'),

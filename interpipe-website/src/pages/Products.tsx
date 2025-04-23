@@ -6,7 +6,7 @@ import polyImage from '../assets/Products/PolyPipes/Poly-pipes-2.png';
 import sewerImage from '../assets/Products/Sewer/sewer-pipes-1.jpg';
 import boreholeImage from '../assets/Products/BoreholeCasings/Borehole-Casings-1.jpg';
 import conduitImage from '../assets/Products/Conduits/Conduits-1.jpg';
-import productsHeroImage from '../assets/Home/hero_slides/PVC.png';
+import productsHeroImage from '../assets/Products/BoreholeCasings/Borehole-Casings-1.jpg';
 
 // Import PDF specifications
 import pvcUStandardsPdf from '../assets/Downloads/STANDARDS FOR PVC-U Pipes .pdf';

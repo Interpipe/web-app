@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Hero from '../components/Hero';
 
 // Import with the correct filename that exists in the assets directory
-import heroImage from '../assets/Home/PVC PIpes.png';
+import heroImage from '../assets/Home/polyy.jpg';
 
 // Define product categories and their images
 const productCategories = {
