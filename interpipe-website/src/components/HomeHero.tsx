@@ -25,7 +25,7 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 'slide1',
-    title: "PVC Pressure Systems",
+    title: "PVC Pressure Pipes",
     subtitle: "Your trusted partner in PVC Pipes and fittings",
     image: imagePaths.pvc,
     link: "/products#pvc-pipes",

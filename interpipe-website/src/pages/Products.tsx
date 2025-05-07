@@ -9,10 +9,8 @@ import conduitImage from '../assets/Products/Conduits/Conduits-1.jpg';
 import productsHeroImage from '../assets/Products/BoreholeCasings/Borehole-Casings-1.jpg';
 
 // Import PDF specifications
-import pvcUStandardsPdf from '../assets/Downloads/STANDARDS FOR PVC-U Pipes .pdf';
-import pePipesPdf from '../assets/Downloads/STANDARDS FOR PE Pipes .pdf';
-import sdrSewerPipesPdf from '../assets/Downloads/STANDARDS FOR SDR (Standard Dimensional Ratio) Sewer Drain Pipes .pdf';
-import electricalConduitsPdf from '../assets/Downloads/Standards Value for Electrical Conduits.pdf';
+import productListPdf from '../assets/Downloads/Interpipe Product List.pdf';
+import companyProfilePdf from '../assets/Downloads/InterPipe Company Profile.pdf.pdf';
 
 const products = [
   {
@@ -28,8 +26,8 @@ const products = [
     ],
     sizes: ['25mm to 315mm'],
     image: pvcImage,
-    specPdf: pvcUStandardsPdf,
-    pdfName: 'STANDARDS FOR PVC-U Pipes'
+    specPdf: productListPdf,
+    pdfName: 'Interpipe Product List'
   },
   {
     id: 'poly-pipes',
@@ -44,8 +42,8 @@ const products = [
     ],
     sizes: ['25mm to 75mm'],
     image: polyImage,
-    specPdf: pePipesPdf,
-    pdfName: 'STANDARDS FOR PE Pipes'
+    specPdf: productListPdf,
+    pdfName: 'Interpipe Product List'
   },
   {
     id: 'sewer-pipes',
@@ -60,8 +58,8 @@ const products = [
     ],
     sizes: ['50mm to 315mm'],
     image: sewerImage,
-    specPdf: sdrSewerPipesPdf,
-    pdfName: 'STANDARDS FOR SDR Sewer Drain Pipes'
+    specPdf: productListPdf,
+    pdfName: 'Interpipe Product List'
   },
   {
     id: 'casings',
@@ -76,8 +74,8 @@ const products = [
     ],
     sizes: ['110mm to 180mm'],
     image: boreholeImage,
-    specPdf: pvcUStandardsPdf,
-    pdfName: 'STANDARDS FOR PVC-U Pipes'
+    specPdf: productListPdf,
+    pdfName: 'Interpipe Product List'
   },
   {
     id: 'conduits',
@@ -92,8 +90,8 @@ const products = [
     ],
     sizes: ['19mm to 25mm'],
     image: conduitImage,
-    specPdf: electricalConduitsPdf,
-    pdfName: 'Standards Value for Electrical Conduits'
+    specPdf: productListPdf,
+    pdfName: 'Interpipe Product List'
   }
 ];
 

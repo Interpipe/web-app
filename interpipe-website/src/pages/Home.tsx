@@ -55,7 +55,7 @@ const features = [
 const stats = [
   { id: 'customers', number: "150+", label: "Happy Customers", icon: Users },
   { id: 'experience', number: "3+", label: "Years Experience", icon: Award },
-  { id: 'worktime', number: "Open", label: "Mon-Fri: 0730-1700hrs\nSaturday: 0730-1400hrs", icon: Clock }
+  { id: 'worktime', number: "Open", label: "Mon-Fri: 0730-1630hrs\nSaturday: 0800-1400hrs", icon: Clock }
 ];
 
 const featuredProducts = [
