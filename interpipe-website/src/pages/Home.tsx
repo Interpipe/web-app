@@ -1,102 +1,11 @@
-import { ArrowRight, Droplet, Shield, Zap, Users, Award, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-
-// Import product images
-import pvcImage from '../assets/Products/PVC/pvc-1.jpg';
-import hdpeImage from '../assets/Products/PolyPipes/Poly-pipes-2.png';
-import boreholeImage from '../assets/Products/BoreholeCasings/Borehole-Casings-1.jpg';
-import sewerImage from '../assets/Products/Sewer/sewer-pipes-1.jpg';
-import conduitImage from '../assets/Products/Conduits/Conduits-1.jpg';
-
-// Import partner logos
-import jnmLogo from '../assets/Partners/j_n_m.png';
-import makBokanoLogo from '../assets/Partners/mak_bokano.png';
-import prevLogo from '../assets/Partners/prev.jpg';
-import primeIrrigationLogo from '../assets/Partners/prime_irrigation.png';
-import cityCouncilLogo from '../assets/Partners/city_council.png';
-import icpLogo from '../assets/Partners/icp.png';
-import macHomeLogo from '../assets/Partners/mac_home.webp';
-import liquiLogo from '../assets/Partners/liqui.jpg';
-
-const partnerImages = [
-  { id: 'jnm', name: 'J & M', logo: jnmLogo },
-  { id: 'mak_bokano', name: 'Mak Bokano', logo: makBokanoLogo },
-  { id: 'prev', name: 'Prev', logo: prevLogo },
-  { id: 'prime_irrigation', name: 'Prime Irrigation', logo: primeIrrigationLogo },
-  { id: 'city_council', name: 'City Council', logo: cityCouncilLogo },
-  { id: 'icp', name: 'ICP', logo: icpLogo },
-  { id: 'mac_home', name: 'Mac Home', logo: macHomeLogo },
-  { id: 'liqui', name: 'Liquitech', logo: liquiLogo },
-];
-
-const features = [
-  {
-    id: 'quality',
-    icon: Droplet,
-    title: "Superior Quality",
-    description: "Our PVC pipes are manufactured using the highest quality materials and advanced technology, ensuring durability and long-lasting performance."
-  },
-  {
-    id: 'reliability',
-    icon: Shield,
-    title: "Reliable Performance",
-    description: "Built to withstand the toughest conditions, our PVC pipes deliver consistent performance year after year in various applications."
-  },
-  {
-    id: 'efficiency',
-    icon: Zap,
-    title: "Energy Efficient",
-    description: "Optimized design ensures maximum water flow with minimal energy consumption, making our PVC pipes an economical choice."
-  }
-];
-
-const stats = [
-  { id: 'customers', number: "150+", label: "Happy Customers", icon: Users },
-  { id: 'experience', number: "3+", label: "Years Experience", icon: Award },
-  { id: 'worktime', number: "Open", label: "Mon-Fri: 0730-1630hrs\nSaturday: 0800-1400hrs", icon: Clock }
-];
-
-const featuredProducts = [
-  {
-    id: 'pvc',
-    name: "PVC Pressure Pipes",
-    description: "High-quality PVC pipes for water distribution and irrigation systems",
-    image: pvcImage,
-    link: "/products#pvc-pipes"
-  },
-  {
-    id: 'hdpe',
-    name: "HDPE Pipes",
-    description: "Durable polyethylene pipes for specialized and demanding applications",
-    image: hdpeImage,
-    link: "/products#poly-pipes"
-  },
-  {
-    id: 'sewer',
-    name: "Sewer & Drainage Pipes",
-    description: "Reliable solutions for waste water management and drainage",
-    image: sewerImage,
-    link: "/products#sewer-pipes"
-  },
-  {
-    id: 'casings',
-    name: "Borehole Casings",
-    description: "Quality PVC casings for water well and borehole applications",
-    image: boreholeImage,
-    link: "/products#casings"
-  },
-  {
-    id: 'conduits',
-    name: "Electrical Conduits",
-    description: "Safe and durable conduit systems for electrical installations",
-    image: conduitImage,
-    link: "/products#conduits"
-  }
-];
+import { useStore } from '../store/useStore';
 
 const Home = () => {
+  const { partners, features, stats, featuredProducts, isLoading, error, fetchData } = useStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const visiblePartners = 3; // Number of partners visible at once
@@ -105,9 +14,14 @@ const Home = () => {
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
   const productsCarouselRef = useRef<HTMLDivElement>(null);
 
+  // Fetch data on component mount
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => 
-      prevIndex + visiblePartners >= partnerImages.length 
+      prevIndex + visiblePartners >= partners.length 
         ? 0 
         : prevIndex + 1
     );
@@ -116,7 +30,7 @@ const Home = () => {
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 
-        ? Math.max(0, partnerImages.length - visiblePartners) 
+        ? Math.max(0, partners.length - visiblePartners) 
         : prevIndex - 1
     );
   };
@@ -153,6 +67,33 @@ const Home = () => {
     }, 5000);
     return () => clearInterval(interval);
   }, [currentProductIndex]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-500">Error: {error}</p>
+          <button 
+            onClick={fetchData}
+            className="mt-4 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -248,19 +189,19 @@ const Home = () => {
                     >
                       <Link to={product.link} className="block group">
                         <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                          <div className="h-72 w-full overflow-hidden">
-                            <img
-                              src={product.image}
+                          <div className="aspect-w-16 aspect-h-9">
+                            <img 
+                              src={product.image} 
                               alt={product.name}
-                              className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                              className="object-cover w-full h-64"
                             />
                           </div>
                           <div className="p-6">
                             <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                             <p className="text-gray-600 mb-4">{product.description}</p>
-                            <div className="text-sky-500 font-semibold flex items-center">
+                            <div className="flex items-center text-sky-500 group-hover:text-sky-600">
                               Learn More
-                              <ArrowRight className="ml-2 w-4 h-4" />
+                              <ArrowRight className="ml-2" size={20} />
                             </div>
                           </div>
                         </div>
@@ -271,43 +212,21 @@ const Home = () => {
               </div>
             </div>
             
-            <button 
+            {/* Navigation Buttons */}
+            <button
               onClick={prevProduct}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-40"
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-50"
               aria-label="Previous product"
             >
-              <ChevronLeft className="w-6 h-6 text-sky-500" />
+              <ChevronLeft size={24} />
             </button>
-            
-            <button 
+            <button
               onClick={nextProduct}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-md z-40" 
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-gray-50"
               aria-label="Next product"
             >
-              <ChevronRight className="w-6 h-6 text-sky-500" />
+              <ChevronRight size={24} />
             </button>
-          </div>
-          
-          <div className="flex justify-center mt-16">
-            {featuredProducts.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentProductIndex(idx)}
-                className={`mx-1 w-3 h-3 rounded-full ${
-                  currentProductIndex === idx ? 'bg-sky-500' : 'bg-gray-300'
-                }`}
-                aria-label={`Go to product ${idx + 1}`}
-              />
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link
-              to="/products"
-              className="inline-block bg-sky-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-sky-600 transition-colors"
-            >
-              View All Products
-            </Link>
           </div>
         </div>
       </section>
@@ -324,7 +243,7 @@ const Home = () => {
                 className="flex transition-transform duration-300 ease-in-out"
                 style={{ transform: `translateX(-${currentIndex * (100 / visiblePartners)}%)` }}
               >
-                {partnerImages.map((partner) => (
+                {partners.map((partner) => (
                   <div 
                     key={partner.id} 
                     className="min-w-[33.333%] px-4 flex-shrink-0"
@@ -359,7 +278,7 @@ const Home = () => {
           </div>
           
           <div className="flex justify-center mt-6">
-            {Array.from({ length: Math.ceil(partnerImages.length / visiblePartners) }).map((_, idx) => (
+            {Array.from({ length: Math.ceil(partners.length / visiblePartners) }).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx * visiblePartners)}
