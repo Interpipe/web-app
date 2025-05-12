@@ -12,9 +12,20 @@ import {
   Alert,
   Autocomplete,
   DialogContentText,
+  Paper,
+  Grid,
+  IconButton,
+  useTheme,
+  alpha,
 } from '@mui/material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Add as AddIcon, Description as DescriptionIcon } from '@mui/icons-material';
+import { 
+  Add as AddIcon, 
+  Description as DescriptionIcon, 
+  Close as CloseIcon,
+  CloudDownload as CloudDownloadIcon,
+  Visibility as VisibilityIcon,
+} from '@mui/icons-material';
 import DataTable from '../components/DataTable';
 import FileUpload from '../components/FileUpload';
 import {
@@ -65,6 +76,9 @@ export default function DownloadsPage() {
   const [error, setError] = useState<string | null>(null);
   const [newCategory, setNewCategory] = useState('');
   const [showNewCategoryDialog, setShowNewCategoryDialog] = useState(false);
+  const [detailViewOpen, setDetailViewOpen] = useState(false);
+  const [detailItem, setDetailItem] = useState<DownloadItem | null>(null);
+  const theme = useTheme();
   const queryClient = useQueryClient();
 
   const { data: downloadItems = [], isLoading: isLoadingDownloads } = useQuery({
@@ -218,6 +232,29 @@ export default function DownloadsPage() {
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
   };
 
+  const handleViewDetails = (id: string) => {
+    const item = downloadItems.find((item) => item.id === id) ?? null;
+    if (item) {
+      setDetailItem(item);
+      setDetailViewOpen(true);
+    }
+  };
+
+  const handleCloseDetailView = () => {
+    setDetailViewOpen(false);
+    setDetailItem(null);
+  };
+
+  const downloadFile = (url: string, filename: string) => {
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (isLoadingDownloads || isLoadingCategories) {
     return <Typography>Loading...</Typography>;
   }
@@ -240,7 +277,126 @@ export default function DownloadsPage() {
         data={downloadItems}
         onEdit={(id) => handleOpen(downloadItems.find((item) => item.id === id))}
         onDelete={handleDelete}
+        onViewDetails={handleViewDetails}
+        title="Available Downloads"
       />
+
+      <Dialog 
+        open={detailViewOpen} 
+        onClose={handleCloseDetailView}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          borderBottom: `1px solid ${theme.palette.divider}`,
+          pb: 2
+        }}>
+          <Typography variant="h6">Download Details</Typography>
+          <IconButton onClick={handleCloseDetailView} size="small">
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent sx={{ py: 3 }}>
+          {detailItem && (
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom>{detailItem.title}</Typography>
+                <Chip 
+                  label={detailItem.category} 
+                  color="primary" 
+                  sx={{ mb: 2 }}
+                />
+              </Grid>
+              
+              <Grid item xs={12}>
+                <Typography variant="body1" paragraph>
+                  {detailItem.description}
+                </Typography>
+              </Grid>
+              
+              <Grid item xs={12}>
+                <Paper 
+                  elevation={0} 
+                  sx={{ 
+                    p: 3, 
+                    backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                    borderRadius: 2,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <DescriptionIcon 
+                      sx={{ 
+                        fontSize: 40,
+                        color: theme.palette.primary.main
+                      }} 
+                    />
+                    <Box>
+                      <Typography variant="subtitle1">
+                        {detailItem.fileUrl.split('/').pop() ?? 'File'}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Size: {detailItem.fileSize}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Button 
+                      variant="outlined"
+                      startIcon={<VisibilityIcon />}
+                      onClick={() => window.open(detailItem.fileUrl, '_blank')}
+                    >
+                      Preview
+                    </Button>
+                    <Button 
+                      variant="contained"
+                      startIcon={<CloudDownloadIcon />}
+                      onClick={() => 
+                        downloadFile(
+                          detailItem.fileUrl, 
+                          detailItem.fileUrl.split('/').pop() ?? 'download'
+                        )
+                      }
+                    >
+                      Download
+                    </Button>
+                  </Box>
+                </Paper>
+              </Grid>
+              
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mt: 2 }}>
+                  <Button 
+                    onClick={() => {
+                      handleCloseDetailView();
+                      handleOpen(detailItem);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button 
+                    variant="outlined" 
+                    color="error"
+                    onClick={() => {
+                      if (window.confirm('Are you sure you want to delete this item?')) {
+                        handleDelete(detailItem.id);
+                        handleCloseDetailView();
+                      }
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <form onSubmit={handleSubmit}>

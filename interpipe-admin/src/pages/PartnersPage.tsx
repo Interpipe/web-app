@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Add as AddIcon } from '@mui/icons-material';
-import DataTable from '../components/DataTable';
+import ThumbnailGrid from '../components/ThumbnailGrid';
 import FileUpload from '../components/FileUpload';
 import {
   getPartners,
@@ -20,26 +20,6 @@ import {
   deletePartner,
 } from '../services/api';
 import type { Partner } from '../types';
-
-const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'logo', label: 'Logo', minWidth: 100,
-    format: (value: string) => (
-      <Box
-        component="img"
-        src={value}
-        alt="Partner logo"
-        sx={{
-          width: 100,
-          height: 60,
-          objectFit: 'contain',
-          borderRadius: 1,
-        }}
-      />
-    ),
-  },
-  { id: 'order', label: 'Order', minWidth: 100 },
-];
 
 export default function PartnersPage() {
   const [open, setOpen] = useState(false);
@@ -142,11 +122,14 @@ export default function PartnersPage() {
         </Button>
       </Box>
 
-      <DataTable
-        columns={columns}
-        data={partners}
+      <ThumbnailGrid
+        items={partners}
+        imageKey="logo"
+        titleKey="name"
+        imageHeight={120}
         onEdit={(id) => handleOpen(partners.find((item) => item.id === id))}
         onDelete={handleDelete}
+        cardWidth={300}
       />
 
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>

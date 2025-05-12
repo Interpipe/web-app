@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Add as AddIcon } from '@mui/icons-material';
-import DataTable from '../components/DataTable';
+import ThumbnailGrid from '../components/ThumbnailGrid';
 import FileUpload from '../components/FileUpload';
 import {
   getGalleryItems,
@@ -25,29 +25,12 @@ import {
 } from '../services/api';
 import type { GalleryItem, Category } from '../types';
 
-const columns = [
-  { id: 'title', label: 'Title', minWidth: 170 },
-  { id: 'description', label: 'Description', minWidth: 200 },
-  { id: 'category', label: 'Category', minWidth: 100 },
-  {
-    id: 'imageUrl',
-    label: 'Image',
-    minWidth: 100,
-    format: (value: string) => (
-      <Box
-        component="img"
-        src={value}
-        alt="Gallery item"
-        sx={{
-          width: 100,
-          height: 60,
-          objectFit: 'cover',
-          borderRadius: 1,
-        }}
-      />
-    ),
-  },
-];
+const formatCategory = (categoryName: string) => {
+  return {
+    label: categoryName,
+    color: 'primary' as const
+  };
+};
 
 export default function GalleryPage() {
   const [open, setOpen] = useState(false);
@@ -198,11 +181,17 @@ export default function GalleryPage() {
         </Button>
       </Box>
 
-      <DataTable
-        columns={columns}
-        data={galleryItems}
+      <ThumbnailGrid
+        items={galleryItems}
+        imageKey="imageUrl"
+        titleKey="title"
+        subtitleKey="description"
+        chipKey="category"
+        chipFormat={formatCategory}
         onEdit={(id) => handleOpen(galleryItems.find((item) => item.id === id))}
         onDelete={handleDelete}
+        imageHeight={200}
+        cardWidth={300}
       />
 
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>

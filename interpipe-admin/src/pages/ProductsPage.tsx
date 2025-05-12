@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import DataTable from '../components/DataTable';
+import ThumbnailGrid from '../components/ThumbnailGrid';
 import FileUpload from '../components/FileUpload';
 import {
   getProducts,
@@ -27,45 +27,13 @@ import {
 } from '../services/api';
 import type { Product, Category } from '../types';
 
-const columns = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'description', label: 'Description', minWidth: 200 },
-  {
-    id: 'category',
-    label: 'Category',
-    minWidth: 100,
-    format: (value: { name: string }) => value?.name ?? 'N/A',
-  },
-  {
-    id: 'isFeatured',
-    label: 'Featured',
-    minWidth: 100,
-    format: (value: boolean) => (value ? 'Yes' : 'No'),
-  },
-  {
-    id: 'image',
-    label: 'Image',
-    minWidth: 100,
-    format: (value: string) => (
-      <Box
-        component="img"
-        src={value}
-        alt="Product"
-        sx={{
-          width: 100,
-          height: 60,
-          objectFit: 'cover',
-          borderRadius: 1,
-        }}
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.src = 'https://placehold.co/100x60/e2e8f0/64748b?text=No+Image';
-          target.onerror = null; // Prevent infinite loop
-        }}
-      />
-    ),
-  },
-];
+// Format featured status for chip display
+const formatFeaturedStatus = (isFeatured: boolean) => {
+  return {
+    label: isFeatured ? 'Featured' : 'Standard',
+    color: isFeatured ? 'success' as const : 'default' as const
+  };
+};
 
 export default function ProductsPage() {
   const [open, setOpen] = useState(false);
@@ -323,11 +291,17 @@ export default function ProductsPage() {
         </Button>
       </Box>
 
-      <DataTable
-        columns={columns}
-        data={products}
+      <ThumbnailGrid
+        items={products}
+        imageKey="image"
+        titleKey="name"
+        subtitleKey="description"
+        chipKey="isFeatured"
+        chipFormat={formatFeaturedStatus}
         onEdit={(id) => handleOpen(products.find((item) => item.id === id))}
         onDelete={handleDelete}
+        imageHeight={200}
+        cardWidth={300}
       />
 
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
