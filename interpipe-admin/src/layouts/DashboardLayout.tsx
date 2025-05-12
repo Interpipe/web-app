@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 import {
   Menu as MenuIcon,
-  Dashboard as DashboardIcon,
   Category as CategoryIcon,
   PhotoLibrary as PhotoLibraryIcon,
   Download as DownloadIcon,
@@ -26,7 +25,10 @@ import {
   Business as BusinessIcon,
   Build as BuildIcon,
   TrendingUp as TrendingUpIcon,
+  Logout as LogoutIcon,
 } from '@mui/icons-material';
+import { useAuth } from '../contexts/AuthContext';
+import logo from '../assets/logo.png'; // Import the logo
 
 const drawerWidth = 240;
 
@@ -45,6 +47,7 @@ export default function DashboardLayout() {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { logout } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -52,7 +55,8 @@ export default function DashboardLayout() {
 
   const drawer = (
     <div>
-      <Toolbar>
+      <Toolbar sx={{ display: 'flex', alignItems: 'center' }}>
+        <img src={logo} alt="Interpipe Logo" style={{ height: '40px', marginRight: '8px' }} />
         <Typography variant="h6" noWrap component="div">
           Interpipe Admin
         </Typography>
@@ -71,6 +75,19 @@ export default function DashboardLayout() {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => {
+            logout();
+            if (isMobile) {
+              setMobileOpen(false);
+            }
+          }}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );

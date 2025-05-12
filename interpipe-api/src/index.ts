@@ -70,18 +70,33 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+// Authentication routes
 app.use('/api/auth', authRoutes);
-app.use('/api/upload', uploadRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/products', productRoutes);
 
-// Protected routes
-app.use('/api/gallery', authMiddleware, galleryRoutes);
-app.use('/api/downloads', authMiddleware, downloadRoutes);
-app.use('/api/contact', authMiddleware, contactRoutes);
-app.use('/api/partners', authMiddleware, partnerRoutes);
-app.use('/api/features', authMiddleware, featureRoutes);
-app.use('/api/stats', authMiddleware, statRoutes);
+// Middleware that only applies authentication for non-GET requests
+// and allows POST to /api/contact
+const conditionalAuth = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  // Allow all GET requests and POST requests to /api/contact
+  if (req.method === 'GET' || (req.method === 'POST' && req.path === '/')) {
+    return next();
+  } else {
+    return authMiddleware(req, res, next);
+  }
+};
+
+// Routes with conditional auth (GET is public, other methods require auth)
+app.use('/api/products', conditionalAuth, productRoutes);
+app.use('/api/categories', conditionalAuth, categoryRoutes);
+app.use('/api/gallery', conditionalAuth, galleryRoutes);
+app.use('/api/downloads', conditionalAuth, downloadRoutes);
+// Note: req.path will be '/' here because the middleware runs *before* contactRoutes
+app.use('/api/contact', conditionalAuth, contactRoutes);
+app.use('/api/partners', conditionalAuth, partnerRoutes);
+app.use('/api/features', conditionalAuth, featureRoutes);
+app.use('/api/stats', conditionalAuth, statRoutes);
+
+// Always protected routes
+app.use('/api/upload', authMiddleware, uploadRoutes);
 
 // Error handling
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -1,14 +1,30 @@
 import { Download, FileCheck } from 'lucide-react';
 import Hero from '../components/Hero';
 import { useStore } from '../store/useStore';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { getApiDocumentPath } from '../services/assets';
+import bluePvcImage from '../assets/Home/blue_pvc.jpg'; // Import the static image
 
 const Downloads = () => {
-  const { downloads, isLoading, error, fetchData } = useStore();
+  const { groupedDownloads, categories, isLoading, error, fetchData } = useStore();
+
+  // Log the state received from the store - REMOVE LATER
+  // console.log('Downloads Component - groupedDownloads:', groupedDownloads);
+  // console.log('Downloads Component - categories:', categories);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  // Get hero image from first download document or use empty string
+  // const heroImage = useMemo(() => {
+  //   if (!groupedDownloads || groupedDownloads.length === 0) return '';
+  //   const firstCategory = groupedDownloads[0];
+  //   if (!firstCategory?.items || !Array.isArray(firstCategory.items) || firstCategory.items.length === 0) return '';
+    
+  //   const firstItem = firstCategory.items[0];
+  //   return firstItem?.url ? getApiDocumentPath(firstItem.url) : '';
+  // }, [groupedDownloads]);
 
   if (isLoading) {
     return (
@@ -42,7 +58,7 @@ const Downloads = () => {
       <Hero 
         title="Downloads"
         subtitle="Access our product specifications, standards, and documentation"
-        image={downloads[0]?.items[0]?.url}
+        image={bluePvcImage} // Use the imported static image
       />
       <div className="py-12">
         <div className="container mx-auto px-4">
@@ -50,39 +66,51 @@ const Downloads = () => {
           
           {/* Downloads Grid */}
           <div className="space-y-12">
-            {downloads.map((category) => (
-              <div key={category.id}>
-                <h2 className="text-2xl font-bold mb-6">{category.category}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {category.items.map((item) => (
-                    <div
-                      key={item.id}
-                      className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                          <p className="text-gray-600 text-sm mb-2">{item.description}</p>
-                          <div className="flex items-center text-sm text-gray-500">
-                            <FileCheck className="mr-1" size={16} />
-                            <span>{item.fileSize}</span>
-                            <span className="mx-2">•</span>
-                            <span>{item.type}</span>
+            {groupedDownloads && groupedDownloads.length > 0 ? (
+              groupedDownloads.map((category) => (
+                <div key={category.id}>
+                  <h2 className="text-2xl font-bold mb-6">{category.categoryName ?? category.category}</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {category.items && Array.isArray(category.items) && category.items.length > 0 ? (
+                      category.items.map((item) => item && (
+                        <div
+                          key={item.id}
+                          className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+                        >
+                          <div className="flex items-start justify-between mb-4">
+                            <div>
+                              <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                              <p className="text-gray-600 text-sm mb-2">{item.description}</p>
+                              <div className="flex items-center text-sm text-gray-500">
+                                <FileCheck className="mr-1" size={16} />
+                                <span>{item.fileSize}</span>
+                                <span className="mx-2">•</span>
+                                <span>{item.type}</span>
+                              </div>
+                            </div>
+                            <a
+                              href={getApiDocumentPath(item.url)}
+                              className="inline-flex items-center text-sky-500 hover:text-sky-600"
+                              download
+                            >
+                              <Download size={20} />
+                            </a>
                           </div>
                         </div>
-                        <a
-                          href={item.url}
-                          className="inline-flex items-center text-sky-500 hover:text-sky-600"
-                          download
-                        >
-                          <Download size={20} />
-                        </a>
+                      ))
+                    ) : (
+                      <div className="col-span-3 text-center py-4">
+                        <p className="text-gray-600">No items available in this category.</p>
                       </div>
-                    </div>
-                  ))}
+                    )}
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-600">No downloads available at this time.</p>
               </div>
-            ))}
+            )}
           </div>
 
           {/* Additional Information */}

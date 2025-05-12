@@ -8,7 +8,7 @@ import {
   DialogActions,
   TextField,
   Typography,
-  IconButton,
+  Alert,
 } from '@mui/material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Add as AddIcon } from '@mui/icons-material';
@@ -31,6 +31,7 @@ export default function FeaturesPage() {
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Feature | null>(null);
   const [formData, setFormData] = useState<Partial<Feature>>({});
+  const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const { data: features = [], isLoading } = useQuery({
@@ -44,6 +45,13 @@ export default function FeaturesPage() {
       queryClient.invalidateQueries({ queryKey: ['features'] });
       handleClose();
     },
+    onError: (error: any) => {
+      console.error('Create feature error:', error.response?.data);
+      if (error.response?.data?.errors) {
+        console.error('Server validation errors:', JSON.stringify(error.response.data.errors));
+      }
+      setError(error.response?.data?.message ?? 'Failed to create feature');
+    },
   });
 
   const updateMutation = useMutation({
@@ -52,6 +60,10 @@ export default function FeaturesPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['features'] });
       handleClose();
+    },
+    onError: (error: any) => {
+      console.error('Update feature error:', error.response?.data);
+      setError(error.response?.data?.message ?? 'Failed to update feature');
     },
   });
 
@@ -68,8 +80,9 @@ export default function FeaturesPage() {
       setFormData(item);
     } else {
       setSelectedItem(null);
-      setFormData({});
+      setFormData({ order: 0 });
     }
+    setError(null);
     setOpen(true);
   };
 
@@ -77,10 +90,30 @@ export default function FeaturesPage() {
     setOpen(false);
     setSelectedItem(null);
     setFormData({});
+    setError(null);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
+    if (!formData.title?.trim()) {
+      setError('Title is required');
+      return;
+    }
+    if (!formData.description?.trim()) {
+      setError('Description is required');
+      return;
+    }
+    if (!formData.icon?.trim()) {
+      setError('Icon is required');
+      return;
+    }
+    if (formData.order === undefined || formData.order === null || isNaN(Number(formData.order))) {
+      setError('Order must be a valid number');
+      return;
+    }
+
     if (selectedItem) {
       updateMutation.mutate({ id: selectedItem.id, data: formData });
     } else {
@@ -124,6 +157,11 @@ export default function FeaturesPage() {
             {selectedItem ? 'Edit Feature' : 'Add Feature'}
           </DialogTitle>
           <DialogContent>
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
             <TextField
               autoFocus
               margin="dense"
@@ -151,6 +189,21 @@ export default function FeaturesPage() {
               onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
               required
               helperText="Enter a Material Icon name (e.g., 'settings', 'build', 'engineering')"
+            />
+            <TextField
+              margin="dense"
+              label="Order"
+              type="number"
+              fullWidth
+              value={formData.order ?? 0}
+              onChange={(e) => 
+                setFormData({ 
+                  ...formData, 
+                  order: e.target.value === '' ? 0 : parseInt(e.target.value, 10) 
+                })
+              }
+              required
+              inputProps={{ min: 0 }}
             />
           </DialogContent>
           <DialogActions>

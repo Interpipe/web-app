@@ -2,6 +2,7 @@ import { Download } from 'lucide-react';
 import Hero from '../components/Hero';
 import { useStore } from '../store/useStore';
 import { useEffect } from 'react';
+import { getApiProductImagePath, getApiDocumentPath } from '../services/assets';
 
 const Products = () => {
   const { products, isLoading, error, fetchData } = useStore();
@@ -37,12 +38,15 @@ const Products = () => {
     );
   }
 
+  // Get hero image using API path
+  const heroImage = products[0]?.image ? getApiProductImagePath(products[0].image) : '';
+
   return (
     <div>
       <Hero 
         title="Our Products"
         subtitle="Discover our range of high-quality PVC pipes and fittings"
-        image={products[0]?.image}
+        image={heroImage}
       />
       <div className="py-12">
         <div className="container mx-auto px-4">
@@ -57,7 +61,7 @@ const Products = () => {
               >
                 <div className="aspect-w-16 aspect-h-9">
                   <img 
-                    src={product.image} 
+                    src={getApiProductImagePath(product.image)} 
                     alt={product.name}
                     className="object-cover w-full h-64"
                   />
@@ -66,28 +70,34 @@ const Products = () => {
                   <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
                   <p className="text-gray-600 mb-6">{product.description}</p>
                   
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold mb-2">Features</h3>
-                    <ul className="list-disc list-inside text-gray-600">
-                      {product.features.map((feature, index) => (
-                        <li key={index}>{feature}</li>
-                      ))}
-                    </ul>
-                  </div>
+                  {product.features && product.features.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold mb-2">Features</h3>
+                      <ul className="list-disc list-inside text-gray-600">
+                        {product.features.map((feature, index) => (
+                          <li key={index}>{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold mb-2">Available Sizes</h3>
-                    <p className="text-gray-600">{product.sizes.join(', ')}</p>
-                  </div>
+                  {product.sizes && product.sizes.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold mb-2">Available Sizes</h3>
+                      <p className="text-gray-600">{product.sizes.join(', ')}</p>
+                    </div>
+                  )}
                   
-                  <a
-                    href={product.specPdf}
-                    className="inline-flex items-center text-sky-500 hover:text-sky-600"
-                    download={product.pdfName}
-                  >
-                    <Download className="mr-2" size={20} />
-                    Download Specifications
-                  </a>
+                  {product.specPdf && (
+                    <a
+                      href={getApiDocumentPath(product.specPdf)}
+                      className="inline-flex items-center text-sky-500 hover:text-sky-600"
+                      download={product.pdfName ?? 'product-specifications.pdf'}
+                    >
+                      <Download className="mr-2" size={20} />
+                      Download Specifications
+                    </a>
+                  )}
                 </div>
               </div>
             ))}

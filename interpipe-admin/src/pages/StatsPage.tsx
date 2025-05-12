@@ -22,9 +22,8 @@ import {
 import type { Stat } from '../types';
 
 const columns = [
-  { id: 'title', label: 'Title', minWidth: 170 },
-  { id: 'value', label: 'Value', minWidth: 100 },
-  { id: 'unit', label: 'Unit', minWidth: 100 },
+  { id: 'label', label: 'Title', minWidth: 170 },
+  { id: 'number', label: 'Value', minWidth: 100 },
   { id: 'icon', label: 'Icon', minWidth: 100 },
 ];
 
@@ -45,6 +44,19 @@ export default function StatsPage() {
       queryClient.invalidateQueries({ queryKey: ['stats'] });
       handleClose();
     },
+    onError: (error: any) => {
+      const errorData = error.response?.data;
+      console.error("Create stat error message:", errorData?.message);
+      console.error(
+        "Create stat error details (errors array):",
+        JSON.stringify(errorData?.errors, null, 2)
+      );
+      alert(
+        `Failed to create stat: ${
+          errorData?.message ?? error.message
+        } (Check console for details)`
+      );
+    },
   });
 
   const updateMutation = useMutation({
@@ -53,6 +65,17 @@ export default function StatsPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['stats'] });
       handleClose();
+    },
+    onError: (error: any, variables) => {
+      console.error(
+        `Update stat error (ID: ${variables.id}):`,
+        error.response?.data
+      );
+      alert(
+        `Failed to update stat: ${
+          error.response?.data?.message ?? error.message
+        } (Check console for details)`
+      );
     },
   });
 
@@ -66,10 +89,21 @@ export default function StatsPage() {
   const handleOpen = (item?: Stat) => {
     if (item) {
       setSelectedItem(item);
-      setFormData(item);
+      setFormData({
+        id: item.id,
+        title: item.label,
+        value: Number(item.number),
+        icon: item.icon,
+        order: item.order ?? 0,
+      });
     } else {
       setSelectedItem(null);
-      setFormData({});
+      setFormData({
+        title: '',
+        value: 0,
+        icon: '',
+        order: 0,
+      });
     }
     setOpen(true);
   };
@@ -82,10 +116,62 @@ export default function StatsPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const currentFormData = { ...formData };
+
+    if (!currentFormData.title?.trim()) {
+      alert('Title cannot be empty.');
+      return;
+    }
+
+    if (
+      currentFormData.value === undefined ||
+      typeof currentFormData.value !== 'number' ||
+      isNaN(currentFormData.value)
+    ) {
+      alert(
+        'The "Value" field is invalid or missing. Please ensure "Value" is a number.'
+      );
+      return;
+    }
+    
+    if (!currentFormData.icon?.trim()) {
+      alert('Icon cannot be empty.');
+      return;
+    }
+
+    if (currentFormData.order === undefined || typeof currentFormData.order !== 'number') {
+       alert('Order is missing or invalid.');
+       return;
+    }
+
     if (selectedItem) {
-      updateMutation.mutate({ id: selectedItem.id, data: formData });
+      const payload = {
+        label: currentFormData.title,
+        number: String(currentFormData.value),
+        icon: currentFormData.icon,
+        order: currentFormData.order,
+      };
+
+      const updateData = Object.fromEntries(
+        Object.entries(payload).filter(([, value]) => value !== undefined)
+      );
+
+      updateMutation.mutate({ 
+        id: selectedItem.id, 
+        data: updateData as any 
+      });
     } else {
-      createMutation.mutate(formData as Omit<Stat, 'id' | 'createdAt' | 'updatedAt'>);
+      const payload = {
+        label: currentFormData.title,
+        number: String(currentFormData.value),
+        icon: currentFormData.icon,
+        order: currentFormData.order,
+      };
+
+      createMutation.mutate(
+        payload as any
+      );
     }
   };
 
@@ -142,15 +228,6 @@ export default function StatsPage() {
               value={formData.value ?? ''}
               onChange={(e) => setFormData({ ...formData, value: Number(e.target.value) })}
               required
-            />
-            <TextField
-              margin="dense"
-              label="Unit"
-              fullWidth
-              value={formData.unit ?? ''}
-              onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-              required
-              helperText="e.g., 'Years', 'Projects', '%'"
             />
             <TextField
               margin="dense"

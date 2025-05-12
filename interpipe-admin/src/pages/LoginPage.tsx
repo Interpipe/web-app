@@ -8,6 +8,7 @@ import {
   Typography,
   Alert,
 } from '@mui/material';
+import logo from '../assets/logo.png'; // Updated path to assets directory
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -42,10 +43,12 @@ export default function LoginPage() {
           p: 4,
           width: '100%',
           maxWidth: 400,
+          textAlign: 'center', // Center align content
         }}
       >
-        <Typography variant="h5" component="h1" gutterBottom align="center">
-          Login
+        <img src={logo} alt="Interpipe Logo" style={{ maxWidth: '150px', marginBottom: '16px' }} />
+        <Typography variant="h5" component="h1" gutterBottom>
+          Interpipe Website Admin
         </Typography>
         {error && (
           <Alert severity="error" sx={{ mb: 2 }}>

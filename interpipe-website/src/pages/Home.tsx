@@ -1,8 +1,19 @@
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Droplet, Shield, Zap, Users, Award, Clock } from 'lucide-react';
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store/useStore';
+import { getApiProductImagePath, getApiPartnerLogoPath } from '../services/assets';
+
+// Icon mapping for dynamic rendering
+const iconMap = {
+  Droplet,
+  Shield,
+  Zap,
+  Users,
+  Award,
+  Clock
+};
 
 const Home = () => {
   const { partners, features, stats, featuredProducts, isLoading, error, fetchData } = useStore();
@@ -68,6 +79,31 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [currentProductIndex]);
 
+  // Helper to render icons dynamically
+  const renderIcon = (iconName: string | undefined, size = 24) => {
+    if (!iconName) {
+      console.warn('Feature is missing an icon name.');
+      // Optionally return a default icon here if needed
+      return null;
+    }
+
+    // Find the key in iconMap case-insensitively
+    const matchedKey = Object.keys(iconMap).find(
+      (key) => key.toLowerCase() === iconName.toLowerCase()
+    );
+
+    if (matchedKey) {
+      const IconComponent = iconMap[matchedKey as keyof typeof iconMap];
+      return <IconComponent size={size} className="text-sky-500" />;
+    } else {
+      console.warn(
+        `Icon '${iconName}' not found in iconMap. Available icons: ${Object.keys(iconMap).join(', ')}`
+      );
+      // Optionally return a default icon here if needed
+      return null;
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -105,7 +141,9 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
             {stats.map((stat) => (
               <div key={stat.id} className="text-center">
-                <stat.icon className="w-12 h-12 text-sky-500 mx-auto mb-4" />
+                <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                  {renderIcon(stat.icon as string, 40)}
+                </div>
                 <div className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</div>
                 <div className="text-gray-600 whitespace-pre-line">{stat.label}</div>
               </div>
@@ -121,7 +159,9 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature) => (
               <div key={feature.id} className="bg-white p-6 rounded-lg shadow-md">
-                <feature.icon className="text-sky-500 mb-4" size={40} />
+                <div className="mb-4">
+                  {renderIcon(feature.icon as string, 40)}
+                </div>
                 <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-gray-600">
                   {feature.description}
@@ -191,7 +231,7 @@ const Home = () => {
                         <div className="bg-white rounded-lg shadow-md overflow-hidden">
                           <div className="aspect-w-16 aspect-h-9">
                             <img 
-                              src={product.image} 
+                              src={getApiProductImagePath(product.image)} 
                               alt={product.name}
                               className="object-cover w-full h-64"
                             />
@@ -250,7 +290,7 @@ const Home = () => {
                   >
                     <div className="bg-white p-6 rounded-lg shadow-md h-40 flex items-center justify-center">
                       <img 
-                        src={partner.logo} 
+                        src={getApiPartnerLogoPath(partner.logo)} 
                         alt={partner.name}
                         className="max-h-full max-w-full object-contain"
                       />

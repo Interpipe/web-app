@@ -104,6 +104,38 @@ export const assets = {
   },
 } as const;
 
+// Constants
+export const API_BASE_URL = import.meta.env['VITE_API_URL'] ?? 'http://localhost:3000';
+
+// Helper function to get gallery image path from the API
+export const getApiGalleryImagePath = (category: string, image: string): string => {
+  return `${API_BASE_URL}/uploads/gallery/${category}/${image}`;
+};
+
+// Helper function to get a product image path from the API
+export const getApiProductImagePath = (imagePath: string): string => {
+  if (imagePath.startsWith('http')) {
+    return imagePath;
+  }
+  return `${API_BASE_URL}/uploads/products/${imagePath}`;
+};
+
+// Helper function to get a document path from the API
+export const getApiDocumentPath = (documentPath: string): string => {
+  if (documentPath.startsWith('http')) {
+    return documentPath;
+  }
+  return `${API_BASE_URL}/uploads/documents/${documentPath}`;
+};
+
+// Helper function to get partner logo path from the API
+export const getApiPartnerLogoPath = (logoPath: string): string => {
+  if (logoPath.startsWith('http')) {
+    return logoPath;
+  }
+  return `${API_BASE_URL}/uploads/partners/${logoPath}`;
+};
+
 // Helper function to get gallery image path
 export const getGalleryImagePath = (category: ProductCategory, filename: string): string => {
   try {

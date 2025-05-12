@@ -2,15 +2,22 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+// Import images from the src directory
+import pvcImage from '../assets/Home/hero_slides/pvc.png';
+import hdeImage from '../assets/Home/hero_slides/hde.png';
+import sewerImage from '../assets/Home/hero_slides/sewer-pipes.jpg';
+import boreholeImage from '../assets/Home/hero_slides/borehole-casings.jpg';
+import conduitImage from '../assets/Home/hero_slides/conduit.jpg';
+
 // Create an object with all image paths using relative URLs
 // These will be processed by Vite and replaced with hashed URLs in production
 const imagePaths = {
   // Using relative URLs from the public directory (more reliable in production)
-  pvc: '/assets/hero_slides/pvc.png',
-  hde: '/assets/hero_slides/hde.png',
-  sewer: '/assets/hero_slides/sewer-pipes.jpg',
-  borehole: '/assets/hero_slides/borehole-casings.jpg',
-  conduit: '/assets/hero_slides/conduit.jpg',
+  pvc: pvcImage,
+  hde: hdeImage,
+  sewer: sewerImage,
+  borehole: boreholeImage,
+  conduit: conduitImage,
 };
 
 interface Slide {

@@ -1,6 +1,78 @@
 import { Mail, Phone, MapPin, Clock, Globe } from 'lucide-react';
+import { useState, FormEvent } from 'react';
+import { submitContactForm } from '../services/apiServices';
 
 const Contact = () => {
+  const [formState, setFormState] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState<{
+    submitted: boolean;
+    success: boolean;
+    message: string;
+  } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormState(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setFormStatus(null);
+
+    // Construct the payload matching the backend schema
+    const payload = {
+      name: `${formState.firstName} ${formState.lastName}`.trim(),
+      email: formState.email,
+      subject: formState.subject,
+      message: formState.message,
+      // Include optional fields if they have values
+      ...(formState.phone && { phone: formState.phone }),
+      // Assuming no 'company' field exists in the form state currently, but adding for schema completeness if needed later
+      // ...(formState.company && { company: formState.company }),
+    };
+
+    try {
+      // Send the explicit payload
+      const response = await submitContactForm(payload);
+      setFormStatus({
+        submitted: true,
+        success: response.success,
+        message: response.message ?? 'Your message has been sent successfully!'
+      });
+      
+      if (response.success) {
+        // Reset form on success
+        setFormState({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      }
+    } catch (error) {
+      setFormStatus({
+        submitted: true,
+        success: false,
+        message: 'There was an error sending your message. Please try again later.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div>
       <div className="py-12 pt-20">
@@ -85,7 +157,14 @@ const Contact = () => {
             {/* Contact Form */}
             <div className="bg-white rounded-lg shadow-md p-8">
               <h2 className="text-2xl font-semibold mb-6">Send us a Message</h2>
-              <form className="space-y-6">
+              
+              {formStatus?.submitted && (
+                <div className={`p-4 mb-6 rounded-lg ${formStatus.success ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+                  {formStatus.message}
+                </div>
+              )}
+              
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -95,6 +174,8 @@ const Contact = () => {
                       type="text"
                       id="firstName"
                       name="firstName"
+                      value={formState.firstName}
+                      onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                       required
                     />
@@ -107,6 +188,8 @@ const Contact = () => {
                       type="text"
                       id="lastName"
                       name="lastName"
+                      value={formState.lastName}
+                      onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                       required
                     />
@@ -121,6 +204,8 @@ const Contact = () => {
                     type="email"
                     id="email"
                     name="email"
+                    value={formState.email}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                     required
                   />
@@ -134,6 +219,8 @@ const Contact = () => {
                     type="tel"
                     id="phone"
                     name="phone"
+                    value={formState.phone}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                   />
                 </div>
@@ -145,6 +232,8 @@ const Contact = () => {
                   <select
                     id="subject"
                     name="subject"
+                    value={formState.subject}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                     required
                   >
@@ -164,6 +253,8 @@ const Contact = () => {
                     id="message"
                     name="message"
                     rows={4}
+                    value={formState.message}
+                    onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                     required
                   ></textarea>
@@ -171,9 +262,10 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-600 transition-colors disabled:bg-sky-300"
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
