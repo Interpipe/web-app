@@ -20,6 +20,10 @@ export NVM_DIR="$HOME/.nvm"
 
 echo "Starting deployment to $DEPLOY_PATH..."
 
+# Clean up all previous releases for a fresh start
+echo "Cleaning up previous releases..."
+rm -rf "$DEPLOY_PATH/releases/"*
+
 # Check if deployment package exists
 if [ ! -f "$TARBALL" ]; then
   echo "Error: Deployment package not found at $TARBALL"
