@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Import images from the src directory
-import pvcImage from '@/assets/Home/hero_slides/pvc.png';
+import pvcImage from '@/assets/Home/hero_slides/PVC.png';
 import hdeImage from '@/assets/Home/hero_slides/hde.png';
 import sewerImage from '@/assets/Home/hero_slides/sewer-pipes.jpg';
 import boreholeImage from '@/assets/Home/hero_slides/borehole-casings.jpg';
