@@ -9,23 +9,23 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { PrismaClient } from '@prisma/client';
 import fs from 'fs';
-import { authMiddleware } from './middleware/auth';
-import authRoutes from './routes/auth';
-import productRoutes from './routes/products';
-import galleryRoutes from './routes/gallery';
-import downloadRoutes from './routes/downloads';
-import contactRoutes from './routes/contact';
-import partnerRoutes from './routes/partners';
-import featureRoutes from './routes/features';
-import statRoutes from './routes/stats';
-import categoryRoutes from './routes/categories';
-import uploadRoutes from './routes/upload';
+import { authMiddleware } from './middleware/auth.js';
+import authRoutes from './routes/auth.js';
+import productRoutes from './routes/products.js';
+import galleryRoutes from './routes/gallery.js';
+import downloadRoutes from './routes/downloads.js';
+import contactRoutes from './routes/contact.js';
+import partnerRoutes from './routes/partners.js';
+import featureRoutes from './routes/features.js';
+import statRoutes from './routes/stats.js';
+import categoryRoutes from './routes/categories.js';
+import uploadRoutes from './routes/upload.js';
 import { 
   PORT, 
   ALLOWED_ORIGINS, 
   RESOURCE_POLICY, 
   OPENER_POLICY 
-} from './config';
+} from './config.js';
 
 // ES module equivalent of __filename and __dirname
 const __filename = fileURLToPath(import.meta.url);

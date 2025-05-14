@@ -5,7 +5,7 @@ import {
   createDownload,
   updateDownload,
   deleteDownload
-} from '../controllers/downloadController';
+} from '../controllers/downloadController.js';
 
 const router = Router();
 

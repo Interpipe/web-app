@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt, { Secret, SignOptions } from 'jsonwebtoken';
 import { z } from 'zod';
-import { JWT_SECRET, JWT_EXPIRATION } from '../config';
+import { JWT_SECRET, JWT_EXPIRATION } from '../config.js';
 
 const prisma = new PrismaClient();
 const router = Router();

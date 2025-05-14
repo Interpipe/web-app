@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import prisma from '../lib/prisma';
-import { galleryItemSchema } from '../validations';
+import prisma from '../lib/prisma.js';
+import { galleryItemSchema } from '../validations/index.js';
 import { ZodError } from 'zod';
 import { Prisma } from '@prisma/client';
 

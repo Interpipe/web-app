@@ -5,7 +5,7 @@ import {
   createGalleryItem,
   updateGalleryItem,
   deleteGalleryItem
-} from '../controllers/galleryController';
+} from '../controllers/galleryController.js';
 
 const router = Router();
 

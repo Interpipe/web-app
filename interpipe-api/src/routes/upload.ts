@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Request, Response, NextFunction } from 'express';
-import { UPLOAD_MAX_SIZE } from '../config';
+import { UPLOAD_MAX_SIZE } from '../config.js';
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import prisma from '../lib/prisma';
-import { contactFormSchema, contactStatusSchema } from '../validations';
+import prisma from '../lib/prisma.js';
+import { contactFormSchema, contactStatusSchema } from '../validations/index.js';
 import { ZodError } from 'zod';
 import { Prisma } from '@prisma/client';
 
