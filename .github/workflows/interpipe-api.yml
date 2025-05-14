@@ -71,8 +71,8 @@ jobs:
       
     - name: Create deployment package
       run: |
-        # Make sure scripts directory is included in the package
-        mkdir -p scripts
+        # Make sure scripts directory exists in the package
+        cp -r scripts .
         # Create a deployment package
         tar -czf deployment.tar.gz dist package.json package-lock.json prisma scripts
         
