@@ -40,6 +40,7 @@ const API_PATH = import.meta.env.VITE_API_BASE_PATH ?? '/api';
 
 // Ensure API_URL doesn't end with slash
 const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+const apiPath = API_PATH.startsWith('/') ? API_PATH : `/${API_PATH}`;
 
 export default function FileUpload({
   value,
@@ -86,7 +87,7 @@ export default function FileUpload({
     formData.append('file', file);
 
     try {
-      const response = await axios.post(`${API_URL}${API_PATH}/upload?uploadType=${type}`, formData, {
+      const response = await axios.post(`${baseUrl}${apiPath}/upload?uploadType=${type}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -99,7 +100,7 @@ export default function FileUpload({
       });
 
       const { filePath } = response.data; // Get the server-generated file path
-      setInternalPreviewUrl(`${API_URL}${filePath}`); // Update preview for the new server path
+      setInternalPreviewUrl(`${baseUrl}${filePath}`); // Update preview for the new server path
       onChange(filePath, file); // Pass the server path and original file to parent
 
     } catch (err) {
