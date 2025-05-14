@@ -12,6 +12,7 @@ RELEASE_PATH="$DEPLOY_PATH/releases/$TIMESTAMP"
 CURRENT_PATH="$DEPLOY_PATH/current"
 BACKUP_PATH="$DEPLOY_PATH/backups/$TIMESTAMP"
 TARBALL="$DEPLOY_PATH/deployment.tar.gz"
+ENV_FILE="$DEPLOY_PATH/.env"
 
 # Source NVM
 export NVM_DIR="$HOME/.nvm"
@@ -25,6 +26,12 @@ if [ ! -f "$TARBALL" ]; then
   exit 1
 fi
 
+# Check if .env file exists
+if [ ! -f "$ENV_FILE" ]; then
+  echo "Error: .env file not found at $ENV_FILE"
+  exit 1
+fi
+
 # Create release directory
 mkdir -p "$RELEASE_PATH"
 echo "Created release directory: $RELEASE_PATH"
@@ -32,6 +39,10 @@ echo "Created release directory: $RELEASE_PATH"
 # Extract the tarball to the release directory
 echo "Extracting deployment package..."
 tar -xzf "$TARBALL" -C "$RELEASE_PATH"
+
+# Copy environment variables
+echo "Copying environment variables..."
+cp "$ENV_FILE" "$RELEASE_PATH/.env"
 
 # Backup current version if it exists
 if [ -d "$CURRENT_PATH" ]; then
