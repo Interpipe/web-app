@@ -2,8 +2,16 @@ import axios from 'axios';
 import { getStoredToken } from './auth';
 import type { Product, GalleryItem, DownloadItem, ContactSubmission, Partner, Feature, Stat, Category } from '../types';
 
+// Properly format the base URL with correct path handling
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
+const API_PATH = import.meta.env.VITE_API_BASE_PATH ?? '/api';
+
+// Ensure API_URL doesn't end with slash and API_PATH starts with slash
+const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+const apiPath = API_PATH.startsWith('/') ? API_PATH : `/${API_PATH}`;
+
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}${import.meta.env.VITE_API_BASE_PATH ?? '/api'}`,
+  baseURL: `${baseUrl}${apiPath}`,
   headers: {
     'Content-Type': 'application/json',
   },

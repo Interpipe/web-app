@@ -1,11 +1,16 @@
 import axios from 'axios';
 import type { User } from '../types';
 
+// Fix URL construction - ensure we have proper URL formatting
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 const API_PATH = import.meta.env.VITE_API_BASE_PATH ?? '/api';
 
 export async function login(email: string, password: string) {
-  const response = await axios.post(`${API_URL}${API_PATH}/auth/login`, {
+  // Ensure API_URL doesn't end with slash and API_PATH starts with slash
+  const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+  const apiPath = API_PATH.startsWith('/') ? API_PATH : `/${API_PATH}`;
+  
+  const response = await axios.post(`${baseUrl}${apiPath}/auth/login`, {
     email,
     password,
   });

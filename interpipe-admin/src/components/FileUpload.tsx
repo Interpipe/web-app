@@ -38,6 +38,9 @@ interface FileUploadProps {
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 const API_PATH = import.meta.env.VITE_API_BASE_PATH ?? '/api';
 
+// Ensure API_URL doesn't end with slash
+const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+
 export default function FileUpload({
   value,
   onChange,
@@ -62,7 +65,7 @@ export default function FileUpload({
       if (value.startsWith('blob:')) {
         setInternalPreviewUrl(value); // Still a local blob, use directly
       } else if (value.startsWith('/uploads/')) {
-        setInternalPreviewUrl(`${API_URL}${value}`); // Path from server
+        setInternalPreviewUrl(`${baseUrl}${value}`); // Path from server
       } else {
         setInternalPreviewUrl(value); // Assume it's a full URL or data URL already
       }
