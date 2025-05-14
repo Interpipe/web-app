@@ -13,6 +13,10 @@ CURRENT_PATH="$DEPLOY_PATH/current"
 BACKUP_PATH="$DEPLOY_PATH/backups/$TIMESTAMP"
 TARBALL="$DEPLOY_PATH/deployment.tar.gz"
 
+# Source NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 echo "Starting deployment to $DEPLOY_PATH..."
 
 # Check if deployment package exists
@@ -39,10 +43,14 @@ fi
 # Install dependencies
 echo "Installing dependencies..."
 cd "$RELEASE_PATH"
+# Ensure Node.js is available
+echo "Node.js version: $(node --version)"
+echo "NPM version: $(npm --version)"
 npm ci --production
 
 # Run database migrations
 echo "Running database migrations..."
+npx prisma generate
 npx prisma migrate deploy
 
 # Update symlink
@@ -50,10 +58,18 @@ echo "Updating symlink..."
 ln -sfn "$RELEASE_PATH" "$CURRENT_PATH"
 
 # Restart or start the application with PM2
-if pm2 list | grep -q interpipe-api; then
-  echo "Restarting application with PM2..."
-  pm2 reload interpipe-api
+if command -v pm2 >/dev/null 2>&1; then
+  if pm2 list | grep -q interpipe-api; then
+    echo "Restarting application with PM2..."
+    pm2 reload interpipe-api
+  else
+    echo "Starting application with PM2..."
+    cd "$CURRENT_PATH"
+    pm2 start dist/index.js --name interpipe-api
+  fi
 else
+  echo "PM2 is not installed. Installing PM2..."
+  npm install -g pm2
   echo "Starting application with PM2..."
   cd "$CURRENT_PATH"
   pm2 start dist/index.js --name interpipe-api
