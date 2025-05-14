@@ -20,6 +20,12 @@ import featureRoutes from './routes/features';
 import statRoutes from './routes/stats';
 import categoryRoutes from './routes/categories';
 import uploadRoutes from './routes/upload';
+import { 
+  PORT, 
+  ALLOWED_ORIGINS, 
+  RESOURCE_POLICY, 
+  OPENER_POLICY 
+} from './config';
 
 // ES module equivalent of __filename and __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -33,16 +39,11 @@ if (!fs.existsSync(uploadsDir)) {
 
 const prisma = new PrismaClient();
 const app = express();
-const port = process.env.PORT || '3000';
+const port = PORT;
 
 // Configure CORS
 const corsOptions = {
-  origin: [
-    process.env.FRONTEND_URL ?? 'http://localhost:5173',
-    'http://localhost:5174',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:5174'
-  ],
+  origin: ALLOWED_ORIGINS,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -51,8 +52,8 @@ const corsOptions = {
 // Middleware
 app.use(cors(corsOptions));
 app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" },
-  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
+  crossOriginResourcePolicy: { policy: RESOURCE_POLICY },
+  crossOriginOpenerPolicy: { policy: OPENER_POLICY }
 }));
 app.use(morgan('dev'));
 app.use(express.json());
@@ -60,7 +61,7 @@ app.use(express.json());
 // Serve uploaded files statically with proper headers
 app.use('/uploads', express.static(path.join(__dirname, '../uploads'), {
   setHeaders: (res, path) => {
-    res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+    res.set('Cross-Origin-Resource-Policy', RESOURCE_POLICY);
     res.set('Access-Control-Allow-Origin', '*');
   }
 }));

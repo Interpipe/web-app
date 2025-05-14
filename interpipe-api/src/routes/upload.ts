@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Request, Response, NextFunction } from 'express';
+import { UPLOAD_MAX_SIZE } from '../config';
 
 const router = Router();
 
@@ -34,7 +35,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB file size limit
+  limits: { fileSize: UPLOAD_MAX_SIZE }, // File size limit from environment
 });
 
 // POST /api/upload

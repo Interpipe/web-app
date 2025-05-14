@@ -36,6 +36,7 @@ interface FileUploadProps {
 }
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
+const API_PATH = import.meta.env.VITE_API_BASE_PATH ?? '/api';
 
 export default function FileUpload({
   value,
@@ -82,7 +83,7 @@ export default function FileUpload({
     formData.append('file', file);
 
     try {
-      const response = await axios.post(`${API_URL}/api/upload?uploadType=${type}`, formData, {
+      const response = await axios.post(`${API_URL}${API_PATH}/upload?uploadType=${type}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

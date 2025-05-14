@@ -123,9 +123,9 @@ export const useStore = create<StoreState>((set) => ({
       ]);
 
       // --- Client-side Grouping Logic ---
-      const validCategories = categoriesData ?? [];
-      const validFlatDownloads = flatDownloadsData ?? [];
-      const validFlatGallery = flatGalleryData ?? [];
+      const validCategories = Array.isArray(categoriesData) ? categoriesData : [];
+      const validFlatDownloads = Array.isArray(flatDownloadsData) ? flatDownloadsData : [];
+      const validFlatGallery = Array.isArray(flatGalleryData) ? flatGalleryData : [];
 
       // Create maps for efficient lookup
       const categoryMapById = validCategories.reduce((acc, cat) => {

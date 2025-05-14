@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
-import { JWT_SECRET } from '../config';
+import { JWT_SECRET, JWT_EXPIRATION } from '../config';
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -38,22 +38,20 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       { id: user.id, email: user.email },
       JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: JWT_EXPIRATION }
     );
 
-    res.json({
+    return res.json({
       token,
       user: {
         id: user.id,
-        email: user.email,
         name: user.name,
+        email: user.email,
       },
     });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({ message: 'Invalid input', errors: error.errors });
-    }
-    res.status(500).json({ message: 'Internal server error' });
+    console.error('Login error:', error);
+    return res.status(400).json({ message: 'Invalid request' });
   }
 });
 

@@ -3,7 +3,7 @@ import { getStoredToken } from './auth';
 import type { Product, GalleryItem, DownloadItem, ContactSubmission, Partner, Feature, Stat, Category } from '../types';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: `${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}${import.meta.env.VITE_API_BASE_PATH ?? '/api'}`,
   headers: {
     'Content-Type': 'application/json',
   },
