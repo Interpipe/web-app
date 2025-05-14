@@ -24,8 +24,8 @@ export const ALLOWED_ORIGINS = [
 ];
 
 // Security policies
-export const RESOURCE_POLICY = process.env.RESOURCE_POLICY ?? 'cross-origin';
-export const OPENER_POLICY = process.env.OPENER_POLICY ?? 'same-origin-allow-popups';
+export const RESOURCE_POLICY = (process.env.RESOURCE_POLICY ?? 'cross-origin') as 'cross-origin' | 'same-origin' | 'same-site';
+export const OPENER_POLICY = (process.env.OPENER_POLICY ?? 'same-origin-allow-popups') as 'same-origin-allow-popups' | 'same-origin' | 'unsafe-none';
 
 // Upload configuration
 export const UPLOAD_MAX_SIZE = parseInt(process.env.UPLOAD_MAX_SIZE ?? '10485760', 10); // 10MB default

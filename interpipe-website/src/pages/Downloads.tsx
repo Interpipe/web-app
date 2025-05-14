@@ -8,6 +8,10 @@ import bluePvcImage from '../assets/Home/blue_pvc.jpg'; // Import the static ima
 const Downloads = () => {
   const { groupedDownloads, categories, isLoading, error, fetchData } = useStore();
 
+  // Ensure data is always arrays
+  const safeDownloads = Array.isArray(groupedDownloads) ? groupedDownloads : [];
+  const safeCategories = Array.isArray(categories) ? categories : [];
+
   // Log the state received from the store - REMOVE LATER
   // console.log('Downloads Component - groupedDownloads:', groupedDownloads);
   // console.log('Downloads Component - categories:', categories);
@@ -66,12 +70,12 @@ const Downloads = () => {
           
           {/* Downloads Grid */}
           <div className="space-y-12">
-            {groupedDownloads && groupedDownloads.length > 0 ? (
-              groupedDownloads.map((category) => (
+            {safeDownloads.length > 0 ? (
+              safeDownloads.map((category) => (
                 <div key={category.id}>
                   <h2 className="text-2xl font-bold mb-6">{category.categoryName ?? category.category}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {category.items && Array.isArray(category.items) && category.items.length > 0 ? (
+                    {Array.isArray(category.items) && category.items.length > 0 ? (
                       category.items.map((item) => item && (
                         <div
                           key={item.id}

@@ -38,8 +38,11 @@ const Products = () => {
     );
   }
 
+  // Ensure products is an array
+  const safeProducts = Array.isArray(products) ? products : [];
+  
   // Get hero image using API path
-  const heroImage = products[0]?.image ? getApiProductImagePath(products[0].image) : '';
+  const heroImage = safeProducts[0]?.image ? getApiProductImagePath(safeProducts[0].image) : '';
 
   return (
     <div>
@@ -54,7 +57,7 @@ const Products = () => {
           
           {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
+            {safeProducts.map((product) => (
               <div
                 key={product.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden"
@@ -70,7 +73,7 @@ const Products = () => {
                   <h2 className="text-2xl font-semibold mb-4">{product.name}</h2>
                   <p className="text-gray-600 mb-6">{product.description}</p>
                   
-                  {product.features && product.features.length > 0 && (
+                  {product.features && Array.isArray(product.features) && product.features.length > 0 && (
                     <div className="mb-6">
                       <h3 className="text-lg font-semibold mb-2">Features</h3>
                       <ul className="list-disc list-inside text-gray-600">
@@ -81,7 +84,7 @@ const Products = () => {
                     </div>
                   )}
                   
-                  {product.sizes && product.sizes.length > 0 && (
+                  {product.sizes && Array.isArray(product.sizes) && product.sizes.length > 0 && (
                     <div className="mb-6">
                       <h3 className="text-lg font-semibold mb-2">Available Sizes</h3>
                       <p className="text-gray-600">{product.sizes.join(', ')}</p>

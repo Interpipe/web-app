@@ -25,6 +25,12 @@ const Home = () => {
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
   const productsCarouselRef = useRef<HTMLDivElement>(null);
 
+  // Ensure data is always arrays
+  const safePartners = Array.isArray(partners) ? partners : [];
+  const safeFeatures = Array.isArray(features) ? features : [];
+  const safeStats = Array.isArray(stats) ? stats : [];
+  const safeFeaturedProducts = Array.isArray(featuredProducts) ? featuredProducts : [];
+
   // Fetch data on component mount
   useEffect(() => {
     fetchData();
@@ -32,7 +38,7 @@ const Home = () => {
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => 
-      prevIndex + visiblePartners >= partners.length 
+      prevIndex + visiblePartners >= safePartners.length 
         ? 0 
         : prevIndex + 1
     );
@@ -41,7 +47,7 @@ const Home = () => {
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 
-        ? Math.max(0, partners.length - visiblePartners) 
+        ? Math.max(0, safePartners.length - visiblePartners) 
         : prevIndex - 1
     );
   };
@@ -49,7 +55,7 @@ const Home = () => {
   // Products carousel controls
   const nextProduct = () => {
     setCurrentProductIndex((prevIndex) => 
-      prevIndex + 1 >= featuredProducts.length 
+      prevIndex + 1 >= safeFeaturedProducts.length 
         ? 0 
         : prevIndex + 1
     );
@@ -58,7 +64,7 @@ const Home = () => {
   const prevProduct = () => {
     setCurrentProductIndex((prevIndex) => 
       prevIndex === 0 
-        ? featuredProducts.length - 1 
+        ? safeFeaturedProducts.length - 1 
         : prevIndex - 1
     );
   };
@@ -139,7 +145,7 @@ const Home = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-            {stats.map((stat) => (
+            {safeStats.map((stat) => (
               <div key={stat.id} className="text-center">
                 <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center">
                   {renderIcon(stat.icon as string, 40)}
@@ -157,7 +163,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Why Choose Interpipe?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature) => (
+            {safeFeatures.map((feature) => (
               <div key={feature.id} className="bg-white p-6 rounded-lg shadow-md">
                 <div className="mb-4">
                   {renderIcon(feature.icon as string, 40)}
@@ -183,12 +189,12 @@ const Home = () => {
                 ref={productsCarouselRef}
                 className="flex justify-center items-center pt-10"
               >
-                {featuredProducts.map((product, index) => {
+                {safeFeaturedProducts.map((product, index) => {
                   // Calculate relative position
-                  const normalizedIndex = (index - currentProductIndex + featuredProducts.length) % featuredProducts.length;
+                  const normalizedIndex = (index - currentProductIndex + safeFeaturedProducts.length) % safeFeaturedProducts.length;
                   
                   // Only show 3 items: previous, current, and next
-                  if (normalizedIndex > 2 && normalizedIndex < featuredProducts.length - 1) {
+                  if (normalizedIndex > 2 && normalizedIndex < safeFeaturedProducts.length - 1) {
                     return null;
                   }
                   
@@ -203,7 +209,7 @@ const Home = () => {
                     transformScale = 1;
                     zIndex = 30;
                     opacity = 1;
-                  } else if (normalizedIndex === 1 || normalizedIndex === featuredProducts.length - 1) {
+                  } else if (normalizedIndex === 1 || normalizedIndex === safeFeaturedProducts.length - 1) {
                     // Side items - make them smaller and further away
                     position = normalizedIndex === 1 ? 'right' : 'left';
                     transformScale = 0.65;
@@ -283,7 +289,7 @@ const Home = () => {
                 className="flex transition-transform duration-300 ease-in-out"
                 style={{ transform: `translateX(-${currentIndex * (100 / visiblePartners)}%)` }}
               >
-                {partners.map((partner) => (
+                {safePartners.map((partner) => (
                   <div 
                     key={partner.id} 
                     className="min-w-[33.333%] px-4 flex-shrink-0"
@@ -318,7 +324,7 @@ const Home = () => {
           </div>
           
           <div className="flex justify-center mt-6">
-            {Array.from({ length: Math.ceil(partners.length / visiblePartners) }).map((_, idx) => (
+            {Array.from({ length: Math.ceil(safePartners.length / visiblePartners) }).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx * visiblePartners)}

@@ -9,6 +9,9 @@ export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  // Ensure data is always properly typed, even if API returns unexpected values
+  const safeCategories = Array.isArray(categories) ? categories : [];
+
   // Log the state received from the store - REMOVE LATER
   // console.log('Gallery Component - groupedGalleryData:', groupedGalleryData);
   // console.log('Gallery Component - categories:', categories);
@@ -19,19 +22,19 @@ export default function Gallery() {
 
   // Filter categories to only include those with images
   const visibleCategories = useMemo(() => {
-    const categoryImageMap = groupedGalleryData?.categories;
-    if (!categories || !categoryImageMap) {
+    const categoryImageMap = groupedGalleryData?.categories ?? {};
+    if (!safeCategories || !categoryImageMap) {
       return [];
     }
     
-    return categories.filter(category => {
+    return safeCategories.filter(category => {
       if (!category || !category.id) {
         return false; // Skip if category or its id is invalid
       }
       const images = categoryImageMap[category.id];
-      return images && images.length > 0;
+      return Array.isArray(images) && images.length > 0;
     });
-  }, [categories, groupedGalleryData]);
+  }, [safeCategories, groupedGalleryData]);
 
   // Set initial selected category once visible categories are determined
   useEffect(() => {
@@ -64,15 +67,16 @@ export default function Gallery() {
     if (categoryKeys.length === 0) return '';
     
     // Find the first category key that actually has images
-    const firstCategoryWithImages = categoryKeys.find(key => 
-      groupedGalleryData.categories[key] && groupedGalleryData.categories[key].length > 0
-    );
+    const firstCategoryWithImages = categoryKeys.find(key => {
+      const images = groupedGalleryData.categories[key];
+      return Array.isArray(images) && images.length > 0;
+    });
     
     if (!firstCategoryWithImages) return ''; // No category has images
     
     const images = groupedGalleryData.categories[firstCategoryWithImages];
     
-    if (!images || images.length === 0) return ''; // Should not happen due to find condition
+    if (!Array.isArray(images) || images.length === 0) return ''; // Should not happen due to find condition
     const firstImage = images[0];
     if (!firstImage) return '';
     
@@ -103,6 +107,11 @@ export default function Gallery() {
       </div>
     );
   }
+
+  // Make sure we have a valid categories object
+  const currentCategoryImages = selectedCategory && 
+    groupedGalleryData?.categories?.[selectedCategory];
+  const safeCurrentImages = Array.isArray(currentCategoryImages) ? currentCategoryImages : [];
 
   return (
     <div>
@@ -143,8 +152,8 @@ export default function Gallery() {
 
         {/* Image Grid - Uses groupedGalleryData */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {groupedGalleryData && groupedGalleryData.categories && selectedCategory && groupedGalleryData.categories[selectedCategory] ? 
-            groupedGalleryData.categories[selectedCategory].map((imageUrl) => imageUrl && (
+          {safeCurrentImages.length > 0 ? 
+            safeCurrentImages.map((imageUrl) => imageUrl && (
               <div
                 key={imageUrl} 
                 className="relative aspect-square cursor-pointer group"
