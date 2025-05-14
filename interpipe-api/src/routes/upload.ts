@@ -3,6 +3,7 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { Request, Response, NextFunction } from 'express';
 
 const router = Router();
 
@@ -37,7 +38,7 @@ const upload = multer({
 });
 
 // POST /api/upload
-router.post('/', upload.single('file'), (req, res) => {
+router.post('/', upload.single('file'), (req: Request, res: Response) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded.' });
   }
@@ -56,7 +57,7 @@ router.post('/', upload.single('file'), (req, res) => {
     mimeType: req.file.mimetype,
     size: req.file.size,
   });
-}, (error: Error, req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+}, (error: Error, req: Request, res: Response, next: NextFunction) => {
   // Handle multer errors (e.g., file size limit exceeded)
   if (error instanceof multer.MulterError) {
     return res.status(400).json({ message: error.message });

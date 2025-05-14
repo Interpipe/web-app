@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import prisma from '../lib/prisma';
 import { galleryItemSchema } from '../validations';
+import { ZodError } from 'zod';
+import { Prisma } from '@prisma/client';
 
 export const getGalleryItems = async (req: Request, res: Response) => {
   try {
@@ -47,7 +49,7 @@ export const createGalleryItem = async (req: Request, res: Response) => {
     res.status(201).json(item);
   } catch (error) {
     console.error('Error creating gallery item:', error);
-    if (error.name === 'ZodError') {
+    if (error instanceof ZodError) {
       return res.status(400).json({ message: 'Invalid gallery item data', errors: error.errors });
     }
     res.status(500).json({ message: 'Error creating gallery item' });
@@ -67,10 +69,10 @@ export const updateGalleryItem = async (req: Request, res: Response) => {
     res.json(item);
   } catch (error) {
     console.error('Error updating gallery item:', error);
-    if (error.name === 'ZodError') {
+    if (error instanceof ZodError) {
       return res.status(400).json({ message: 'Invalid gallery item data', errors: error.errors });
     }
-    if (error.code === 'P2025') {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
       return res.status(404).json({ message: 'Gallery item not found' });
     }
     res.status(500).json({ message: 'Error updating gallery item' });
@@ -88,7 +90,7 @@ export const deleteGalleryItem = async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting gallery item:', error);
-    if (error.code === 'P2025') {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
       return res.status(404).json({ message: 'Gallery item not found' });
     }
     res.status(500).json({ message: 'Error deleting gallery item' });

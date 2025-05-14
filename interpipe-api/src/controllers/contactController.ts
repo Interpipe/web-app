@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import prisma from '../lib/prisma';
 import { contactFormSchema, contactStatusSchema } from '../validations';
+import { ZodError } from 'zod';
+import { Prisma } from '@prisma/client';
 
 export const submitContactForm = async (req: Request, res: Response) => {
   try {
@@ -13,7 +15,7 @@ export const submitContactForm = async (req: Request, res: Response) => {
     res.status(201).json(submission);
   } catch (error) {
     console.error('Error submitting contact form:', error);
-    if (error.name === 'ZodError') {
+    if (error instanceof ZodError) {
       return res.status(400).json({ message: 'Invalid contact form data', errors: error.errors });
     }
     res.status(500).json({ message: 'Error submitting contact form' });
@@ -62,7 +64,7 @@ export const deleteContactSubmission = async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting contact submission:', error);
-    if (error.code === 'P2025') {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
       return res.status(404).json({ message: 'Contact submission not found' });
     }
     res.status(500).json({ message: 'Error deleting contact submission' });
@@ -82,10 +84,10 @@ export const updateContactStatus = async (req: Request, res: Response) => {
     res.json(submission);
   } catch (error) {
     console.error('Error updating contact status:', error);
-    if (error.name === 'ZodError') {
+    if (error instanceof ZodError) {
       return res.status(400).json({ message: 'Invalid status data', errors: error.errors });
     }
-    if (error.code === 'P2025') {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
       return res.status(404).json({ message: 'Contact submission not found' });
     }
     res.status(500).json({ message: 'Error updating contact status' });

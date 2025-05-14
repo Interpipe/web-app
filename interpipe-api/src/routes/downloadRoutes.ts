@@ -1,21 +1,21 @@
 import { Router } from 'express';
 import {
-  getDownloadItems,
-  getDownloadItemById,
-  createDownloadItem,
-  updateDownloadItem,
-  deleteDownloadItem
+  getDownloads,
+  getDownloadById,
+  createDownload,
+  updateDownload,
+  deleteDownload
 } from '../controllers/downloadController';
 
 const router = Router();
 
 // Public routes
-router.get('/', getDownloadItems);
-router.get('/:id', getDownloadItemById);
+router.get('/', getDownloads);
+router.get('/:id', getDownloadById);
 
 // Protected routes (add authentication middleware later)
-router.post('/', createDownloadItem);
-router.put('/:id', updateDownloadItem);
-router.delete('/:id', deleteDownloadItem);
+router.post('/', createDownload);
+router.put('/:id', updateDownload);
+router.delete('/:id', deleteDownload);
 
 export default router; 

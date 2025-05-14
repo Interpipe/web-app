@@ -1,83 +1,85 @@
 import { Request, Response } from 'express';
 import prisma from '../lib/prisma';
 import { downloadItemSchema } from '../validations';
+import { ZodError } from 'zod';
+import { Prisma } from '@prisma/client';
 
-export const getDownloadItems = async (req: Request, res: Response) => {
+export const getDownloads = async (req: Request, res: Response) => {
   try {
     const { category } = req.query;
     
-    const items = await prisma.downloadItem.findMany({
+    const downloads = await prisma.downloadItem.findMany({
       where: category ? { category: category as string } : undefined,
       orderBy: { createdAt: 'desc' }
     });
     
-    res.json(items);
+    res.json(downloads);
   } catch (error) {
-    console.error('Error fetching download items:', error);
-    res.status(500).json({ message: 'Error fetching download items' });
+    console.error('Error fetching downloads:', error);
+    res.status(500).json({ message: 'Error fetching downloads' });
   }
 };
 
-export const getDownloadItemById = async (req: Request, res: Response) => {
+export const getDownloadById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const item = await prisma.downloadItem.findUnique({
+    const download = await prisma.downloadItem.findUnique({
       where: { id }
     });
     
-    if (!item) {
+    if (!download) {
       return res.status(404).json({ message: 'Download item not found' });
     }
     
-    res.json(item);
+    res.json(download);
   } catch (error) {
     console.error('Error fetching download item:', error);
     res.status(500).json({ message: 'Error fetching download item' });
   }
 };
 
-export const createDownloadItem = async (req: Request, res: Response) => {
+export const createDownload = async (req: Request, res: Response) => {
   try {
     const validatedData = downloadItemSchema.parse(req.body);
     
-    const item = await prisma.downloadItem.create({
+    const download = await prisma.downloadItem.create({
       data: validatedData
     });
     
-    res.status(201).json(item);
+    res.status(201).json(download);
   } catch (error) {
     console.error('Error creating download item:', error);
-    if (error.name === 'ZodError') {
+    if (error instanceof ZodError) {
       return res.status(400).json({ message: 'Invalid download item data', errors: error.errors });
     }
     res.status(500).json({ message: 'Error creating download item' });
   }
 };
 
-export const updateDownloadItem = async (req: Request, res: Response) => {
+export const updateDownload = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const validatedData = downloadItemSchema.parse(req.body);
     
-    const item = await prisma.downloadItem.update({
+    const download = await prisma.downloadItem.update({
       where: { id },
       data: validatedData
     });
     
-    res.json(item);
+    res.json(download);
   } catch (error) {
     console.error('Error updating download item:', error);
-    if (error.name === 'ZodError') {
+    if (error instanceof ZodError) {
       return res.status(400).json({ message: 'Invalid download item data', errors: error.errors });
     }
-    if (error.code === 'P2025') {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
       return res.status(404).json({ message: 'Download item not found' });
     }
     res.status(500).json({ message: 'Error updating download item' });
   }
 };
 
-export const deleteDownloadItem = async (req: Request, res: Response) => {
+export const deleteDownload = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     
@@ -88,7 +90,7 @@ export const deleteDownloadItem = async (req: Request, res: Response) => {
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting download item:', error);
-    if (error.code === 'P2025') {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
       return res.status(404).json({ message: 'Download item not found' });
     }
     res.status(500).json({ message: 'Error deleting download item' });
