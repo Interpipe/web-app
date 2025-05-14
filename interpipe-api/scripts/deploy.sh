@@ -5,56 +5,72 @@
 
 set -e
 
-APP_NAME="interpipe-api"
-APP_DIR="/var/www/$APP_NAME"
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BACKUP_DIR="$APP_DIR/backups"
-RELEASE_DIR="$APP_DIR/releases/$TIMESTAMP"
+# Deployment script for Interpipe API
+DEPLOY_PATH=${DEPLOY_PATH:-/var/www/interpipe-api}
+TIMESTAMP=$(date +%Y%m%d%H%M%S)
+RELEASE_PATH="$DEPLOY_PATH/releases/$TIMESTAMP"
+CURRENT_PATH="$DEPLOY_PATH/current"
+BACKUP_PATH="$DEPLOY_PATH/backups/$TIMESTAMP"
+TARBALL="$DEPLOY_PATH/deployment.tar.gz"
 
-echo "📦 Starting deployment of $APP_NAME..."
+echo "Starting deployment to $DEPLOY_PATH..."
 
-# Create necessary directories
-mkdir -p $BACKUP_DIR
-mkdir -p $RELEASE_DIR
-
-# Backup current deployment if it exists
-if [ -L "$APP_DIR/current" ] && [ -d "$APP_DIR/current" ]; then
-  echo "🔄 Backing up current deployment..."
-  cp -r $APP_DIR/current/* $BACKUP_DIR/
+# Check if deployment package exists
+if [ ! -f "$TARBALL" ]; then
+  echo "Error: Deployment package not found at $TARBALL"
+  exit 1
 fi
 
-# Extract deployment package
-echo "📂 Extracting deployment package..."
-tar -xzf $APP_DIR/deployment.tar.gz -C $RELEASE_DIR
+# Create release directory
+mkdir -p "$RELEASE_PATH"
+echo "Created release directory: $RELEASE_PATH"
 
-# Install production dependencies
-echo "📚 Installing dependencies..."
-cd $RELEASE_DIR
+# Extract the tarball to the release directory
+echo "Extracting deployment package..."
+tar -xzf "$TARBALL" -C "$RELEASE_PATH"
+
+# Backup current version if it exists
+if [ -d "$CURRENT_PATH" ]; then
+  echo "Backing up current version..."
+  mkdir -p "$BACKUP_PATH"
+  cp -r "$CURRENT_PATH"/* "$BACKUP_PATH"
+fi
+
+# Install dependencies
+echo "Installing dependencies..."
+cd "$RELEASE_PATH"
 npm ci --production
 
-# Generate Prisma client
-echo "🔧 Generating Prisma client..."
-npx prisma generate
-
-# Apply database migrations if needed (uncomment if you want to run migrations during deployment)
-# echo "🔄 Running database migrations..."
-# npx prisma migrate deploy
+# Run database migrations
+echo "Running database migrations..."
+npx prisma migrate deploy
 
 # Update symlink
-echo "🔗 Updating symlink..."
-ln -sfn $RELEASE_DIR $APP_DIR/current
+echo "Updating symlink..."
+ln -sfn "$RELEASE_PATH" "$CURRENT_PATH"
 
 # Restart or start the application with PM2
-echo "🚀 Restarting application..."
-cd $APP_DIR/current
-pm2 restart $APP_NAME 2>/dev/null || pm2 start dist/index.js --name $APP_NAME
+if pm2 list | grep -q interpipe-api; then
+  echo "Restarting application with PM2..."
+  pm2 reload interpipe-api
+else
+  echo "Starting application with PM2..."
+  cd "$CURRENT_PATH"
+  pm2 start dist/index.js --name interpipe-api
+fi
 
 # Clean up
-echo "🧹 Cleaning up..."
-rm -f $APP_DIR/deployment.tar.gz
+echo "Cleaning up..."
+rm -f "$TARBALL"
 
-# Keep only the 3 most recent backups
-echo "🗑️ Removing old backups..."
-ls -dt $BACKUP_DIR/* | tail -n +4 | xargs rm -rf
+# Keep only the last 5 backups
+echo "Removing old backups..."
+cd "$DEPLOY_PATH/backups"
+ls -t | tail -n +6 | xargs -r rm -rf
 
-echo "✅ Deployment completed successfully!" 
+# Keep only the last 5 releases
+echo "Removing old releases..."
+cd "$DEPLOY_PATH/releases"
+ls -t | tail -n +6 | xargs -r rm -rf
+
+echo "Deployment completed successfully!" 
