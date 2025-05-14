@@ -1,0 +1,81 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Generate Prisma client
+      run: npx prisma generate
+      
+    # If you have tests, uncomment this step
+    # - name: Run tests
+    #   run: npm test
+  
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build application
+      run: npm run build
+      
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        
+    - name: Add host key
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H ${{ secrets.DROPLET_IP }} >> ~/.ssh/known_hosts
+      
+    - name: Create deployment package
+      run: |
+        # Make sure scripts directory is included in the package
+        mkdir -p scripts
+        # Create a deployment package
+        tar -czf deployment.tar.gz dist package.json package-lock.json prisma scripts
+        
+    - name: Deploy to DigitalOcean
+      env:
+        DROPLET_IP: ${{ secrets.DROPLET_IP }}
+        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH || '/var/www/interpipe-api' }}
+      run: |
+        # Copy the package to the server
+        scp deployment.tar.gz root@$DROPLET_IP:$DEPLOY_PATH
+        
+        # Make sure deployment directory exists and script is executable
+        ssh root@$DROPLET_IP "mkdir -p $DEPLOY_PATH/releases && mkdir -p $DEPLOY_PATH/backups"
+        
+        # Execute deployment script on the server
+        ssh root@$DROPLET_IP "bash $DEPLOY_PATH/scripts/deploy.sh"

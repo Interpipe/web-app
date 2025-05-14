@@ -34,9 +34,9 @@ export const features = [
 ];
 
 export const stats = [
-  { id: 'customers', number: "150+", label: "Happy Customers", icon: Users },
-  { id: 'experience', number: "3+", label: "Years Experience", icon: Award },
-  { id: 'worktime', number: "Open", label: "Mon-Fri: 0730-1630hrs\nSaturday: 0800-1400hrs", icon: Clock }
+  { id: 'customers', number: import.meta.env['VITE_CUSTOMERS_COUNT'] ?? "150+", label: "Happy Customers", icon: Users },
+  { id: 'experience', number: import.meta.env['VITE_EXPERIENCE_YEARS'] ?? "3+", label: "Years Experience", icon: Award },
+  { id: 'worktime', number: "Open", label: `${import.meta.env['VITE_BUSINESS_HOURS_WEEKDAY'] ?? "Mon-Fri: 0730-1630hrs"}\n${import.meta.env['VITE_BUSINESS_HOURS_WEEKEND'] ?? "Saturday: 0800-1400hrs"}`, icon: Clock }
 ];
 
 export const featuredProducts = [
