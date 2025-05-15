@@ -119,20 +119,27 @@ server {
     server_name api.interpipe.co.zw;
 
     location / {
-        # CORS headers
-        add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw https://www.interpipe.co.zw' always;
+        # CORS handling with dynamic origin
+        set $cors_origin "";
+        if ($http_origin ~ '^https://(admin|www)\.interpipe\.co\.zw$') {
+            set $cors_origin $http_origin;
+        }
+
+        add_header 'Access-Control-Allow-Origin' $cors_origin always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
         add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
         add_header 'Access-Control-Allow-Credentials' 'true' always;
-        add_header 'Access-Control-Max-Age' 1728000;
+        add_header 'Access-Control-Max-Age' 1728000 always;
+        add_header 'Vary' 'Origin' always;
         
-        # Handle preflight requests
+        # Handle preflight requests with dynamic origin
         if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw https://www.interpipe.co.zw' always;
+            add_header 'Access-Control-Allow-Origin' $cors_origin always;
             add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
             add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
             add_header 'Access-Control-Allow-Credentials' 'true' always;
-            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Access-Control-Max-Age' 1728000 always;
+            add_header 'Vary' 'Origin' always;
             add_header 'Content-Type' 'text/plain; charset=utf-8';
             add_header 'Content-Length' 0;
             return 204;
@@ -185,20 +192,27 @@ server {
     server_name api.interpipe.co.zw;
 
     location / {
-        # CORS headers
-        add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw https://www.interpipe.co.zw' always;
+        # CORS handling with dynamic origin
+        set $cors_origin "";
+        if ($http_origin ~ '^https://(admin|www)\.interpipe\.co\.zw$') {
+            set $cors_origin $http_origin;
+        }
+
+        add_header 'Access-Control-Allow-Origin' $cors_origin always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
         add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
         add_header 'Access-Control-Allow-Credentials' 'true' always;
-        add_header 'Access-Control-Max-Age' 1728000;
+        add_header 'Access-Control-Max-Age' 1728000 always;
+        add_header 'Vary' 'Origin' always;
         
-        # Handle preflight requests
+        # Handle preflight requests with dynamic origin
         if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw https://www.interpipe.co.zw' always;
+            add_header 'Access-Control-Allow-Origin' $cors_origin always;
             add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
             add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
             add_header 'Access-Control-Allow-Credentials' 'true' always;
-            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Access-Control-Max-Age' 1728000 always;
+            add_header 'Vary' 'Origin' always;
             add_header 'Content-Type' 'text/plain; charset=utf-8';
             add_header 'Content-Length' 0;
             return 204;
