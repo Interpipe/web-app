@@ -103,8 +103,10 @@ jobs:
         # Execute deployment script on the server
         ssh root@$DROPLET_IP "bash $DEPLOY_PATH/scripts/deploy.sh" 
         
-        # Ensure PM2 starts on system reboot
-        ssh root@$DROPLET_IP "cd $DEPLOY_PATH/current && \
+        # Ensure PM2 starts on system reboot (with proper NVM initialization)
+        ssh root@$DROPLET_IP "export NVM_DIR=\$HOME/.nvm && \
+        [ -s \$NVM_DIR/nvm.sh ] && \. \$NVM_DIR/nvm.sh && \
+        cd $DEPLOY_PATH/current && \
         pm2 delete interpipe-api 2>/dev/null || true && \
         pm2 start dist/index.js --name interpipe-api && \
         pm2 save && \
