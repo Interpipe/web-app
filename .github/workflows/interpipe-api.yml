@@ -102,3 +102,11 @@ jobs:
         
         # Execute deployment script on the server
         ssh root@$DROPLET_IP "bash $DEPLOY_PATH/scripts/deploy.sh" 
+        
+        # Ensure PM2 starts on system reboot
+        ssh root@$DROPLET_IP "cd $DEPLOY_PATH/current && \
+        pm2 delete interpipe-api 2>/dev/null || true && \
+        pm2 start dist/index.js --name interpipe-api && \
+        pm2 save && \
+        pm2 startup systemd -u root --hp /root && \
+        systemctl enable pm2-root" 
