@@ -120,7 +120,7 @@ server {
 
     location / {
         # CORS headers
-        add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw' always;
+        add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw https://www.interpipe.co.zw' always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
         add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
         add_header 'Access-Control-Allow-Credentials' 'true' always;
@@ -128,7 +128,7 @@ server {
         
         # Handle preflight requests
         if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw' always;
+            add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw https://www.interpipe.co.zw' always;
             add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
             add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
             add_header 'Access-Control-Allow-Credentials' 'true' always;
@@ -186,7 +186,7 @@ server {
 
     location / {
         # CORS headers
-        add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw' always;
+        add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw https://www.interpipe.co.zw' always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
         add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
         add_header 'Access-Control-Allow-Credentials' 'true' always;
@@ -194,7 +194,7 @@ server {
         
         # Handle preflight requests
         if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw' always;
+            add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw https://www.interpipe.co.zw' always;
             add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
             add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
             add_header 'Access-Control-Allow-Credentials' 'true' always;
