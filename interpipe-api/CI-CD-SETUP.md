@@ -116,15 +116,36 @@ Add the following configuration:
 
 ```
 server {
-    listen 80;
-    server_name your-domain.com;  # Replace with your domain
+    server_name api.interpipe.co.zw;
 
     location / {
-        proxy_pass http://localhost:3000;  # Adjust port if needed
+        # CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+        add_header 'Access-Control-Max-Age' 1728000;
+        
+        # Handle preflight requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
+            add_header 'Access-Control-Allow-Credentials' 'true' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+        
+        proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
     }
 }
@@ -137,6 +158,88 @@ ln -s /etc/nginx/sites-available/interpipe-api /etc/nginx/sites-enabled/
 nginx -t
 systemctl restart nginx
 ```
+
+## Set Up SSL with Let's Encrypt
+
+For secure HTTPS connections, it's strongly recommended to set up SSL certificates using Let's Encrypt:
+
+```bash
+# Install Certbot and the Nginx plugin
+apt update
+apt install -y certbot python3-certbot-nginx
+
+# Obtain and automatically configure SSL certificates
+certbot --nginx -d api.interpipe.co.zw
+```
+
+Follow the prompts from Certbot. It will:
+1. Ask for your email address
+2. Ask you to agree to the terms of service
+3. Update your Nginx configuration automatically
+4. Set up automatic renewal of certificates
+
+After Let's Encrypt setup, your final Nginx configuration should look similar to this:
+
+```
+server {
+    server_name api.interpipe.co.zw;
+
+    location / {
+        # CORS headers
+        add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
+        add_header 'Access-Control-Allow-Credentials' 'true' always;
+        add_header 'Access-Control-Max-Age' 1728000;
+        
+        # Handle preflight requests
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' 'https://admin.interpipe.co.zw' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
+            add_header 'Access-Control-Allow-Credentials' 'true' always;
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+        
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/api.interpipe.co.zw/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/api.interpipe.co.zw/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+server {
+    if ($host = api.interpipe.co.zw) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    server_name api.interpipe.co.zw;
+    return 404; # managed by Certbot
+}
+```
+
+To verify your certificates are properly configured, you can test with:
+
+```bash
+curl -I https://api.interpipe.co.zw
+```
+
+You should see a response with `HTTP/2 200` or similar.
 
 ## Troubleshooting
 
