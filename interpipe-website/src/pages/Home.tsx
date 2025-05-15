@@ -1,7 +1,7 @@
 import { ArrowRight, ChevronLeft, ChevronRight, Droplet, Shield, Zap, Users, Award, Clock } from 'lucide-react';
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { useStore } from '../store/useStore';
 import { getApiProductImagePath, getApiPartnerLogoPath } from '../services/assets';
 
@@ -25,16 +25,25 @@ const Home = () => {
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
   const productsCarouselRef = useRef<HTMLDivElement>(null);
 
-  // Ensure data is always arrays
-  const safePartners = Array.isArray(partners) ? partners : [];
-  const safeFeatures = Array.isArray(features) ? features : [];
-  const safeStats = Array.isArray(stats) ? stats : [];
-  const safeFeaturedProducts = Array.isArray(featuredProducts) ? featuredProducts : [];
-
   // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  // Filter products to only show those with isFeatured=true
+  const filteredFeaturedProducts = useMemo(() => {
+    return Array.isArray(featuredProducts) 
+      ? featuredProducts.filter(product => product.isFeatured === true)
+      : [];
+  }, [featuredProducts]);
+
+  // Ensure data is always arrays
+  const safePartners = Array.isArray(partners) ? partners : [];
+  const safeFeatures = Array.isArray(features) ? features : [];
+  const safeStats = Array.isArray(stats) ? stats : [];
+  const safeFeaturedProducts = filteredFeaturedProducts.length > 0 
+    ? filteredFeaturedProducts 
+    : Array.isArray(featuredProducts) ? featuredProducts : [];
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => 
