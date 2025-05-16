@@ -154,7 +154,10 @@ const Home = () => {
                   {renderIcon(stat.icon as string, 40)}
                 </div>
                 <div className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                <div className="text-gray-600 whitespace-pre-line">{stat.label}</div>
+                <div 
+                  className="text-gray-600 whitespace-pre-line"
+                  dangerouslySetInnerHTML={{ __html: stat.label }}
+                />
               </div>
             ))}
           </div>
