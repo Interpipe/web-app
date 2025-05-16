@@ -144,7 +144,7 @@ export default function StatsPage() {
       setFormData({
         id: item.id,
         title: item.label,
-        value: Number(item.number),
+        value: item.number,
         icon: item.icon,
         order: item.order ?? 0,
       });
@@ -152,7 +152,7 @@ export default function StatsPage() {
       setSelectedItem(null);
       setFormData({
         title: '',
-        value: 0,
+        value: '',
         icon: '',
         order: 0,
       });
@@ -176,14 +176,8 @@ export default function StatsPage() {
       return;
     }
 
-    if (
-      currentFormData.value === undefined ||
-      typeof currentFormData.value !== 'number' ||
-      isNaN(currentFormData.value)
-    ) {
-      alert(
-        'The "Value" field is invalid or missing. Please ensure "Value" is a number.'
-      );
+    if (currentFormData.value === undefined || !currentFormData.value.trim()) {
+      alert('The "Value" field is invalid or missing. Please enter a value.');
       return;
     }
     
@@ -200,7 +194,7 @@ export default function StatsPage() {
     if (selectedItem) {
       const payload = {
         label: currentFormData.title,
-        number: String(currentFormData.value),
+        number: currentFormData.value,
         icon: currentFormData.icon,
         order: currentFormData.order,
       };
@@ -216,7 +210,7 @@ export default function StatsPage() {
     } else {
       const payload = {
         label: currentFormData.title,
-        number: String(currentFormData.value),
+        number: currentFormData.value,
         icon: currentFormData.icon,
         order: currentFormData.order,
       };
@@ -427,7 +421,7 @@ export default function StatsPage() {
                 </Box>
                 
                 <Typography variant="h3" gutterBottom fontWeight="bold" color="primary">
-                  {Number(detailItem.number).toLocaleString()}
+                  {detailItem.number}
                 </Typography>
                 
                 <Typography variant="h5" color="text.secondary">
@@ -490,9 +484,9 @@ export default function StatsPage() {
               margin="dense"
               label="Value"
               fullWidth
-              type="number"
+              type="text"
               value={formData.value ?? ''}
-              onChange={(e) => setFormData({ ...formData, value: Number(e.target.value) })}
+              onChange={(e) => setFormData({ ...formData, value: e.target.value })}
               required
             />
             
