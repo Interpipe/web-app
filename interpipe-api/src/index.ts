@@ -79,8 +79,12 @@ app.use('/api/auth', authRoutes);
 // Middleware that only applies authentication for non-GET requests
 // and allows POST to /api/contact
 const conditionalAuth = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  // Allow all GET requests and POST requests to /api/contact
-  if (req.method === 'GET' || (req.method === 'POST' && req.path === '/')) {
+  // Allow all GET requests, POST requests to /api/contact, and PATCH requests to contact status
+  if (
+    req.method === 'GET' || 
+    (req.method === 'POST' && req.path === '/') ||
+    (req.method === 'PATCH' && req.path.match(/^\/[^\/]+\/status$/))
+  ) {
     return next();
   } else {
     return authMiddleware(req, res, next);
