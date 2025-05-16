@@ -1,7 +1,7 @@
 import { ArrowRight, ChevronLeft, ChevronRight, Droplet, Shield, Zap, Users, Award, Clock } from 'lucide-react';
 import HomeHero from '../components/HomeHero';
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStore } from '../store/useStore';
 import { getApiProductImagePath, getApiPartnerLogoPath } from '../services/assets';
 
@@ -154,10 +154,9 @@ const Home = () => {
                   {renderIcon(stat.icon as string, 40)}
                 </div>
                 <div className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                <div 
-                  className="text-gray-600 whitespace-pre-line"
-                  dangerouslySetInnerHTML={{ __html: stat.label }}
-                />
+                <div className="text-gray-600 whitespace-pre-line">
+                  {stat.label.replace(/\\n/g, '\n')}
+                </div>
               </div>
             ))}
           </div>
