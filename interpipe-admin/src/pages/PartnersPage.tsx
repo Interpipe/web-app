@@ -84,7 +84,7 @@ export default function PartnersPage() {
     // Construct the full URL for the logo
     const logoUrl = formData.logo.startsWith('http') 
       ? formData.logo 
-      : `http://localhost:3000${formData.logo}`;
+      : `${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}${formData.logo}`;
 
     const partnerData = {
       name: formData.name,
