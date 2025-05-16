@@ -37,6 +37,10 @@ import {
   Cloud as CloudIcon,
   Code as CodeIcon,
   HelpCircle as HelpOutlineIcon,
+  Award,
+  Clock,
+  Droplet,
+  Zap
 } from 'lucide-react';
 import DataTable from '../components/DataTable';
 import {
@@ -214,6 +218,10 @@ export default function FeaturesPage() {
       'construction': <ConstructionIcon size={iconSize} color={iconColor} />,
       'cloud': <CloudIcon size={iconSize} color={iconColor} />,
       'code': <CodeIcon size={iconSize} color={iconColor} />,
+      'award': <Award size={iconSize} color={iconColor} />,
+      'clock': <Clock size={iconSize} color={iconColor} />,
+      'droplet': <Droplet size={iconSize} color={iconColor} />,
+      'zap': <Zap size={iconSize} color={iconColor} />,
     };
   };
 

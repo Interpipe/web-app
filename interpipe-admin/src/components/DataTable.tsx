@@ -37,6 +37,10 @@ import {
   Cloud as CloudIcon,
   Settings as SettingsIcon,
   Shield as SecurityIcon,
+  Award,
+  Clock,
+  Droplet,
+  Zap
 } from 'lucide-react';
 
 interface Column {
@@ -112,6 +116,10 @@ export default function DataTable({ columns, data, onEdit, onDelete, onViewDetai
       'cloud': <CloudIcon size={iconSize} color={iconColor} />,
       'settings': <SettingsIcon size={iconSize} color={iconColor} />,
       'shield': <SecurityIcon size={iconSize} color={iconColor} />, 
+      'award': <Award size={iconSize} color={iconColor} />,
+      'clock': <Clock size={iconSize} color={iconColor} />,
+      'droplet': <Droplet size={iconSize} color={iconColor} />,
+      'zap': <Zap size={iconSize} color={iconColor} />,
       // Add more icons here as needed
     };
 

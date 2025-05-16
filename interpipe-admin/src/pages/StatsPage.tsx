@@ -43,7 +43,9 @@ import {
   Truck,
   ShieldCheck,
   Database,
-  Hammer
+  Hammer,
+  Droplet,
+  Zap
 } from 'lucide-react';
 import DataTable from '../components/DataTable';
 import {
@@ -53,6 +55,11 @@ import {
   deleteStat,
 } from '../services/api';
 import type { Stat } from '../types';
+
+// Extend the Stat type to include updatedAt property
+interface ExtendedStat extends Stat {
+  updatedAt?: string;
+}
 
 const columns = [
   { id: 'label', label: 'Title', minWidth: 170 },
@@ -78,10 +85,10 @@ const formatDate = (dateString: string | undefined): string => {
 
 export default function StatsPage() {
   const [open, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<Stat | null>(null);
-  const [formData, setFormData] = useState<Partial<Stat>>({});
+  const [selectedItem, setSelectedItem] = useState<ExtendedStat | null>(null);
+  const [formData, setFormData] = useState<Partial<ExtendedStat>>({});
   const [detailViewOpen, setDetailViewOpen] = useState(false);
-  const [detailItem, setDetailItem] = useState<Stat | null>(null);
+  const [detailItem, setDetailItem] = useState<ExtendedStat | null>(null);
   const theme = useTheme();
   const queryClient = useQueryClient();
 
@@ -112,7 +119,7 @@ export default function StatsPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<Stat> }) =>
+    mutationFn: ({ id, data }: { id: string; data: Partial<ExtendedStat> }) =>
       updateStat(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['stats'] });
@@ -138,21 +145,21 @@ export default function StatsPage() {
     },
   });
 
-  const handleOpen = (item?: Stat) => {
+  const handleOpen = (item?: ExtendedStat) => {
     if (item) {
       setSelectedItem(item);
       setFormData({
         id: item.id,
-        title: item.label,
-        value: item.number,
+        label: item.label,
+        number: item.number,
         icon: item.icon,
         order: item.order ?? 0,
       });
     } else {
       setSelectedItem(null);
       setFormData({
-        title: '',
-        value: '',
+        label: '',
+        number: '',
         icon: '',
         order: 0,
       });
@@ -171,12 +178,12 @@ export default function StatsPage() {
 
     const currentFormData = { ...formData };
 
-    if (!currentFormData.title?.trim()) {
+    if (!currentFormData.label?.trim()) {
       alert('Title cannot be empty.');
       return;
     }
 
-    if (currentFormData.value === undefined || !currentFormData.value.trim()) {
+    if (currentFormData.number === undefined || !currentFormData.number.trim()) {
       alert('The "Value" field is invalid or missing. Please enter a value.');
       return;
     }
@@ -193,8 +200,8 @@ export default function StatsPage() {
 
     if (selectedItem) {
       const payload = {
-        label: currentFormData.title,
-        number: currentFormData.value,
+        label: currentFormData.label,
+        number: currentFormData.number,
         icon: currentFormData.icon,
         order: currentFormData.order,
       };
@@ -209,8 +216,8 @@ export default function StatsPage() {
       });
     } else {
       const payload = {
-        label: currentFormData.title,
-        number: currentFormData.value,
+        label: currentFormData.label,
+        number: currentFormData.number,
         icon: currentFormData.icon,
         order: currentFormData.order,
       };
@@ -256,7 +263,7 @@ export default function StatsPage() {
       'trending-down': <TrendingDownIcon size={iconSize} color={iconColor} />,
       'trendingdown': <TrendingDownIcon size={iconSize} color={iconColor} />,
       'people': <PeopleIcon size={iconSize} color={iconColor} />,
-      'users': <PeopleIcon size={iconSize} color={iconColor} />,
+      'users': <Users size={iconSize} color={iconColor} />,
       'person': <PeopleIcon size={iconSize} color={iconColor} />,
       'business': <BusinessIcon size={iconSize} color={iconColor} />,
       'building': <BusinessIcon size={iconSize} color={iconColor} />,
@@ -285,7 +292,6 @@ export default function StatsPage() {
       'building2': <ApartmentIcon size={iconSize} color={iconColor} />,
       'building-2': <ApartmentIcon size={iconSize} color={iconColor} />,
       'award': <Award size={iconSize} color={iconColor} />,
-      'users': <Users size={iconSize} color={iconColor} />,
       'clock': <Clock size={iconSize} color={iconColor} />,
       'rocket': <Rocket size={iconSize} color={iconColor} />,
       'handcoins': <HandCoins size={iconSize} color={iconColor} />,
@@ -303,6 +309,8 @@ export default function StatsPage() {
       'shield-check': <ShieldCheck size={iconSize} color={iconColor} />,
       'database': <Database size={iconSize} color={iconColor} />,
       'hammer': <Hammer size={iconSize} color={iconColor} />,
+      'droplet': <Droplet size={iconSize} color={iconColor} />,
+      'zap': <Zap size={iconSize} color={iconColor} />,
     };
   };
 
@@ -476,8 +484,8 @@ export default function StatsPage() {
               margin="dense"
               label="Title"
               fullWidth
-              value={formData.title ?? ''}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              value={formData.label ?? ''}
+              onChange={(e) => setFormData({ ...formData, label: e.target.value })}
               required
             />
             <TextField
@@ -485,8 +493,8 @@ export default function StatsPage() {
               label="Value"
               fullWidth
               type="text"
-              value={formData.value ?? ''}
-              onChange={(e) => setFormData({ ...formData, value: e.target.value })}
+              value={formData.number ?? ''}
+              onChange={(e) => setFormData({ ...formData, number: e.target.value })}
               required
             />
             
