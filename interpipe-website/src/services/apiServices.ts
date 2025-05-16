@@ -138,12 +138,12 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
 export const fetchFeaturedProducts = async (): Promise<FeaturedProduct[]> => {
   try {
-    // Use regular products endpoint and mark some as featured in the client
-    const response = await api.get('/api/products');
+    // Use a dedicated endpoint for featured products that respects the isFeatured flag
+    const response = await api.get('/api/products/featured');
     const products = ensureArray<Product>(response.data);
     
-    // Transform products to featured products
-    return products.slice(0, 5).map((product: Product) => ({
+    // Transform products to featured products format
+    return products.map((product: Product) => ({
       id: product.id,
       name: product.name,
       description: product.description,

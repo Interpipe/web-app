@@ -30,20 +30,14 @@ const Home = () => {
     fetchData();
   }, [fetchData]);
 
-  // Filter products to only show those with isFeatured=true
-  const filteredFeaturedProducts = useMemo(() => {
-    return Array.isArray(featuredProducts) 
-      ? featuredProducts.filter(product => product.isFeatured === true)
-      : [];
-  }, [featuredProducts]);
+  // Use the featuredProducts directly since they're already filtered by the API service
+  // The API service already selects which products to feature - no need for additional filtering
+  const safeFeaturedProducts = Array.isArray(featuredProducts) ? featuredProducts : [];
 
   // Ensure data is always arrays
   const safePartners = Array.isArray(partners) ? partners : [];
   const safeFeatures = Array.isArray(features) ? features : [];
   const safeStats = Array.isArray(stats) ? stats : [];
-  const safeFeaturedProducts = filteredFeaturedProducts.length > 0 
-    ? filteredFeaturedProducts 
-    : Array.isArray(featuredProducts) ? featuredProducts : [];
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => 

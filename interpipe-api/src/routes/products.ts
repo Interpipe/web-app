@@ -29,6 +29,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get featured products only
+router.get('/featured', async (req, res) => {
+  try {
+    const featuredProducts = await prisma.product.findMany({
+      where: { isFeatured: true },
+      orderBy: { createdAt: 'desc' },
+      include: { category: true },
+    });
+    res.json(featuredProducts);
+  } catch (error) {
+    console.error('Error fetching featured products:', error);
+    res.status(500).json({ message: 'Error fetching featured products' });
+  }
+});
+
 // Get a single product
 router.get('/:id', async (req, res) => {
   try {
