@@ -79,6 +79,7 @@ jobs:
         DROPLET_IP: ${{ secrets.DROPLET_IP }}
         DEPLOY_PATH: ${{ secrets.DEPLOY_PATH || '/var/www/interpipe-api' }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        DATABASE_MIGRATION_URL: ${{ secrets.DATABASE_MIGRATION_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
       run: |
         # Create scripts directory on server
@@ -93,6 +94,7 @@ jobs:
         # Create .env file on the server
         ssh root@$DROPLET_IP "cat > $DEPLOY_PATH/.env << 'EOL'
         DATABASE_URL=\"$DATABASE_URL\"
+        DATABASE_MIGRATION_URL=\"$DATABASE_MIGRATION_URL\"
         JWT_SECRET=\"$JWT_SECRET\"
         # Add other environment variables as needed
         EOL"

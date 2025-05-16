@@ -66,7 +66,7 @@ npm ci --production
 # Run database migrations
 echo "Running database migrations..."
 npx prisma generate
-npx prisma migrate deploy
+npx prisma migrate deploy --preview-feature --timeout 60000
 
 # Update symlink
 echo "Updating symlink..."
