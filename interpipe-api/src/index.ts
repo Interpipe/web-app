@@ -24,7 +24,8 @@ import {
   PORT, 
   ALLOWED_ORIGINS, 
   RESOURCE_POLICY, 
-  OPENER_POLICY 
+  OPENER_POLICY,
+  UPLOAD_MAX_SIZE 
 } from './config.js';
 
 // ES module equivalent of __filename and __dirname
@@ -56,7 +57,8 @@ app.use(helmet({
   crossOriginOpenerPolicy: { policy: OPENER_POLICY }
 }));
 app.use(morgan('dev'));
-app.use(express.json());
+app.use(express.json({ limit: `${UPLOAD_MAX_SIZE}` }));
+app.use(express.urlencoded({ limit: `${UPLOAD_MAX_SIZE}`, extended: true }));
 
 // Serve uploaded files statically with proper headers
 app.use('/uploads', express.static(path.join(__dirname, '../uploads'), {

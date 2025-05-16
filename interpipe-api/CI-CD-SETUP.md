@@ -75,6 +75,7 @@ Add the necessary environment variables:
 ```
 DATABASE_URL="your-database-url"
 JWT_SECRET="your-jwt-secret"
+UPLOAD_MAX_SIZE="10485760" # 10MB in bytes
 # Add any other required environment variables
 ```
 
@@ -117,6 +118,7 @@ Add the following configuration:
 ```
 server {
     server_name api.interpipe.co.zw;
+    client_max_body_size 10M; # Allow upload sizes up to 10MB
 
     location / {
         # CORS handling with dynamic origin
@@ -190,6 +192,7 @@ After Let's Encrypt setup, your final Nginx configuration should look similar to
 ```
 server {
     server_name api.interpipe.co.zw;
+    client_max_body_size 10M; # Allow upload sizes up to 10MB
 
     location / {
         # CORS handling with dynamic origin
@@ -263,3 +266,53 @@ If your deployment fails:
 2. Verify that your SSH key has been properly set up
 3. Check if PM2 is running your application: `pm2 status`
 4. Check application logs: `pm2 logs interpipe-api`
+
+### Common Upload Issues
+
+If you encounter issues with file uploads:
+
+1. **413 Request Entity Too Large**: This means Nginx is blocking large uploads.
+   - Verify that `client_max_body_size 10M;` is in your Nginx configuration
+   - Restart Nginx: `systemctl restart nginx`
+
+2. **CORS Errors**: If your admin interface cannot upload files due to CORS:
+   - Check that the origin domain is included in the Nginx CORS configuration
+   - Verify that appropriate CORS headers are being sent
+   - Check browser console for specific CORS error messages
+
+3. **Upload Size Limits**: If Express is limiting upload sizes:
+   - Verify `UPLOAD_MAX_SIZE` is set correctly in your .env file
+   - Check that both Express and Nginx configurations match
+
+## Persisting Uploaded Files
+
+The application stores uploaded files in the `/uploads` directory. To ensure these files persist across deployments, the CI/CD pipeline is configured to:
+
+1. Keep the uploads directory outside the deployment cycle
+2. Use a permanent uploads directory at `/var/www/interpipe-api/uploads`
+3. Symlink this directory to each release
+
+This setup ensures that all uploaded files remain available even after new deployments.
+
+### Manual Setup (If Needed)
+
+If you need to manually configure the uploads directory persistence:
+
+```bash
+# SSH into your server
+ssh root@YOUR_DROPLET_IP
+
+# Create a permanent uploads directory
+mkdir -p /var/www/interpipe-api/uploads
+
+# Ensure appropriate permissions
+chmod 755 /var/www/interpipe-api/uploads
+
+# If you have existing uploads in the current deployment, move them to the permanent directory
+cp -r /var/www/interpipe-api/current/uploads/* /var/www/interpipe-api/uploads/
+
+# Create a symlink in the current deployment
+cd /var/www/interpipe-api/current
+rm -rf uploads
+ln -s /var/www/interpipe-api/uploads uploads
+```

@@ -71,7 +71,7 @@ jobs:
       
     - name: Create deployment package
       run: |
-        # Create a deployment package
+        # Create a deployment package - exclude uploads directory
         tar -czf deployment.tar.gz dist package.json package-lock.json prisma scripts
         
     - name: Deploy to DigitalOcean
@@ -96,6 +96,7 @@ jobs:
         DATABASE_URL=\"$DATABASE_URL\"
         DATABASE_MIGRATION_URL=\"$DATABASE_MIGRATION_URL\"
         JWT_SECRET=\"$JWT_SECRET\"
+        UPLOAD_MAX_SIZE=\"10485760\"
         # Add other environment variables as needed
         EOL"
         

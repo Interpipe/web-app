@@ -13,6 +13,7 @@ CURRENT_PATH="$DEPLOY_PATH/current"
 BACKUP_PATH="$DEPLOY_PATH/backups/$TIMESTAMP"
 TARBALL="$DEPLOY_PATH/deployment.tar.gz"
 ENV_FILE="$DEPLOY_PATH/.env"
+UPLOADS_PATH="$DEPLOY_PATH/uploads"
 
 # Source NVM
 export NVM_DIR="$HOME/.nvm"
@@ -54,6 +55,23 @@ if [ -d "$CURRENT_PATH" ]; then
   mkdir -p "$BACKUP_PATH"
   cp -r "$CURRENT_PATH"/* "$BACKUP_PATH"
 fi
+
+# Ensure uploads directory exists and is preserved
+echo "Ensuring uploads directory is preserved..."
+mkdir -p "$UPLOADS_PATH"
+
+# If the current version has an uploads directory with content, preserve it
+if [ -d "$CURRENT_PATH/uploads" ] && [ "$(ls -A "$CURRENT_PATH/uploads" 2>/dev/null)" ]; then
+  echo "Copying existing uploads to new release..."
+  mkdir -p "$RELEASE_PATH/uploads"
+  cp -r "$CURRENT_PATH/uploads/"* "$RELEASE_PATH/uploads/"
+fi
+
+# Create symlink from central uploads directory to release uploads directory
+echo "Creating symlink for uploads directory..."
+mkdir -p "$RELEASE_PATH/uploads"
+rm -rf "$RELEASE_PATH/uploads"
+ln -sfn "$UPLOADS_PATH" "$RELEASE_PATH/uploads"
 
 # Install dependencies
 echo "Installing dependencies..."
