@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Request, Response, NextFunction } from 'express';
-import { UPLOAD_MAX_SIZE } from '../config.js';
+import { UPLOAD_MAX_SIZE, API_BASE_URL } from '../config.js';
 
 const router = Router();
 
@@ -49,10 +49,16 @@ router.post('/', upload.single('file'), (req: Request, res: Response) => {
   
   // Construct the file URL or path to return to the client
   const filePath = `/uploads/${uploadType}/${req.file.filename}`;
+  
+  // If client expects absolute URLs, add base URL
+  const fileUrl = req.get('x-use-absolute-urls') === 'true' 
+    ? `${API_BASE_URL}${filePath}`
+    : filePath;
 
   res.status(201).json({
     message: 'File uploaded successfully',
     filePath: filePath,
+    fileUrl: fileUrl,
     fileName: req.file.filename,
     originalName: req.file.originalname,
     mimeType: req.file.mimetype,

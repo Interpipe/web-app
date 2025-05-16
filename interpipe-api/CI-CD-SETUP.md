@@ -127,6 +127,9 @@ server {
             set $cors_origin $http_origin;
         }
 
+        # Add Content-Security-Policy header
+        add_header 'Content-Security-Policy' "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'" always;
+        
         add_header 'Access-Control-Allow-Origin' $cors_origin always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
         add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
@@ -201,6 +204,9 @@ server {
             set $cors_origin $http_origin;
         }
 
+        # Add Content-Security-Policy header
+        add_header 'Content-Security-Policy' "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'" always;
+        
         add_header 'Access-Control-Allow-Origin' $cors_origin always;
         add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
         add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
@@ -302,17 +308,40 @@ If you need to manually configure the uploads directory persistence:
 # SSH into your server
 ssh root@YOUR_DROPLET_IP
 
-# Create a permanent uploads directory
-mkdir -p /var/www/interpipe-api/uploads
+# Create a permanent uploads directory with required subdirectories
+mkdir -p /var/www/interpipe-api/uploads/general
+mkdir -p /var/www/interpipe-api/uploads/image
+mkdir -p /var/www/interpipe-api/uploads/document
 
 # Ensure appropriate permissions
-chmod 755 /var/www/interpipe-api/uploads
+chmod -R 755 /var/www/interpipe-api/uploads
 
 # If you have existing uploads in the current deployment, move them to the permanent directory
-cp -r /var/www/interpipe-api/current/uploads/* /var/www/interpipe-api/uploads/
+# For each upload type (general, image, document)
+for dir in general image document; do
+  if [ -d "/var/www/interpipe-api/current/uploads/$dir" ]; then
+    cp -r "/var/www/interpipe-api/current/uploads/$dir/"* "/var/www/interpipe-api/uploads/$dir/" 2>/dev/null || true
+  fi
+done
 
 # Create a symlink in the current deployment
 cd /var/www/interpipe-api/current
 rm -rf uploads
 ln -s /var/www/interpipe-api/uploads uploads
+
+# Restart the API to apply changes
+pm2 restart interpipe-api
+```
+
+### Immediate Fix Command
+
+If your uploads are not being found after deployment, run this command on your server:
+
+```bash
+ssh root@YOUR_DROPLET_IP "mkdir -p /var/www/interpipe-api/uploads/{general,image,document} && \
+chmod -R 755 /var/www/interpipe-api/uploads && \
+cd /var/www/interpipe-api/current && \
+rm -rf uploads && \
+ln -s /var/www/interpipe-api/uploads uploads && \
+pm2 restart interpipe-api"
 ```

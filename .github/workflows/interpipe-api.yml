@@ -97,6 +97,7 @@ jobs:
         DATABASE_MIGRATION_URL=\"$DATABASE_MIGRATION_URL\"
         JWT_SECRET=\"$JWT_SECRET\"
         UPLOAD_MAX_SIZE=\"10485760\"
+        API_BASE_URL=\"https://api.interpipe.co.zw\"
         # Add other environment variables as needed
         EOL"
         

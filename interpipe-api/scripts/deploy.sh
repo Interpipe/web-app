@@ -60,16 +60,27 @@ fi
 echo "Ensuring uploads directory is preserved..."
 mkdir -p "$UPLOADS_PATH"
 
+# Create subdirectories for different upload types
+mkdir -p "$UPLOADS_PATH/general"
+mkdir -p "$UPLOADS_PATH/image"
+mkdir -p "$UPLOADS_PATH/document"
+
 # If the current version has an uploads directory with content, preserve it
-if [ -d "$CURRENT_PATH/uploads" ] && [ "$(ls -A "$CURRENT_PATH/uploads" 2>/dev/null)" ]; then
-  echo "Copying existing uploads to new release..."
-  mkdir -p "$RELEASE_PATH/uploads"
-  cp -r "$CURRENT_PATH/uploads/"* "$RELEASE_PATH/uploads/"
+if [ -d "$CURRENT_PATH/uploads" ]; then
+  echo "Copying existing uploads to permanent storage..."
+  
+  # Copy each upload type directory if it exists
+  for dir in general image document; do
+    if [ -d "$CURRENT_PATH/uploads/$dir" ] && [ "$(ls -A "$CURRENT_PATH/uploads/$dir" 2>/dev/null)" ]; then
+      echo "Copying $dir uploads..."
+      mkdir -p "$UPLOADS_PATH/$dir"
+      cp -r "$CURRENT_PATH/uploads/$dir/"* "$UPLOADS_PATH/$dir/" 2>/dev/null || true
+    fi
+  done
 fi
 
-# Create symlink from central uploads directory to release uploads directory
+# Create symlink to the uploads directory in the release
 echo "Creating symlink for uploads directory..."
-mkdir -p "$RELEASE_PATH/uploads"
 rm -rf "$RELEASE_PATH/uploads"
 ln -sfn "$UPLOADS_PATH" "$RELEASE_PATH/uploads"
 

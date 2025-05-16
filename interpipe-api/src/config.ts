@@ -9,6 +9,7 @@ if (!process.env.JWT_SECRET) {
 // API configuration
 export const PORT = process.env.PORT ?? '3000';
 export const NODE_ENV = process.env.NODE_ENV ?? 'development';
+export const API_BASE_URL = process.env.API_BASE_URL ?? 'http://localhost:3000';
 
 // Security
 export const JWT_SECRET = process.env.JWT_SECRET ?? 'your-very-default-secret-key';
