@@ -345,3 +345,16 @@ rm -rf uploads && \
 ln -s /var/www/interpipe-api/uploads uploads && \
 pm2 restart interpipe-api"
 ```
+
+## Triggering a Deployment
+
+To trigger a new deployment, simply push any changes to the `main` branch that affect files in the `interpipe-api/` directory. The GitHub Actions workflow will automatically:
+
+1. Run tests
+2. Build the application
+3. Deploy to your DigitalOcean Droplet
+4. Run database migrations
+5. Restart the application with PM2
+
+You can monitor the deployment progress in the GitHub Actions tab of your repository.
+```
